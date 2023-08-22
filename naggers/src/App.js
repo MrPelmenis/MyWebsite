@@ -1,9 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
+import BackgroundObject from './BackgroundObject/BackgroundObject';
+import MainPart from './MainPart/mainPart';
+import SinglePost from './SinglePost/singlePost';
+import TopBar from './topBar/topBar';
+
 
 function App() {
   return (
-    2
+    <>
+      <TopBar></TopBar>
+
+      <MainPart>
+      </MainPart>
+    </>
   );
 }
 

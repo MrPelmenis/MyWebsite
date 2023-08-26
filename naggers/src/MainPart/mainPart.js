@@ -7,7 +7,7 @@ import SinglePost from '../SinglePost/singlePost';
 export default function MainPart() {
     return (
         <div className='MainPart'>
-            <SinglePost>s</SinglePost>
+            <SinglePost>a</SinglePost>
         </div>
     )
 }

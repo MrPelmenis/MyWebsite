@@ -4,9 +4,10 @@
     background-color: #0C4A60;
     display: flex;
     justify-content: space-between;
-    z-index: 2;
-    position: relative;
+    z-index: 1;
+    top: 0;
     position: fixed;
+
 }
 
 .TopBarLSide {
@@ -21,10 +22,32 @@
     justify-content: left;
 }
 
+.SingInButton {
+    border: 0px;
+    height: 25px;
+    margin-top: 40px;
+    width: 80px;
+    margin-left: 10px;
+    color: aqua;
+    transition: background-color 0.3s ease;
+    font-weight: 900;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+    background-color: transparent;
+    transition: border-bottom 0s ease-in-out;
+}
+
+.SingInButton:hover {
+    border-bottom: 2px solid aqua;
+    border-radius: 0px;
+}
+
 .TopBarItem {
     height: 25px;
     margin-top: 40px;
-    width: 100px;
+    width: 80px;
     margin-left: 10px;
     color: aqua;
     transition: background-color 0.3s ease;
@@ -37,7 +60,7 @@
 }
 
 .TopBarItem:hover {
-    background-color: #00aaff;
+    background-color: darkgray;
 }
 
 .TopBarImg {

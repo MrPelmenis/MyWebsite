@@ -3,4 +3,6 @@
     background-color: #e1dddb;
     height: 2000px;
     margin: auto;
+    z-index: 1;
+    margin-top: 100px;
 }

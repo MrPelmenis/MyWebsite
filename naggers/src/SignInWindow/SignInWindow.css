@@ -1,0 +1,56 @@
+.Container {
+    background-color: rgba(150, 150, 150, 1);
+    z-index: 2;
+}
+
+.sing-in-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    backdrop-filter: blur(5px);
+}
+
+.white-box {
+    background-color: white;
+    width: 30%;
+    height: 40%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.close-button {
+    background-color: darkgrey;
+    transition: background-color 0s ease-in-out;
+
+    position: absolute;
+    right: 35%;
+    top: 30%;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    background-color: red;
+}
+
+.sign-in-button {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}

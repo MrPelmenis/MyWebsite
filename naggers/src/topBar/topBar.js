@@ -2,26 +2,42 @@ import '../App.css';
 import { useState } from 'react';
 import './topBar.css';
 
+
+
+
 import logo from "../img/logotranp.png";
+
+
+import { Provider, useDispatch } from 'react-redux';
+import store from '../store';
+import { showScreen, hideScreen } from '../store/signInWindow';
+
+
+
+
 
 
 
 export default function TopBar() {
     return (
         <div className="TopBar">
-            <TopBarLeftSide />
-            <TopBarRightSide />
-        </div>
+            <TopBarLeftSide></TopBarLeftSide>
+            <TopBarRightSide>
+            </TopBarRightSide>
+        </div >
     )
+
 }
 
 
 
-function TopBarItem({ value }) {
+function SingInButton({ value }) {
+    const dispatch = useDispatch();
+
     return (
-        <div className="TopBarItem">
+        <button className="SingInButton" onClick={() => dispatch(showScreen())}>
             {value}
-        </div>
+        </button>
     )
 }
 
@@ -46,6 +62,9 @@ function TopBarLeftSide() {
 function TopBarRightSide() {
     return (
         <div className="TopBarRSide">
+            <Provider store={store}>
+                <SingInButton value={"Sign In"}></SingInButton>
+            </Provider>
         </div>
     )
 }

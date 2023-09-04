@@ -10,7 +10,7 @@ import logo from "../img/logotranp.png";
 
 import { Provider, useDispatch } from 'react-redux';
 import store from '../store';
-import { showScreen, hideScreen } from '../store/signInWindow';
+import { showScreen } from '../store/signInWindow';
 
 
 

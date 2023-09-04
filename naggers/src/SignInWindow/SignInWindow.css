@@ -1,56 +1,106 @@
 .Container {
-    background-color: rgba(150, 150, 150, 1);
+    background-color: rgba(200, 200, 200S, 0.5);
     z-index: 2;
-}
-
-.sing-in-window {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    z-index: 3;
-    transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
+    position: fixed;
+    left: 0;
+    top: 0;
     backdrop-filter: blur(5px);
+    justify-content: center;
+    display: flex;
 }
 
 .white-box {
     background-color: white;
-    width: 30%;
-    height: 40%;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 40%;
+    height: 50%;
+    margin: auto;
+    border-radius: 5px;
 }
+
+
+
+.signInPart {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+}
+
+
+.inputDiv {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.signInInput:focus {
+    outline: none;
+}
+
+.signInInput {
+    width: 50%;
+    height: 40px;
+    border-radius: 5px;
+
+
+}
+
+.signInText {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.signInPic {
+    width: 80px;
+    height: 80px;
+}
+
+.signInButtonHolder {
+    width: 100%;
+}
+
+.signInButton {
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 60px;
+    height: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    position: relative;
+    left: calc((75% - 60px));
+    top: 5px;
+    transition: 0;
+}
+
+.signInButton:hover {
+    border: 1px solid white;
+}
+
+.forgotCredencials {
+    width: 100%;
+    padding-left: 25%;
+    padding-bottom: 5px;
+}
+
+
 
 .close-button {
     background-color: darkgrey;
     transition: background-color 0s ease-in-out;
-
-    position: absolute;
-    right: 35%;
-    top: 30%;
+    position: relative;
+    left: calc((100% - 30px));
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    text-align: center;
     color: white;
-    padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .close-button:hover {
     background-color: red;
-}
-
-.sign-in-button {
-    background-color: blue;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
 }

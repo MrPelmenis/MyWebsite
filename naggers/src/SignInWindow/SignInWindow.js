@@ -3,10 +3,13 @@ import { useState } from 'react';
 import './SignInWindow.css';
 
 
-import { Provider, useDispatch, useSelector } from 'react-redux';
-import store from '../store';
+import { useDispatch, useSelector } from 'react-redux';
 
-import signInWindow, { showScreen, hideScreen } from '../store/signInWindow';
+import { hideScreen } from '../store/signInWindow';
+
+
+
+import logoPic from '../img/labsLogo.png';
 
 
 export default function SingInWindow() {
@@ -23,17 +26,39 @@ export default function SingInWindow() {
 
     if (signInWindow.visible) {
         return (
-            <div className="Container" >
-                <div className="sing-in-window">
-                    <div className="white-box">
-                        <div className="close-button" onClick={handleClose}>
-                            X
+            <div className="Container">
+                <div className="white-box">
+                    <div className="signInPart" style={{ height: 30 }}><div className="close-button" onClick={handleClose}>
+                        X
+                    </div></div>
+                    <div className="signInPart" style={{ height: 80, display: "flex", justifyContent: 'center' }}><img className='signInPic' src={logoPic}></img></div>
+
+                    <div className="signInPart"><div className='signInText' style={{ display: "flex", justifyContent: 'center' }}>Sign In</div></div>
+                    <br />
+                    <div className="signInPart" style={{ height: 80 }}>
+                        <div className="inputDiv">
+                            <input type="text" placeholder="Nickname" className="signInInput"></input>
+
+                            <div className="forgotCredencials"><a href="http://localhost:3000/">Forgot nickname?</a></div>
+
+                            <input type="password" placeholder="Password" className="signInInput"></input>
+
+                            <div className="forgotCredencials"><a href="http://localhost:3000/">Forgot password?</a></div>
+
+                            <div className="signInButtonHolder"><button className='signInButton'>Sign In</button></div>
+
                         </div>
-                        <h1>Sign In</h1>
-                        <button className="sign-in-button" >
-                            Sign In
-                        </button>
                     </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+
+                    <div className="signInPart" style={{ textAlign: 'center' }}>Don't have an account yet? Click <a href="http://localhost:3000/">HERE</a> to sign up</div>
+
                 </div>
             </div>
         );
@@ -45,3 +70,23 @@ export default function SingInWindow() {
     }
 
 };
+
+
+
+
+
+
+/*<div className="white-box">
+                    <div className="close-button" onClick={handleClose}>
+                        X
+                    </div>
+                    <div className="topPart">
+                        <img className='signInPic' src={logoPic}></img>
+                        <div className="signinText">Sign In</div>
+                    </div>
+
+                    <div className="inputDiv">
+                        <input type="text" placeholder="Nickname" className="signInInput"></input>
+                        <input type="password" placeholder="Password" className="signInInput"></input>
+                    </div>
+                </div>*/

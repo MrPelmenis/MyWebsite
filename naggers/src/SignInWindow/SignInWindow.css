@@ -14,7 +14,7 @@
 .white-box {
     background-color: white;
     width: 40%;
-    height: 50%;
+    height: 70%;
     margin: auto;
     border-radius: 5px;
 }
@@ -40,14 +40,15 @@
 
 .signInInput {
     width: 50%;
-    height: 40px;
+    height: 5%;
+    font-size: 25px;
     border-radius: 5px;
-
-
+    outline: none;
+    border: none;
 }
 
 .signInText {
-    font-size: 30px;
+    font-size:20px;
     font-weight: bold;
 }
 
@@ -83,6 +84,7 @@
     width: 100%;
     padding-left: 25%;
     padding-bottom: 5px;
+    font-size: 15px;
 }
 
 

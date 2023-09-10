@@ -16,7 +16,11 @@ import logoPic from '../img/labsLogo.png';
 
 
 
-
+async function fetchLogin() {
+    const response = await fetch('http://localhost:20067/login');
+    const readyAnswer = await response.text();
+    return readyAnswer;
+}
 
 
 
@@ -34,7 +38,7 @@ export default function SingInWindow() {
 
     const [nicknameInput, setNicknameInput] = useState('');
     const [updatednicknameInput, setUpdatednicknameInput] = useState(nicknameInput);
-  
+
     const handleNickChange = (event) => {
         setNicknameInput(event.target.value);
     };
@@ -44,7 +48,7 @@ export default function SingInWindow() {
 
     const [passwordInput, setPasswordInput] = useState('');
     const [updatedPasswordInput, setUpdatedPasswordInput] = useState(passwordInput);
-  
+
     const handlePasswordChange = (event) => {
         setPasswordInput(event.target.value);
     };
@@ -52,14 +56,15 @@ export default function SingInWindow() {
 
 
 
-    const handleClick = () => {
-      //  "message" stores input field value
-      setUpdatednicknameInput(nicknameInput);
-      setUpdatedPasswordInput(passwordInput);
-      alert(passwordInput + "   " + nicknameInput)
+    const handleClick = async () => {
+        setUpdatednicknameInput(nicknameInput);
+        setUpdatedPasswordInput(passwordInput);
+
+        console.log(await fetchLogin());
+
     };
 
-    
+
 
     if (signInWindow.visible) {
         return (
@@ -78,7 +83,7 @@ export default function SingInWindow() {
 
                             <div className="forgotCredencials"><a href="http://localhost:3000/">Forgot nickname?</a></div>
 
-                            <input type="password" placeholder="Password" className="signInInput"  onChange={handlePasswordChange} value={passwordInput}  ></input>
+                            <input type="password" placeholder="Password" className="signInInput" onChange={handlePasswordChange} value={passwordInput}  ></input>
 
                             <div className="forgotCredencials"><a href="http://localhost:3000/">Forgot password?</a></div>
 

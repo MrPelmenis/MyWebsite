@@ -14,11 +14,14 @@ import { hideScreen } from '../store/signInWindow';
 import logoPic from '../img/labsLogo.png';
 
 
+import configData from "../config.json";
 
 
-async function fetchLogin() {
-    const response = await fetch('http://localhost:20067/login');
+
+async function fetchLogin(nick, pass) {
+    const response = await fetch("http://localhost:3000/index.php" + "/?request=login&nick=" + nick + "&pass=" + pass);
     const readyAnswer = await response.text();
+    alert(readyAnswer);
     return readyAnswer;
 }
 
@@ -60,7 +63,7 @@ export default function SingInWindow() {
         setUpdatednicknameInput(nicknameInput);
         setUpdatedPasswordInput(passwordInput);
 
-        console.log(await fetchLogin());
+        console.log(await fetchLogin(nicknameInput, passwordInput));
 
     };
 

@@ -12,7 +12,7 @@ import { Provider, useDispatch } from 'react-redux';
 import store from '../store';
 import { showScreen } from '../store/signInWindow';
 
-
+import configData from "../config.json";
 
 
 
@@ -22,6 +22,7 @@ export default function TopBar() {
     return (
         <div className="TopBar">
             <TopBarLeftSide></TopBarLeftSide>
+            CONFIG.JSON FAILA SITUACIJU SALABOT!!!
             <TopBarRightSide>
             </TopBarRightSide>
         </div >
@@ -31,13 +32,40 @@ export default function TopBar() {
 
 
 
+function googleLogin() {
+    let url =
+        `https://accounts.google.com/o/oauth2/v2/auth?` +
+        `response_type=code&` +
+        `client_id=${configData.CLIENT_ID}&` +
+        `scope=openid%20email&` +
+        `redirect_uri=${configData.REDIRECT_URL}&` +
+        `nonce=0394852-3190485-2490358&`;
+    window.location.href = url;
+}
+
 function SingInButton({ value }) {
     const dispatch = useDispatch();
 
+    const googleAuth = () => {
+        googleLogin();
+    }
+
+
     return (
-        <button className="SingInButton" onClick={() => dispatch(showScreen())}>
-            {value}
-        </button>
+        <>
+
+            <button className="SingInButton" onClick={() => dispatch(showScreen())}>
+                sign in smukais
+            </button>
+
+            <button className="SingInButton" onClick={() => googleAuth()}>
+                sign in google
+            </button>
+
+        </>
+
+
+
     )
 }
 

@@ -19,7 +19,7 @@ import configData from "../config.json";
 
 
 async function fetchLogin(nick, pass) {
-    const response = await fetch("http://localhost:3000/index.php" + "/?request=login&nick=" + nick + "&pass=" + pass);
+    const response = await fetch(configData.SERVER_URL + "/?request=login&nick=" + nick + "&pass=" + pass);
     const readyAnswer = await response.text();
     alert(readyAnswer);
     return readyAnswer;
@@ -66,6 +66,7 @@ export default function SingInWindow() {
         console.log(await fetchLogin(nicknameInput, passwordInput));
 
     };
+
 
 
 

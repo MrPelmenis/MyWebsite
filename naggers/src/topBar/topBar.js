@@ -8,14 +8,14 @@ import './topBar.css';
 import logo from "../img/logotranp.png";
 
 
+
 import { Provider, useDispatch } from 'react-redux';
 import store from '../store';
 import { showScreen } from '../store/signInWindow';
 
 import configData from "../config.json";
 
-
-
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 
 
 export default function TopBar() {
@@ -43,6 +43,24 @@ function googleLogin() {
     window.location.href = url;
 }
 
+let signedIn = true;
+
+function ProfilePicOnTop(){
+    const navigate = useNavigate();
+
+    const openProfile = () => {
+        navigate("/profile");
+    }
+
+    return (
+        <>
+            <img  onClick={openProfile} src={require('../img/DefaultProfilePic.png')} className='profilePicOnTop'></img>
+        </>
+    )
+}
+
+
+
 function SingInButton({ value }) {
     const dispatch = useDispatch();
 
@@ -50,26 +68,31 @@ function SingInButton({ value }) {
         googleLogin();
     }
 
+    if(signedIn){
+        return (
+            <ProfilePicOnTop> </ProfilePicOnTop>
+        )
+    }else{
+        return (
+            <>
+    
+                <button className="SingInButton" onClick={() => dispatch(showScreen())}>
+                    sign in smukais
+                </button>
+    
+                <button className="SingInButton" onClick={() => googleAuth()}>
+                    sign in google
+                </button>
+    
+            </>
+        )
+    }
 
-    return (
-        <>
-
-            <button className="SingInButton" onClick={() => dispatch(showScreen())}>
-                sign in smukais
-            </button>
-
-            <button className="SingInButton" onClick={() => googleAuth()}>
-                sign in google
-            </button>
-
-        </>
-
-
-
-    )
 }
 
 function TopBarImg({ src, style }) {
+
+   
     return (
         <img className="TopBarImg" style={style} alt={"a"} src={src}></img>
     )

@@ -5,6 +5,7 @@ import App from './App';
 
 import Layout from './pages/layout.js';
 import Login from './pages/login.js';
+import Profile from "./pages/profile.js";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -16,6 +17,7 @@ root.render(
         <Route path="/" element={<Layout />}>
           <Route index element={<App />} />
           <Route path="login" element={<Login />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
     </BrowserRouter>

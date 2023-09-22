@@ -69,3 +69,10 @@
     background-color: transparent;
     margin: auto;
 }
+
+.profilePicOnTop{
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    margin-right: 10px;
+}

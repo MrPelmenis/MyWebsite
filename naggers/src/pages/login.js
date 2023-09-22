@@ -10,7 +10,7 @@ const Login = () => {
     useEffect(() => {
         callback();
         setTimeout(() => {
-            //navigate("/");
+            navigate("/");
         }, 1000);
 
     });
@@ -53,6 +53,13 @@ async function callback() {
 
     console.log("Token:");
     console.log(JWTToken);
+    alert("JWTToken");
+
+    localStorage.setItem("JWT", JWTToken);
+    let jtoken = localStorage.getItem("JWT");
+    alert(jtoken);
+
+
 }
 
 function parseJwt(token) {

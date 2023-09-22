@@ -43,7 +43,7 @@ function googleLogin() {
     window.location.href = url;
 }
 
-let signedIn = true;
+
 
 function ProfilePicOnTop(){
     const navigate = useNavigate();
@@ -64,11 +64,18 @@ function ProfilePicOnTop(){
 function SingInButton({ value }) {
     const dispatch = useDispatch();
 
+    document.addEventListener(
+        "localDataStorage"
+      , ()=>{console.log("local storage change")}
+        , false
+    );
+
+
     const googleAuth = () => {
         googleLogin();
     }
 
-    if(signedIn){
+    if(JSON.parse(localStorage.getItem("JWT"))){
         return (
             <ProfilePicOnTop> </ProfilePicOnTop>
         )
@@ -91,8 +98,6 @@ function SingInButton({ value }) {
 }
 
 function TopBarImg({ src, style }) {
-
-   
     return (
         <img className="TopBarImg" style={style} alt={"a"} src={src}></img>
     )

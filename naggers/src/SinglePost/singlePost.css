@@ -1,5 +1,71 @@
 .SinglePost {
     width: 100%;
-    height: 60px;
+    border-bottom:  3px solid rgb(199, 197, 197);
+}
+
+.authorDateInfo{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    font-size: 20px;
+    line-height: 40px;
+}
+
+.authorName{
+    margin-left: 5px;
+}
+
+.readMoreOrLess{
+    border: none;
+    outline: none;
+    color: #0C4A60;
+    background: none;
+    border-bottom: 1px solid #0C4A60;
+}
+
+.postText{
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin-left:5px;
+    width: 100%;
+    margin-right: 5px;
+}
+
+.dateInfoAboutPost{
+    color: gray;
+    font-size: small;
+    justify-content: center;
+    display: flex;
+}
+
+.likesAndComments{
+    width: 100%;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.likeComment{
+    width: 25px;
+    height:25px;
+    border-radius: 4px;
+}
+
+.likeComment:hover{
+    background-color: gray;
+}
+.authorPic{
+    width: 30px;
+    height: 30px;
+    margin-top: 5px;
+    margin-left: 5px;
+    background-color: #0C4A60;
+    border-Radius: 700px;
+}
+
+.likesAndComments{
+    width: 100%;
     border: 1px solid black;
+    height: 25px;
 }

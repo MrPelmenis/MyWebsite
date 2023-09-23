@@ -22,9 +22,7 @@ export default function TopBar() {
     return (
         <div className="TopBar">
             <TopBarLeftSide></TopBarLeftSide>
-            CONFIG.JSON FAILA SITUACIJU SALABOT!!!
-            <TopBarRightSide>
-            </TopBarRightSide>
+            <TopBarRightSide></TopBarRightSide>
         </div >
     )
 

@@ -18,12 +18,7 @@ import configData from "../config.json";
 
 
 
-async function fetchLogin(nick, pass) {
-    const response = await fetch(configData.SERVER_URL + "/?request=login&nick=" + nick + "&pass=" + pass);
-    const readyAnswer = await response.text();
-    alert(readyAnswer);
-    return readyAnswer;
-}
+import { fetchSpecial } from '../serverComunication.js';
 
 
 
@@ -63,7 +58,7 @@ export default function SingInWindow() {
         setUpdatednicknameInput(nicknameInput);
         setUpdatedPasswordInput(passwordInput);
 
-        console.log(await fetchLogin(nicknameInput, passwordInput));
+        console.log(await fetchSpecial("login", passwordInput));
 
     };
 

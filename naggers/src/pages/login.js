@@ -3,14 +3,13 @@ import { useEffect, useState } from "react";
 
 import configData from "../config.json";
 
-
 const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
         callback();
         setTimeout(() => {
-            window.location.href="/";
+            window.location.href = "/";
         }, 1000);
 
     });
@@ -58,6 +57,9 @@ async function callback() {
     let jtoken = JSON.parse(localStorage.getItem("JWT"));
     console.log("from   storage jwt:");
     console.log(jtoken);
+
+
+
 
 
 }

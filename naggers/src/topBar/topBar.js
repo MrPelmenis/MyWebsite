@@ -17,6 +17,8 @@ import configData from "../config.json";
 
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 
+import { fetchSpecial } from "../serverComunication.js";
+
 
 export default function TopBar() {
     return (
@@ -27,6 +29,8 @@ export default function TopBar() {
     )
 
 }
+
+
 
 
 
@@ -43,7 +47,7 @@ function googleLogin() {
 
 
 
-function ProfilePicOnTop(){
+function ProfilePicOnTop() {
     const navigate = useNavigate();
 
     const openProfile = () => {
@@ -52,7 +56,7 @@ function ProfilePicOnTop(){
 
     return (
         <>
-            <img  onClick={openProfile} src={require('../img/DefaultProfilePic.png')} className='profilePicOnTop'></img>
+            <img onClick={openProfile} src={require('../img/DefaultProfilePic.png')} className='profilePicOnTop'></img>
         </>
     )
 }
@@ -64,7 +68,7 @@ function SingInButton({ value }) {
 
     document.addEventListener(
         "localDataStorage"
-      , ()=>{console.log("local storage change")}
+        , () => { console.log("local storage change") }
         , false
     );
 
@@ -73,22 +77,32 @@ function SingInButton({ value }) {
         googleLogin();
     }
 
-    if(JSON.parse(localStorage.getItem("JWT"))){
+    async function getData() {
+        const data = await fetchSpecial("myName", {});
+        console.log(data);
+    }
+    if (JSON.parse(localStorage.getItem("JWT"))) {
+        getData();
+    }
+
+
+
+    if (JSON.parse(localStorage.getItem("JWT"))) {
         return (
             <ProfilePicOnTop> </ProfilePicOnTop>
         )
-    }else{
+    } else {
         return (
             <>
-    
+
                 <button className="SingInButton" onClick={() => dispatch(showScreen())}>
                     sign in smukais
                 </button>
-    
+
                 <button className="SingInButton" onClick={() => googleAuth()}>
                     sign in google
                 </button>
-    
+
             </>
         )
     }

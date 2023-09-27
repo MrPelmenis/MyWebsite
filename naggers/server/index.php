@@ -1,4 +1,54 @@
 <?php
+
+
+include 'config.php';
+include 'sql.php';
+
+/////////////////
+/*
+$servername;
+$username;
+$password;
+*/
+////////////////
+
+cors();
+
+
+echo sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . "normundsmalnacs@gmail.com" . "'");
+
+
+/*$header = $_SERVER['HTTP_X_TOKEN'];
+if (!$header) {
+    return null;
+}
+return $header;
+*/
+
+
+if (isset($_GET["myName"])) {
+    //$arr = array('vards' => "nomrduns");
+    $headers = getallheaders();
+    $jwt = parseJwt($_SERVER["HTTP_JWT"]);
+    $email = ($jwt->email);;
+
+    //echo json_encode($jwt);
+
+    echo json_encode(array("nickname" => sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'")));
+}
+
+
+
+if (isset($_GET["request"])) {
+    switch ($_GET["request"]) {
+        case 'login': {
+                echo ("Login recieved, nick: " . htmlspecialchars($_GET["nick"])  . " pass: " . htmlspecialchars($_GET["pass"]));
+                break;
+            }
+    }
+}
+
+
 function cors()
 {
 
@@ -26,32 +76,12 @@ function cors()
 }
 
 
-include 'config.php';
-/////////////////
-/*
-$servername;
-$username;
-$password;
-*/
-////////////////
 
-cors();
+function parseJwt($token)
+{
+    $base64Url = explode('.', $token)[1];
+    $base64 = str_replace('-', '+', str_replace('_', '/', $base64Url));
+    $jsonPayload = json_decode(base64_decode($base64));
 
-// Create connection
-$conn = new mysqli($servername, $username, $password);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-
-
-if (isset($_GET["request"])) {
-    switch ($_GET["request"]) {
-        case 'login': {
-                echo ("Login recieved, nick: " . htmlspecialchars($_GET["nick"])  . " pass: " . htmlspecialchars($_GET["pass"]));
-                break;
-            }
-    }
+    return $jsonPayload;
 }

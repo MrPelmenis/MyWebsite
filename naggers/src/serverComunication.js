@@ -13,15 +13,8 @@ export async function fetchSpecial(request, variables) {
         body: JSON.stringify(variables),
     };
 
-    let res;
-
-    fetch(configData.SERVER_URL + "/index.php?" + request, options)
-        .then(response => response.json())
-        .then(response => {
-            console.log(response);
-            res = response;
-        });
-
-    return res;
+    let res = await fetch(configData.SERVER_URL + "/index.php?" + request, options);
+    let finalResult = await res.json();
+    return finalResult;
 }
 

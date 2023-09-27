@@ -66,6 +66,9 @@ function ProfilePicOnTop() {
 function SingInButton({ value }) {
     const dispatch = useDispatch();
 
+    const [myName, changeName] = useState("");
+
+
     document.addEventListener(
         "localDataStorage"
         , () => { console.log("local storage change") }
@@ -77,19 +80,25 @@ function SingInButton({ value }) {
         googleLogin();
     }
 
-    async function getData() {
-        const data = await fetchSpecial("myName", {});
-        console.log(data);
-    }
-    if (JSON.parse(localStorage.getItem("JWT"))) {
-        getData();
-    }
+    (async () => {
+        if (JSON.parse(localStorage.getItem("JWT"))) {
+            const data = await fetchSpecial("myName", {});
+            console.log("data:");
+            console.log(data);
+            changeName(data.nickname);
+        }
+    })();
+
+
 
 
 
     if (JSON.parse(localStorage.getItem("JWT"))) {
         return (
-            <ProfilePicOnTop> </ProfilePicOnTop>
+            <>
+                <ProfilePicOnTop> </ProfilePicOnTop>
+                <div>{myName}</div>
+            </>
         )
     } else {
         return (

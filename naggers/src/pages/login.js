@@ -50,15 +50,24 @@ async function callback() {
 
 
     console.log("Token:");
-
+    // alert(JSON.stringify(result.id_token));
     localStorage.setItem("JWT", JSON.stringify(result.id_token));
-    let jtoken = JSON.parse(localStorage.getItem("JWT"));
+    localStorage.setItem("datums", String(new Date()));
+    let jtoken = (localStorage.getItem("JWT"));
     console.log("from   storage jwt:");
     console.log(jtoken);
 
-
-
-
-
 }
+
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
+
 export default Login;

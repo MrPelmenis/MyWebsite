@@ -10,9 +10,9 @@ const Profile = () => {
     useEffect(() => {
     });
 
-    const logOut =()=>{
-        localStorage.setItem("JWT", null);
-        window.location.href ="/";
+    const logOut = () => {
+        localStorage.setItem("JWT", "");
+        window.location.href = "/";
     }
 
     return (

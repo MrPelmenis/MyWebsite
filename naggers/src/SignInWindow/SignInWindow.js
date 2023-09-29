@@ -58,8 +58,6 @@ export default function SingInWindow() {
         setUpdatednicknameInput(nicknameInput);
         setUpdatedPasswordInput(passwordInput);
 
-        console.log(await fetchSpecial("login", passwordInput));
-
     };
 
 

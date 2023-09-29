@@ -81,11 +81,16 @@ function SingInButton({ value }) {
     }
 
     (async () => {
-        if (JSON.parse(localStorage.getItem("JWT"))) {
+        if (localStorage.getItem("JWT" != "")) {
             const data = await fetchSpecial("myName", {});
             console.log("data:");
-            console.log(data);
-            changeName(data.nickname);
+
+            if (data.accountExists) {
+                console.log(data);
+                changeName(data.nickname);
+            } else {
+
+            }
         }
     })();
 
@@ -93,7 +98,7 @@ function SingInButton({ value }) {
 
 
 
-    if (JSON.parse(localStorage.getItem("JWT"))) {
+    if ((localStorage.getItem("JWT"))) {
         return (
             <>
                 <ProfilePicOnTop> </ProfilePicOnTop>
@@ -103,15 +108,9 @@ function SingInButton({ value }) {
     } else {
         return (
             <>
-
-                <button className="SingInButton" onClick={() => dispatch(showScreen())}>
-                    sign in smukais
-                </button>
-
                 <button className="SingInButton" onClick={() => googleAuth()}>
-                    sign in google
+                    Sign In
                 </button>
-
             </>
         )
     }

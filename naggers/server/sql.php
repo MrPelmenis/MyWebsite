@@ -23,6 +23,11 @@ function sql_StringExecute($myQuery)
     }
 }
 
+function sql_Execute($myQuery)
+{
+    global $conn;
+    $result = $conn->query($myQuery);
+}
 
 function TDB($a)
 {

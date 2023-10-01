@@ -1,6 +1,6 @@
 import './App.css';
 import MainPart from './MainPart/mainPart';
-import SingInWindow from './SignInWindow/SignInWindow';
+import SingUpWindow from './SignUpWindow/SignUpWindow';
 
 import { Provider } from 'react-redux'
 import store from './store'
@@ -10,7 +10,7 @@ function App() {
   return (
     <div >
       <Provider store={store}>
-        <SingInWindow></SingInWindow>
+        <SingUpWindow></SingUpWindow>
       </Provider>
       <MainPart></MainPart>
     </div>

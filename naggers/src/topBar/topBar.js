@@ -81,15 +81,15 @@ function SingInButton({ value }) {
     }
 
     (async () => {
-        if (localStorage.getItem("JWT" != "")) {
-            const data = await fetchSpecial("myName", {});
+        if (localStorage.getItem("JWT") != "") {
+            const data = await fetchSpecial("getUsersNickname", {});
             console.log("data:");
 
             if (data.accountExists) {
                 console.log(data);
                 changeName(data.nickname);
             } else {
-
+                dispatch(showScreen());
             }
         }
     })();

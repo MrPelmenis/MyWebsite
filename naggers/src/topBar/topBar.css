@@ -7,7 +7,6 @@
     z-index: 1;
     top: 0;
     position: fixed;
-
 }
 
 .TopBarLSide {
@@ -29,6 +28,7 @@
     width: 80px;
     margin-left: 10px;
     color: aqua;
+
     transition: background-color 0.3s ease;
     font-weight: 900;
     border-radius: 5px;
@@ -57,6 +57,7 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     text-align: center;
     background-color: transparent;
+    font-family: cursive;
 }
 
 .TopBarItem:hover {
@@ -70,7 +71,7 @@
     margin: auto;
 }
 
-.profilePicOnTop{
+.profilePicOnTop {
     width: 50px;
     height: 50px;
     margin: auto;

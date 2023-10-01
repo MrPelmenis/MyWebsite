@@ -26,29 +26,46 @@ return $header;
 */
 
 
-if (isset($_GET["myName"])) {
-    //$arr = array('vards' => "nomrduns");
-    $headers = getallheaders();
-    $jwt = parseJwt($_SERVER["HTTP_JWT"]);
-    if ($jwt) {
-        $email = ($jwt->email);
-
-        //echo json_encode($jwt);
-
-        $gottenNickname = sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'");
-        $accountExists = ($gottenNickname != "" ? true : false);
-        echo (json_encode(array("nickname" => $gottenNickname, "accountExists" => $accountExists)));
+if (isset($_GET["requestAnonymus"])) {
+    switch ($_GET["requestAnonymus"]) {
     }
 }
 
-
-
 if (isset($_GET["request"])) {
-    switch ($_GET["request"]) {
-        case 'login': {
-                echo ("Login recieved, nick: " . htmlspecialchars($_GET["nick"])  . " pass: " . htmlspecialchars($_GET["pass"]));
-                break;
-            }
+    $jwt = parseJwt($_SERVER["HTTP_JWT"]);
+    if ($jwt) {
+        switch ($_GET["request"]) {
+            case "getUsersNickname": {
+                    //$arr = array('vards' => "nomrduns");
+                    $headers = getallheaders();
+                    $email = ($jwt->email);
+                    //echo json_encode($jwt);
+                    $gottenNickname = sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'");
+                    $accountExists = ($gottenNickname != "" ? true : false);
+                    echo (json_encode(array("nickname" => $gottenNickname, "accountExists" => $accountExists)));
+                    break;
+                }
+
+            case 'nickNameUpdate': {
+                    $nickname = htmlspecialchars($_POST["nickname"]);
+                    $email = ($jwt->email);
+                    $checkName = sql_StringExecute("SELECT 1 FROM Users WHERE Nickname='" . TDB($nickname) . "' AND Email <> '" . TDB($email) . "'");
+
+                    $accountExistsCheck = sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'");
+                    if ($checkName == "") {
+                        if ($accountExistsCheck == "") {
+                            sql_Execute("INSERT INTO Users (Email, Nickname) VALUES ('" . TDB($email) . "', '" . TDB($nickname) . "')");
+                            echo (json_encode(array("success" => true)));
+                        } else {
+                            sql_Execute("UPDATE Users SET Nickname = '" . TDB($nickname) . "' WHERE Email = '" . TDB($email) . "'");
+                            echo (json_encode(array("success" => false)));
+                        }
+                    } else {
+                        echo (json_encode(array("success" => false)));
+                    }
+                    break;
+                }
+        }
     }
 }
 

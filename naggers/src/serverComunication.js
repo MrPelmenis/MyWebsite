@@ -16,7 +16,7 @@ export async function fetchSpecial(request, variables, isUserAnonymus = false) {
 
     Object.entries(variables).forEach(entry => {
         const [key, value] = entry;
-        console.log(key, value);
+        //console.log(key, value);
         formData.append(key, value);
     });
 

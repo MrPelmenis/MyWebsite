@@ -5,6 +5,7 @@ import React from 'react';
 
 
 import { useDispatch, useSelector } from 'react-redux';
+import { changeUser } from '../store/currentUser';
 
 import { hideScreen } from '../store/signInWindow';
 
@@ -25,8 +26,6 @@ export default function SingUpWindow() {
 
     const dispatch = useDispatch();
     const signInWindow = useSelector(state => state.signInWindow);
-
-    const [isVisible, setIsVisible] = useState(true);
 
     const handleClose = () => {
         dispatch(hideScreen());
@@ -51,7 +50,7 @@ export default function SingUpWindow() {
             const data = await fetchSpecial("nickNameUpdate", { nickname: nicknameInput });
             if (data.success) {
                 dispatch(hideScreen());
-                alert("uztaisit ka raadaaas jaunais nickname");
+                dispatch(changeUser({ name: nicknameInput, accountExists: true }));
             } else {
                 setHelperText('userName allready in use');
             }

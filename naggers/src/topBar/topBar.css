@@ -21,7 +21,7 @@
     justify-content: left;
 }
 
-.SingInButton {
+.SignInButton {
     border: 0px;
     height: 25px;
     margin-top: 40px;
@@ -39,7 +39,7 @@
     transition: border-bottom 0s ease-in-out;
 }
 
-.SingInButton:hover {
+.SignInButton:hover {
     border-bottom: 2px solid aqua;
     border-radius: 0px;
 }
@@ -75,5 +75,14 @@
     width: 50px;
     height: 50px;
     margin: auto;
-    margin-right: 10px;
+}
+
+.profileDisplayOnTop {
+    display: flex;
+    margin: auto;
+    flex-wrap: wrap;
+    height: 75px;
+
+    flex-direction: column;
+    align-items: flex-start;
 }

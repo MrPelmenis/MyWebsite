@@ -12,6 +12,8 @@ import logo from "../img/logotranp.png";
 import { Provider, useDispatch } from 'react-redux';
 import store from '../store';
 import { showScreen } from '../store/signInWindow';
+import { useSelector } from 'react-redux';
+import { changeUser } from '../store/currentUser';
 
 import configData from "../config.json";
 
@@ -63,10 +65,16 @@ function ProfilePicOnTop() {
 
 
 
-function SingInButton({ value }) {
+function SignInButton({ value }) {
+    const currentUserState = useSelector(state => state.currentUser);
     const dispatch = useDispatch();
 
-    const [myName, changeName] = useState("");
+    let currentUserName = currentUserState.name;
+    console.log(currentUserState.name);
+    if (!currentUserState.accountExists) {
+        dispatch(showScreen());
+    }
+
 
 
     document.addEventListener(
@@ -80,35 +88,21 @@ function SingInButton({ value }) {
         googleLogin();
     }
 
-    (async () => {
-        if (localStorage.getItem("JWT") != "") {
-            const data = await fetchSpecial("getUsersNickname", {});
-            console.log("data:");
-
-            if (data.accountExists) {
-                console.log(data);
-                changeName(data.nickname);
-            } else {
-                dispatch(showScreen());
-            }
-        }
-    })();
-
-
-
-
 
     if ((localStorage.getItem("JWT"))) {
         return (
             <>
-                <ProfilePicOnTop> </ProfilePicOnTop>
-                <div>{myName}</div>
+                <div className='profileDisplayOnTop'>
+                    <ProfilePicOnTop> </ProfilePicOnTop>
+                    <div style={{ color: "white" }}>{currentUserState.name}</div>
+                </div>
+
             </>
         )
     } else {
         return (
             <>
-                <button className="SingInButton" onClick={() => googleAuth()}>
+                <button className="SignInButton" onClick={() => googleAuth()}>
                     Sign In
                 </button>
             </>
@@ -139,7 +133,7 @@ function TopBarRightSide() {
     return (
         <div className="TopBarRSide">
             <Provider store={store}>
-                <SingInButton value={"Sign In"}></SingInButton>
+                <SignInButton value={"Sign In"}></SignInButton>
             </Provider>
         </div>
     )

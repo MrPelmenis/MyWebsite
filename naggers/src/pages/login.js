@@ -52,7 +52,6 @@ async function callback() {
     console.log("Token:");
     // alert(JSON.stringify(result.id_token));
     localStorage.setItem("JWT", JSON.stringify(result.id_token));
-    localStorage.setItem("datums", String(new Date()));
     let jtoken = (localStorage.getItem("JWT"));
     console.log("from   storage jwt:");
     console.log(jtoken);

@@ -3,6 +3,7 @@ import { fetchSpecial } from "../serverComunication.js";
 import { useDispatch } from 'react-redux';
 import { showScreen } from '../store/signInWindow';
 
+import { ExtraFunctions } from '../extraFunctions.js';
 // Slice
 const slice = createSlice({
     name: 'currentUser',
@@ -30,7 +31,7 @@ export const changeUser = ({ name, accountExists }) => async dispatch => {
 
 async function getUserDataFromServer() {
 
-    if (localStorage.getItem("JWT") != "") {
+    if (ExtraFunctions.isUserLoggedIn()) {
         const data = await fetchSpecial("getUsersNickname", {});
         // console.log("data:");
 
@@ -41,6 +42,8 @@ async function getUserDataFromServer() {
         } else {
             return ({ name: "", accountExists: false });
         }
+    } else {
+        return { name: "", accountExists: false };
     }
 }
 

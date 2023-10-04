@@ -13,13 +13,17 @@ import { Provider, useDispatch } from 'react-redux';
 import store from '../store';
 import { showScreen } from '../store/signInWindow';
 import { useSelector } from 'react-redux';
-import { changeUser } from '../store/currentUser';
+
 
 import configData from "../config.json";
 
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 
 import { fetchSpecial } from "../serverComunication.js";
+
+import { changeUser } from '../store/currentUser';
+
+import { ExtraFunctions } from '../extraFunctions';
 
 
 export default function TopBar() {
@@ -71,7 +75,7 @@ function SignInButton({ value }) {
 
     let currentUserName = currentUserState.name;
     console.log(currentUserState.name);
-    if (!currentUserState.accountExists) {
+    if (ExtraFunctions.isUserLoggedIn() && !currentUserState.accountExists) {
         dispatch(showScreen());
     }
 
@@ -89,7 +93,7 @@ function SignInButton({ value }) {
     }
 
 
-    if ((localStorage.getItem("JWT"))) {
+    if (ExtraFunctions.isUserLoggedIn()) {
         return (
             <>
                 <div className='profileDisplayOnTop'>

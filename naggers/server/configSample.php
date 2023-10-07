@@ -4,4 +4,4 @@ $username = "";
 $password = "";
 $dbname = "";
 
-insert values and rename to "config.php"
+//insert values and rename to "config.php"

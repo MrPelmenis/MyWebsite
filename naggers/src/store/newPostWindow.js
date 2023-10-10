@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const slice = createSlice({
     name: 'newPostWindow',
     initialState: {
-        visible: false,
+        visible: true,
     },
     reducers: {
         showNewPostScreen: (state, action) => {

@@ -24,10 +24,45 @@
 
 
 
-.signUpPart {
+.newPostPart {
     width: 100%;
     height: 40px;
     border-radius: 5px;
+    border: 1px solid black;
+}
+
+.newPostText{
+    margin: auto;
+}
+
+
+.postInputHolder{
+    background-color: red;
+}
+
+.TitleInput{
+    font-weight: 200;
+    height: 30px;
+    font-size: 20px;
+    width: 90%;
+    margin-left: 5px;
+    margin-bottom: 3px;
+    outline: none;
+    word-wrap: break-word;
+    border: none;
+    border-bottom: 1px solid gray;
+}
+
+.PostTextInput{
+    font-weight: 50;
+    width: 90%;
+    margin-left: 5px;
+    outline: none;
+    border: none;
+    word-wrap: break-word;
+    resize: none;
+    padding-left:0;
+    padding-top:0;
 }
 
 
@@ -41,30 +76,9 @@
     outline: none;
 }
 
-.signUpInput {
-    width: 50%;
-    height: 40px;
-    outline: none;
-    border: none;
-    border-bottom: 1px solid black;
-    font-size: 30px;
-}
 
-.signUpText {
-    font-size: 30px;
-    font-weight: bold;
-}
 
-.signUpPic {
-    width: 80px;
-    height: 80px;
-}
-
-.signUpButtonHolder {
-    width: 100%;
-}
-
-.signUpButton {
+.postButton {
     background-color: blue;
     color: white;
     border: none;
@@ -74,20 +88,15 @@
     font-size: 14px;
     cursor: pointer;
     position: relative;
-    left: calc((75% - 60px));
+    left: calc((90% - 70px));
     top: 5px;
     transition: 0;
 }
 
-.signUpButton:hover {
+.postButton:hover {
     border: 1px solid white;
 }
 
-.helperText {
-    width: 100%;
-    padding-left: 25%;
-    padding-bottom: 5px;
-}
 
 
 

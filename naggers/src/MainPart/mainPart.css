@@ -1,5 +1,7 @@
 .MainPart {
     width: 60%;
+    padding-left: 5px;
+    padding-right: 5px;
     background-color: #e1dddb;
     height: 2000px;
     margin: auto;

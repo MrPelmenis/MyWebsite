@@ -1,9 +1,10 @@
 .SinglePost {
     width: 100%;
-    border-bottom:  3px solid rgb(199, 197, 197);
+    border-bottom: 3px solid rgb(199, 197, 197);
+    padding-bottom: 5px;
 }
 
-.authorDateInfo{
+.authorDateInfo {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -12,11 +13,28 @@
     line-height: 40px;
 }
 
-.authorName{
+.authorName {
     margin-left: 5px;
 }
 
-.readMoreOrLess{
+.comment {
+    line-height: 25px;
+    border-radius: 10px;
+}
+
+.comment:hover {
+    background-color: rgb(165, 165, 165);
+}
+
+.ThreeDotIcon {
+    border-radius: 40px;
+}
+
+.ThreeDotIcon:hover {
+    background-color: rgb(165, 165, 165);
+}
+
+.readMoreOrLess {
     border: none;
     outline: none;
     color: #0C4A60;
@@ -24,38 +42,33 @@
     border-bottom: 1px solid #0C4A60;
 }
 
-.postText{
+.postText {
     white-space: pre-wrap;
     word-wrap: break-word;
-    margin-left:5px;
+    margin-left: 5px;
     width: 100%;
     margin-right: 5px;
 }
 
-.dateInfoAboutPost{
+.dateInfoAboutPost {
     color: gray;
     font-size: small;
     justify-content: center;
     display: flex;
 }
 
-.likesAndComments{
+.likesAndComments {
     width: 100%;
     height: 25px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }
 
-.likeComment{
-    width: 25px;
-    height:25px;
-    border-radius: 4px;
+.likeIconAndCount:hover {
+    background-color: rgb(165, 165, 165);
 }
 
-.likeComment:hover{
-    background-color: gray;
-}
-.authorPic{
+.authorPic {
     width: 30px;
     height: 30px;
     margin-top: 5px;
@@ -64,8 +77,19 @@
     border-Radius: 700px;
 }
 
-.likesAndComments{
+.likeIconAndCount {
+    width: 50px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    line-height: 30px;
+    padding-right: 20px;
+
+    border-radius: 10px;
+}
+
+.likesAndComments {
     width: 100%;
-    border: 1px solid black;
-    height: 25px;
+    margin-top: 5px;
+    height: 30px;
 }

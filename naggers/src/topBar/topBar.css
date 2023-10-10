@@ -64,6 +64,24 @@
     background-color: darkgray;
 }
 
+
+.NewPostButton {
+    width: 70px;
+    height: 50px;
+    font-size: 20px;
+    background-color: #1ba1d2;
+    border-radius: 10px;
+    color: #0C4A60;
+    outline: none;
+    border: none;
+    margin: auto;
+    margin-right: 10px;
+}
+
+.NewPostButton:hover {
+    background-color: #20baf2;
+}
+
 .TopBarImg {
     color: aqua;
     text-align: center;

@@ -9,9 +9,9 @@ export default function SinglePost({ value }) {
     return (
         <div className='SinglePost'>
             <div className='authorDateInfo'>
-                <div style={{display:"flex", justifyContent: "left"}}>
-                    <img className="authorPic"  src={require('../img/DefaultProfilePic.png')} ></img>
-                    <div className="authorName">Autors</div>  
+                <div style={{ display: "flex", justifyContent: "left" }}>
+                    <img className="authorPic" src={require('../img/DefaultProfilePic.png')} ></img>
+                    <div className="authorName">Autors</div>
                 </div>
                 <div className='dateInfoAboutPost'>17th March</div>
             </div>
@@ -19,9 +19,9 @@ export default function SinglePost({ value }) {
             <div className='postText'><TextWithReadMoreButton text={value}></TextWithReadMoreButton></div>
 
             <div className='likesAndComments'>
-                <img src={require('../img/likeIcon.png')} className='likeComment'></img>
-                <img src={require('../img/comment.png')} className='likeComment'></img>
-                <img src='likeIcon.png' className='likeComment'></img>
+                <div className='likeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>1122</div>
+                <div className='comment'>Comment ...</div>
+                <div className='ThreeDotIcon'><img src={require('../img/3Dots.png')} ></img></div>
             </div>
         </div>
     )
@@ -29,7 +29,7 @@ export default function SinglePost({ value }) {
 
 
 
-function TextWithReadMoreButton(props){
+function TextWithReadMoreButton(props) {
 
     const maxTextLength = 200;
 
@@ -37,30 +37,30 @@ function TextWithReadMoreButton(props){
     const [maxLength, setLength] = useState(maxTextLength);
 
 
-    const textShortener = (inputText, maxLength)=>{
-        if(maxLength == -1){
+    const textShortener = (inputText, maxLength) => {
+        if (maxLength == -1) {
             return inputText;
-        }else{
+        } else {
             return inputText.substring(0, maxLength) + "...";
         }
     }
 
-    const changeLength = ()=>{
-        if(maxLength == -1){
+    const changeLength = () => {
+        if (maxLength == -1) {
             setLength(maxTextLength);
-        }else{
+        } else {
             setLength(-1);
         }
-        
-    }   
 
-    const buttonChecker = () =>{
-        if(props.text.length > maxTextLength){
+    }
+
+    const buttonChecker = () => {
+        if (props.text.length > maxTextLength) {
             return (<button className='readMoreOrLess' onClick={() => changeLength()}>{maxLength == -1 ? "Read Less" : "Read More"}</button>)
         }
     }
 
-        return (
+    return (
         <div>{textShortener(props.text, maxLength)}  {buttonChecker()}</div>
-        );
+    );
 }

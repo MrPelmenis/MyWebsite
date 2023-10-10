@@ -1,0 +1,110 @@
+.Container {
+    background-color: rgba(200, 200, 200S, 0.5);
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    display: flex;
+}
+
+
+
+.white-box {
+    background-color: white;
+    width: 30%;
+    height: 35%;
+    margin: auto;
+    border-radius: 5px;
+
+}
+
+
+
+.signUpPart {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+}
+
+
+.inputDiv {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.signUpInput:focus {
+    outline: none;
+}
+
+.signUpInput {
+    width: 50%;
+    height: 40px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid black;
+    font-size: 30px;
+}
+
+.signUpText {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.signUpPic {
+    width: 80px;
+    height: 80px;
+}
+
+.signUpButtonHolder {
+    width: 100%;
+}
+
+.signUpButton {
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 70px;
+    height: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    position: relative;
+    left: calc((75% - 60px));
+    top: 5px;
+    transition: 0;
+}
+
+.signUpButton:hover {
+    border: 1px solid white;
+}
+
+.helperText {
+    width: 100%;
+    padding-left: 25%;
+    padding-bottom: 5px;
+}
+
+
+
+.close-button {
+    background-color: darkgrey;
+    transition: background-color 0s ease-in-out;
+    position: relative;
+    left: calc((100% - 30px));
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    background-color: red;
+}

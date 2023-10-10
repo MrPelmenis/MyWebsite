@@ -11,7 +11,12 @@ import logo from "../img/logotranp.png";
 
 import { Provider, useDispatch } from 'react-redux';
 import store from '../store';
+
+
 import { showScreen } from '../store/signInWindow';
+import { showPostScreen } from '../store/newPostWindow';
+
+
 import { useSelector } from 'react-redux';
 
 
@@ -73,6 +78,7 @@ function SignInButton({ value }) {
     const currentUserState = useSelector(state => state.currentUser);
     const dispatch = useDispatch();
 
+
     let currentUserName = currentUserState.name;
     console.log(currentUserState.name);
     if (ExtraFunctions.isUserLoggedIn() && !currentUserState.accountExists) {
@@ -133,10 +139,35 @@ function TopBarLeftSide() {
 
 
 
+
+
+function NewPostButton() {
+    let dispatch = useDispatch();
+    const newPostWindow = useSelector(state => state.newPostWindow);
+    //dispatch(showPostScreen());
+
+    const openNewPostWindow = () => {
+        dispatch(showPostScreen());
+    }
+
+    if (ExtraFunctions.isUserLoggedIn()) {
+        return (
+            <>
+                <button className="NewPostButton" onClick={openNewPostWindow}>New Post</button>
+            </>
+        )
+    } else {
+
+    }
+}
+
+
+
 function TopBarRightSide() {
     return (
         <div className="TopBarRSide">
             <Provider store={store}>
+                <NewPostButton></NewPostButton>
                 <SignInButton value={"Sign In"}></SignInButton>
             </Provider>
         </div>

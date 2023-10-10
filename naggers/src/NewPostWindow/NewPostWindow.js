@@ -26,43 +26,27 @@ export default function NewPostWindow() {
         dispatch(hidePostScreen());
     };
 
-    const [whiteWidth, setWhiteWidth] = useState("35%");
-    const [whiteHeight, setWhiteHeight] = useState("35%");
 
-    const[inputHeight, setInputHeight] = useState("100px");
-    
-    const handleResize = () => {
-        console.log("resize");
-        if (window.innerWidth < 900 || window.innerHeight < 900) {
-            setWhiteWidth("75%");
-            setWhiteHeight("75%");
-        } else {
-            setWhiteWidth("80%");
-            setWhiteHeight("80%");
-        }
-    };
+    //WYSIWYG editors tas ir eee takaa eeee fancy textbox
 
-    useEffect(() => {
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+
 
     if (newPostWindow.visible) {
         return (
             <div className="Container">
-                <div className="white-box" style={{width:whiteWidth, height:whiteHeight}}>
+                <div className="white-box" style={{}}>
                     <div className="signUpPart" ><div className="close-button" onClick={() => { handleClose() }}>
                         X
                     </div>
-                        <div className='newPostPart' style={{textAlign:"center", height:40, fontSize:30,marginTop:-20}}>New Post</div>
-                        <div className="postInputHolder" style={{height: inputHeight,width:"80%", margin:"auto"}}>
-                            <input type='text' placeholder='Title' className='TitleInput'></input>
-                            <textarea type='text' placeholder='Your Thoughts...' className='PostTextInput'></textarea>
-                        </div>
+                    </div>
+                    <div className='newPostPart' style={{ textAlign: "center", height: 40, fontSize: 30, marginTop: -20 }}>New Post</div>
+                    <div className="postInputHolder" style={{ height: "100%", width: "80%", margin: "auto" }}>
+                        <input type='text' placeholder='Title' className='TitleInput'></input>
+                        <textarea type='text' placeholder='Your Thoughts...' className='PostTextInput'></textarea>
                         <button className='postButton'>Post</button>
                     </div>
+
+
                 </div>
             </div>
         );

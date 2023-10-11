@@ -26,6 +26,12 @@
     }
 }
 
+@media only screen and (max-height: 700px) {
+    .white-box {
+        height: 50%;
+    }
+}
+
 
 @media only screen and (min-width: 800px) {
     .white-box {
@@ -45,7 +51,9 @@
 }
 
 
-.postInputHolder {}
+.postInputHolder {
+   top: 0;
+}
 
 .TitleInput {
     font-weight: 200;

@@ -26,9 +26,25 @@ export default function NewPostWindow() {
         dispatch(hidePostScreen());
     };
 
+    const [textInput, setTextInput] = useState('');
+    const handleTextInputChange = event => {
+        setTextInput (event.target.value);
+    };
 
-    //WYSIWYG editors tas ir eee takaa eeee fancy textbox
 
+    const [titleInput, setTitleInput] = useState('');
+    const handleTitleInputChange = event => {
+        setTitleInput (event.target.value);
+        alert(titleInput);
+    };
+
+    function uploadPost (){
+        fetchSpecial("uploadPost", { title: titleInput, body: textInput }, false);
+    }
+
+    ///////////////////////////////////////////////////////
+    //WYSIWYG editors tas ir eee takaa eeee fancy textbox//
+    ///////////////////////////////////////////////////////
 
 
     if (newPostWindow.visible) {
@@ -40,10 +56,15 @@ export default function NewPostWindow() {
                     </div>
                     </div>
                     <div className='newPostPart' style={{ textAlign: "center", height: 40, fontSize: 30, marginTop: -20 }}>New Post</div>
-                    <div className="postInputHolder" style={{ height: "100%", width: "80%", margin: "auto" }}>
-                        <input type='text' placeholder='Title' className='TitleInput'></input>
-                        <textarea type='text' placeholder='Your Thoughts...' className='PostTextInput'></textarea>
-                        <button className='postButton'>Post</button>
+                    <div className="postInputHolder" style={{width: "80%", margin: "auto" }}>
+                        <input type='text' placeholder='Title' className='TitleInput'
+                        onChange={handleTitleInputChange} value={titleInput}></input>
+
+                        <textarea type='text' placeholder='Your Thoughts...' className='PostTextInput'
+                        onChange={handleTextInputChange} value={textInput}></textarea>
+                        
+                        <button className='postButton' onClick={()=>{uploadPost()}}>Post</button>
+
                     </div>
 
 

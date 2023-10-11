@@ -34,12 +34,24 @@ if (isset($_GET["requestAnonymus"])) {
 if (isset($_GET["request"])) {
     $jwt = parseJwt($_SERVER["HTTP_JWT"]);
     if ($jwt) {
+        //user ir logged in  
         switch ($_GET["request"]) {
+            case "uploadPost": {
+                $headers = getallheaders();
+                $email = ($jwt->email);
+                $gottenNickname = sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'");
+
+                $title = htmlspecialchars($_POST["title"]);
+                $body = htmlspecialchars($_POST["body"]);
+
+                $accountExists = ($gottenNickname != "" ? true : false);
+                echo (json_encode(array("nickname" => $gottenNickname, "accountExists" => $accountExists)));
+                break;
+            }
+
             case "getUsersNickname": {
-                    //$arr = array('vards' => "nomrduns");
                     $headers = getallheaders();
                     $email = ($jwt->email);
-                    //echo json_encode($jwt);
                     $gottenNickname = sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'");
                     $accountExists = ($gottenNickname != "" ? true : false);
                     echo (json_encode(array("nickname" => $gottenNickname, "accountExists" => $accountExists)));
@@ -66,6 +78,8 @@ if (isset($_GET["request"])) {
                     break;
                 }
         }
+    }else{
+        //userIsnt logged in
     }
 }
 

@@ -20,7 +20,7 @@ export default function MainPart() {
     let [postsAllreadyLoaded, setPostsAllreadyLoaded] = useState(false);
     const [postArray, setPostArray] = useState([]);
     const makeInsides = async () =>{
-        let recentPosts = ((await fetchSpecial("getRecentPosts", { }, false)));
+        let recentPosts = ((await fetchSpecial("getRecentPosts", { }, true)));
         console.log(recentPosts);
         let postArrayTemp = [];
         recentPosts.forEach(post => {

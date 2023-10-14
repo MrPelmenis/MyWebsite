@@ -28,18 +28,28 @@ return $header;
 
 if (isset($_GET["requestAnonymus"])) {
     switch ($_GET["requestAnonymus"]) {
+        case "getRecentPosts": {
+            getRecentPosts();
+        }
+        
     }
 }
+
+function getRecentPosts(){
+    $result = sql_MultipleRow("SELECT * FROM Posts ORDER BY id DESC LIMIT  ". 10 . ";");
+    echo(json_encode($result));
+}
+
 
 if (isset($_GET["request"])) {
     //works if user is or isnt logged
     switch ($_GET["request"]) {
         case "getRecentPosts": {
-            $result = sql_MultipleRow("SELECT * FROM Posts ORDER BY id DESC LIMIT  ". $maxAmountOfPostsToReturn . ";");
-            echo(json_encode($result));
-            break;
+            getRecentPosts();
         }
     }
+
+    
 
     $jwt = parseJwt($_SERVER["HTTP_JWT"]);
     if ($jwt) {

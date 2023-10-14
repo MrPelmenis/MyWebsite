@@ -4,6 +4,11 @@
     padding-bottom: 5px;
 }
 
+.titleText{
+    font-size: 30px;
+    font-weight: 5000;
+}
+
 .authorDateInfo {
     width: 100%;
     display: flex;

@@ -35,11 +35,22 @@ export default function NewPostWindow() {
     const [titleInput, setTitleInput] = useState('');
     const handleTitleInputChange = event => {
         setTitleInput (event.target.value);
-        alert(titleInput);
+       // alert(titleInput);
     };
 
-    function uploadPost (){
-        fetchSpecial("uploadPost", { title: titleInput, body: textInput }, false);
+    async function uploadPost (){
+        if(titleInput != "" && textInput != ""){
+            let res = await fetchSpecial("uploadPost", { title: titleInput, body: textInput }, false);
+            console.log(res);
+            if(res.answer){
+                setTitleInput("");
+                setTextInput("");
+                dispatch(hidePostScreen());
+                window.location.href = "/";
+            }
+        }else{
+            alert("You must enter something");
+        }
     }
 
     ///////////////////////////////////////////////////////

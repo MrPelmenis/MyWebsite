@@ -32,6 +32,15 @@ if (isset($_GET["requestAnonymus"])) {
 }
 
 if (isset($_GET["request"])) {
+    //works if user is or isnt logged
+    switch ($_GET["request"]) {
+        case "getRecentPosts": {
+            $result = sql_MultipleRow("SELECT * FROM Posts ORDER BY id DESC LIMIT  ". $maxAmountOfPostsToReturn . ";");
+            echo(json_encode($result));
+            break;
+        }
+    }
+
     $jwt = parseJwt($_SERVER["HTTP_JWT"]);
     if ($jwt) {
         //user ir logged in  
@@ -41,11 +50,22 @@ if (isset($_GET["request"])) {
                 $email = ($jwt->email);
                 $gottenNickname = sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'");
 
+                $date = date('Y-m-d H:i:s');  
+
                 $title = htmlspecialchars($_POST["title"]);
                 $body = htmlspecialchars($_POST["body"]);
 
                 $accountExists = ($gottenNickname != "" ? true : false);
-                echo (json_encode(array("nickname" => $gottenNickname, "accountExists" => $accountExists)));
+
+                if($accountExists){
+                    sql_Execute("INSERT INTO Posts (TITLE, BODY, AuthorName, AuthorEmail, LikeAmount, DATE_TIME)
+                     VALUES ('" . TDB($title) . "', '" . TDB($body) . "', '" . TDB($gottenNickname) .
+                     "', '" . TDB($email) . "', 0, '" . TDB($date) . "'); ");
+                     echo (json_encode(array("answer" => true)));
+                }
+                
+
+                
                 break;
             }
 

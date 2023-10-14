@@ -5,21 +5,22 @@ import "./singlePost.css";
 
 
 
-export default function SinglePost({ value }) {
+export default function SinglePost({ title, body, authorName, date, likeAmount}) {
     return (
         <div className='SinglePost'>
             <div className='authorDateInfo'>
                 <div style={{ display: "flex", justifyContent: "left" }}>
                     <img className="authorPic" src={require('../img/DefaultProfilePic.png')} ></img>
-                    <div className="authorName">Autors</div>
+                    <div className="authorName">{authorName}</div>
                 </div>
-                <div className='dateInfoAboutPost'>17th March</div>
+                <div className='dateInfoAboutPost'>{getTimeAgo(date)}</div>
             </div>
 
-            <div className='postText'><TextWithReadMoreButton text={value}></TextWithReadMoreButton></div>
+            <div className='titleText'>{title}</div>
+            <div className='postText'><TextWithReadMoreButton text={body}></TextWithReadMoreButton></div>
 
             <div className='likesAndComments'>
-                <div className='likeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>1122</div>
+                <div className='likeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>{likeAmount}</div>
                 <div className='comment'>Comment ...</div>
                 <div className='ThreeDotIcon'><img src={require('../img/3Dots.png')} ></img></div>
             </div>
@@ -27,6 +28,24 @@ export default function SinglePost({ value }) {
     )
 }
 
+
+function getTimeAgo(dateTimeString) {
+    const givenDateTime = new Date(dateTimeString);
+    const currentDateTime = new Date();
+    const timeDifference = Math.floor((currentDateTime - givenDateTime) / 1000); // Convert to seconds
+    if (timeDifference < 60) {
+      return timeDifference + " seconds ago";
+    } else if (timeDifference < 3600) {
+      const minutes = Math.floor(timeDifference / 60);
+      return minutes + " minutes ago";
+    } else if (timeDifference < 86400) {
+      const hours = Math.floor(timeDifference / 3600);
+      return hours + " hours ago";
+    } else {
+      const days = Math.floor(timeDifference / 86400);
+      return days + " days ago";
+    }
+  }
 
 
 function TextWithReadMoreButton(props) {

@@ -13,7 +13,7 @@ function sql_StringExecute($myQuery)
 {
     global $conn;
 
-    $result =  $conn->query($myQuery);
+    $result =  $conn->query(($myQuery));
 
     $row = mysqli_fetch_row($result);
     if (isset($row)) {
@@ -26,7 +26,13 @@ function sql_StringExecute($myQuery)
 function sql_Execute($myQuery)
 {
     global $conn;
-    $result = $conn->query($myQuery);
+    $result = $conn->query(($myQuery));
+}
+
+function sql_MultipleRow($myQuery){
+    global $conn;
+    $result = $conn->query(($myQuery));
+    return $result->fetch_all(MYSQLI_ASSOC);
 }
 
 function TDB($a)

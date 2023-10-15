@@ -8,12 +8,8 @@ import { ExtraFunctions } from "../extraFunctions";
 const Login = () => {
     const navigate = useNavigate();
 
-    useEffect(() => {
+     useEffect(() => {
         callback();
-
-        setTimeout(() => {
-            window.location.href = "/";
-        }, 5000);
 
     });
 
@@ -26,10 +22,7 @@ const Login = () => {
 
 
 async function callback() {
-    let jtoken = (localStorage.getItem("JWT"));
-        console.log("from   storage jwt:");
-        console.log(jtoken);
-    if(!ExtraFunctions.isUserLoggedIn() && jtoken == "undefined"){
+    if(!ExtraFunctions.isUserLoggedIn()){
         const url = new URL(window.location.href);
         let code = url.searchParams.get('code');
         console.log(code);
@@ -56,11 +49,10 @@ async function callback() {
     
     
         console.log("Token:");
-        alert(JSON.stringify(result.id_token));
         localStorage.setItem("JWT", JSON.stringify(result.id_token));
-        jtoken = (localStorage.getItem("JWT"));
-        console.log("from   storage jwt:");
-        console.log(jtoken);
+       // let jtoken = (localStorage.getItem("JWT"));
+
+        window.location.href = "/";
     }
 }
 

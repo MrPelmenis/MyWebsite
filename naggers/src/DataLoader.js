@@ -5,11 +5,7 @@ import React from 'react';
 
 
 export function DataLoader() {
-
-
     return (
         <div></div>
     )
-
-
 }

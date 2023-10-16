@@ -5,6 +5,9 @@ import SinglePost from '../SinglePost/singlePost';
 import React, { useEffect } from "react";
 import { fetchSpecial } from '../serverComunication';
 
+
+import { useDispatch, useSelector } from 'react-redux';
+
 export default function MainPart() {
     const [mainPartWidth, setWidth] = useState(window.innerWidth);
     useEffect(() => {
@@ -19,12 +22,19 @@ export default function MainPart() {
 
     let [postsAllreadyLoaded, setPostsAllreadyLoaded] = useState(false);
     const [postArray, setPostArray] = useState([]);
+
+
+    const dispatch = useDispatch();
+    const currentUser = useSelector(state => state.currentUser);
+
     const makeInsides = async () =>{
         let recentPosts = ((await fetchSpecial("getRecentPosts", { }, true)));
-        console.log(recentPosts);
+        //console.log(recentPosts);
         let postArrayTemp = [];
         recentPosts.forEach(post => {
-            postArrayTemp.push(<SinglePost key={(post.TITLE + post.BODY + post.DATE_TIME)} date={post.DATE_TIME} title={post.TITLE} body={post.BODY} likeAmount={post.LikeAmount} authorName={post.AuthorName}></SinglePost>);
+            postArrayTemp.push(<SinglePost key={(post.TITLE + post.BODY + post.DATE_TIME)}
+             date={post.DATE_TIME} title={post.TITLE} body={post.BODY}
+              likeAmount={post.LikeAmount} authorName={post.AuthorName} id={post.ID} readingUser={currentUser.name}></SinglePost>);
         });
         setPostsAllreadyLoaded(true);
         setPostArray(postArrayTemp);
@@ -33,7 +43,7 @@ export default function MainPart() {
 
     if(!postsAllreadyLoaded){
         makeInsides();
-        console.log("makeInsides");
+        //console.log("makeInsides");
     }
       
 

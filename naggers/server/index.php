@@ -31,12 +31,12 @@ if (isset($_GET["requestAnonymus"])) {
         case "getRecentPosts": {
             getRecentPosts();
         }
-        
     }
 }
 
 function getRecentPosts(){
     $result = sql_MultipleRow("SELECT * FROM Posts ORDER BY id DESC LIMIT  ". 10 . ";");
+
     echo(json_encode($result));
 }
 
@@ -55,6 +55,29 @@ if (isset($_GET["request"])) {
     if ($jwt) {
         //user ir logged in  
         switch ($_GET["request"]) {
+
+            case "postLike": {
+                $postID = htmlspecialchars($_POST["postID"]);
+                $clientName = htmlspecialchars($_POST["clientName"]);
+
+                $userID = sql_StringExecute("SELECT ID FROM Users WHERE `nickname` = '". $clientName ."';");
+
+                $hasUserAllreadyLikedThePost = sql_StringExecute("SELECT 1 FROM likes WHERE userid = '". $userID ."' AND postid = '". $postID ."'; ");
+
+                if($hasUserAllreadyLikedThePost != 1){
+                    sql_Execute("INSERT INTO likes (`postid`, `userid`) VALUES ('". $postID ."','". $userID ."' ); ");
+                }else{
+                    echo(json_encode(array("statuss" => "userAllreadyLikedThePost")));
+                    break; 
+                }
+                
+                echo (json_encode(array("statuss" => "postLiked")));
+                break;
+
+            }
+
+
+
             case "uploadPost": {
                 $headers = getallheaders();
                 $email = ($jwt->email);

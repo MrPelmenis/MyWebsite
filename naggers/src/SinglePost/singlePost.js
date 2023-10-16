@@ -2,10 +2,31 @@ import '../App.css';
 import { useState } from 'react';
 import "./singlePost.css";
 
+import { ExtraFunctions } from "../extraFunctions";
+import { fetchSpecial } from '../serverComunication';
 
+import { useDispatch, useSelector } from 'react-redux';
 
+export default function SinglePost({id, title, body, authorName, date, likeAmount, readingUser}) {
+    
+    const [postID, setPostID] = useState(id);
+    const [currentUser, setcurrentUser] = useState(readingUser);
 
-export default function SinglePost({ title, body, authorName, date, likeAmount}) {
+    const  likeCallback = async ()=>{
+        if(ExtraFunctions.isUserLoggedIn()){
+            console.log("sending as: " + currentUser);
+            
+            let result = await fetchSpecial("postLike", {postID: postID, clientName: currentUser}, false);
+            console.log(result);
+        }else{
+            alert("you must be logged in to like posts, VAJAG VELAK SATAISIT");
+        }
+    }
+    
+    
+    
+    
+    
     return (
         <div className='SinglePost'>
             <div className='authorDateInfo'>
@@ -20,7 +41,7 @@ export default function SinglePost({ title, body, authorName, date, likeAmount})
             <div className='postText'><TextWithReadMoreButton text={body}></TextWithReadMoreButton></div>
 
             <div className='likesAndComments'>
-                <div className='likeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>{likeAmount}</div>
+                <div onClick={()=>{likeCallback()}} className='likeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>{likeAmount}</div>
                 <div className='comment'>Comment ...</div>
                 <div className='ThreeDotIcon'><img src={require('../img/3Dots.png')} ></img></div>
             </div>
@@ -28,11 +49,19 @@ export default function SinglePost({ title, body, authorName, date, likeAmount})
     )
 }
 
+function convertUTCtoLocal(utcDate) {
+    var localDate = new Date(utcDate.getTime() - utcDate.getTimezoneOffset() * 60 * 1000);
+    return localDate;
+  }
 
 function getTimeAgo(dateTimeString) {
-    const givenDateTime = new Date(dateTimeString);
+    let givenDateTime = new Date(dateTimeString)
+    givenDateTime = convertUTCtoLocal(givenDateTime);
     const currentDateTime = new Date();
+   // console.log("no servera: " + givenDateTime);
+   // console.log("tagad ir: " +  currentDateTime);
     const timeDifference = Math.floor((currentDateTime - givenDateTime) / 1000); // Convert to seconds
+    //console.log("seconds: " + timeDifference);
     if (timeDifference < 60) {
       return timeDifference + " seconds ago";
     } else if (timeDifference < 3600) {

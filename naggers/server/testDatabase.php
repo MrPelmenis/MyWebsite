@@ -4,4 +4,15 @@ include 'config.php';
 include 'sql.php';
 
 
-echo(sql_MultipleRow("SELECT * FROM Posts ORDER BY id DESC LIMIT 2;"));
+
+$clientID = 10;
+
+$postID = 9;
+
+$hasUserAllreadyLikedThePost = sql_StringExecute("SELECT ID FROM likes WHERE 'UserID' = '" . $clientID . "' ;" );
+
+
+if(!$hasUserAllreadyLikedThePost){
+    sql_Execute("INSERT INTO likes (`postid`, `userid`) VALUES ('". $postID ."','". $clientID ."' ); ");
+}
+echo (json_encode(array("answer" => true)));

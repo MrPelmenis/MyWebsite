@@ -16,8 +16,9 @@ function App() {
         <DataLoader></DataLoader>
         <SingUpWindow></SingUpWindow>
         <NewPostWindow></NewPostWindow>
+        <MainPart></MainPart>
       </Provider>
-      <MainPart></MainPart>
+      
     </div>
   );
 }

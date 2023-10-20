@@ -15,4 +15,3 @@ $hasUserAllreadyLikedThePost = sql_StringExecute("SELECT ID FROM likes WHERE 'Us
 if(!$hasUserAllreadyLikedThePost){
     sql_Execute("INSERT INTO likes (`postid`, `userid`) VALUES ('". $postID ."','". $clientID ."' ); ");
 }
-echo (json_encode(array("answer" => true)));

@@ -23,6 +23,22 @@ function sql_StringExecute($myQuery)
     }
 }
 
+
+function sql_Execute_Transaction($querryList){
+    global $conn;
+    $conn->begin_Transaction();
+    $res = $querryList;
+    try{
+        foreach ($querryList as $query) {
+            $conn->query(($query));
+        }
+        $conn->commit();
+    }catch (\Throwable $e) {
+        $conn->rollback();
+    }    
+    return $res;
+}
+
 function sql_Execute($myQuery)
 {
     global $conn;

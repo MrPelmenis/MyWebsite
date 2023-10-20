@@ -65,13 +65,14 @@ if (isset($_GET["request"])) {
                 $hasUserAllreadyLikedThePost = sql_StringExecute("SELECT 1 FROM likes WHERE userid = '". $userID ."' AND postid = '". $postID ."'; ");
 
                 if($hasUserAllreadyLikedThePost != 1){
-                    sql_Execute("INSERT INTO likes (`postid`, `userid`) VALUES ('". $postID ."','". $userID ."' ); ");
+                    echo(json_encode(array("statuss" => sql_Execute_Transaction(["INSERT INTO likes (`postid`, `userid`) VALUES ('". TDB($postID) ."','".TDB($userID) ."' );",
+                    "UPDATE Posts SET LikeAmount = LikeAmount + 1 WHERE ID = ". TDB($postID) ." ;" ])))  );
                 }else{
                     echo(json_encode(array("statuss" => "userAllreadyLikedThePost")));
                     break; 
                 }
                 
-                echo (json_encode(array("statuss" => "postLiked")));
+                //echo (json_encode(array("statuss" => "postLiked")));
                 break;
 
             }

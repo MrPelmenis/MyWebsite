@@ -7,16 +7,33 @@ import { fetchSpecial } from '../serverComunication';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function SinglePost({id, title, body, authorName, date, likeAmount, readingUser}) {
+import { changeLikeForSinglePost } from '../store/loadedPosts';
+
+
+
+export default function SinglePost({id, title, body, authorName, date, likeAmount, readingUser, isPostLikedByUser}) {
     
+    const dispatch = useDispatch();
+    const loadedPosts = useSelector(state => state.loadedPosts);
+    //dispatch(changePosts({posts:recentPosts}));
+
     const [postID, setPostID] = useState(id);
     const [currentUser, setcurrentUser] = useState(readingUser);
-
     const  likeCallback = async ()=>{
         if(ExtraFunctions.isUserLoggedIn()){
             console.log("sending as: " + currentUser);
+            //alert(postID);
+            let result;
+            if(isPostLikedByUser == 0){
+                result = await fetchSpecial("postLike", {postID: postID, clientName: currentUser}, false);
+                dispatch(changeLikeForSinglePost({postID:postID, likeAmount:1}));
+                console.log(loadedPosts);
+            }else{
+               result = await fetchSpecial("postDislike", {postID: postID, clientName: currentUser}, false);
+               dispatch(changeLikeForSinglePost({postID:postID, likeAmount:-1}));
+               console.log(result);
+            }
             
-            let result = await fetchSpecial("postLike", {postID: postID, clientName: currentUser}, false);
             console.log(result);
         }else{
             alert("you must be logged in to like posts, VAJAG VELAK SATAISIT");
@@ -41,9 +58,9 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
             <div className='postText'><TextWithReadMoreButton text={body}></TextWithReadMoreButton></div>
 
             <div className='likesAndComments'>
-                <div onClick={()=>{likeCallback()}} className='likeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>{likeAmount}</div>
+                <div onClick={()=>{likeCallback()}} style={{backgroundColor:(isPostLikedByUser ==1?"red":"white")}} className='likeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>{likeAmount}</div>
                 <div className='comment'>Comment ...</div>
-                <div className='ThreeDotIcon'><img src={require('../img/3Dots.png')} ></img></div>
+                <div className='ThreeDotIcon' ><img src={require('../img/3Dots.png')} ></img></div>
             </div>
         </div>
     )

@@ -28,7 +28,7 @@ export default function MainPart() {
     const currentUser = useSelector(state => state.currentUser);
 
     const makeInsides = async () =>{
-        let recentPosts = ((await fetchSpecial("getRecentPosts", {clientName: currentUser.name}, true)));
+        let recentPosts = ((await fetchSpecial("getRecentPosts", {clientName: currentUser.name}, (currentUser.name != "" ? false: true ))));
         //console.log(recentPosts);
         let postArrayTemp = [];
         recentPosts.forEach(post => {

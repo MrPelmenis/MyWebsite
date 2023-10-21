@@ -29,32 +29,42 @@ return $header;
 if (isset($_GET["requestAnonymus"])) {
     switch ($_GET["requestAnonymus"]) {
         case "getRecentPosts": {
-            getRecentPosts();
+            getRecentPosts(false);
         }
     }
 }
 
-function getRecentPosts(){
-    $result = sql_MultipleRow("SELECT * FROM Posts ORDER BY id DESC LIMIT  ". 10 . ";");
+function getRecentPosts($isUserLoggedIn){
+    if($isUserLoggedIn){
+        $clientName = htmlspecialchars($_POST["clientName"]);
+        $userID = sql_StringExecute("SELECT ID FROM Users WHERE `nickname` = '". $clientName ."';");
+        $result = sql_MultipleRow("
+                SELECT * 
+                FROM Posts P 
+                LEFT OUTER JOIN likes L ON
+                    L.PostID = P.ID AND L.UserID = ".$userID." 
+                ORDER BY P.id DESC LIMIT  ". 10 . " ;");
+    }else{
+        $result = sql_MultipleRow("
+                SELECT *
+                FROM Posts
+                ORDER BY id DESC LIMIT  ". 10 . ";");
+    }
+    
 
     echo(json_encode($result));
 }
 
 
 if (isset($_GET["request"])) {
-    //works if user is or isnt logged
-    switch ($_GET["request"]) {
-        case "getRecentPosts": {
-            getRecentPosts();
-        }
-    }
-
-    
-
     $jwt = parseJwt($_SERVER["HTTP_JWT"]);
     if ($jwt) {
         //user ir logged in  
         switch ($_GET["request"]) {
+            
+            case "getRecentPosts": {
+                getRecentPosts(true);
+            }
 
             case "postLike": {
                 $postID = htmlspecialchars($_POST["postID"]);

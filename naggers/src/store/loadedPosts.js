@@ -10,11 +10,16 @@ const slice = createSlice({
         },
         changeLikeForSinglePostReducer: (state, action) => {
            state.posts.forEach((post)=>{
-                console.log(post);
-                console.log(post.ID == action.payload.postID);
-                if(post.ID == action.payload.postID){
-                    post.likeAmount += action.payload.likeAmount;
-                }
+                if(Number(post.ID) == action.payload.postID){
+                    if(action.payload.serverResult.statuss == "liked"){
+                        post.LikeAmount =  Number(post.LikeAmount) + 1;
+                        post.isLikedByCurrentUser = true;
+                    }
+                    if(action.payload.serverResult.statuss == "disliked"){
+                        post.LikeAmount =  Number(post.LikeAmount) - 1;
+                        post.isLikedByCurrentUser = false;
+                    }
+                } 
             });
         }
     },
@@ -33,9 +38,9 @@ export const changePosts = ({ posts }) => dispatch => {
 
 
 const { changeLikeForSinglePostReducer } = slice.actions;
-export const changeLikeForSinglePost = ({postID, likeAmount}) => dispatch =>{
+export const changeLikeForSinglePost = ({postID, serverResult}) => dispatch =>{
     try {
-        dispatch(changeLikeForSinglePostReducer({ postID, likeAmount }));
+        dispatch(changeLikeForSinglePostReducer({ postID, serverResult }));
     } catch (e) {
         return console.error(e.message);
     }

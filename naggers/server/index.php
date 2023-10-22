@@ -106,7 +106,7 @@ if (isset($_GET["request"])) {
                     $res = sql_Execute_Transaction([
                     "INSERT INTO likes (`postid`, `userid`) VALUES ('". TDB($postID) ."','".TDB($userID) ."' );",
                     "UPDATE Posts SET LikeAmount = LikeAmount + 1 WHERE ID = ". TDB($postID) ." ;" ]);
-                    echo (json_encode(array("statuss" => $res)));
+                    echo (json_encode(array("statuss" => "liked")));
                 }else{
                     echo(json_encode(array("statuss" => "userAllreadyLikedThePost")));
                     break; 

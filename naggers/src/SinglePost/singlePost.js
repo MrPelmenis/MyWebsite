@@ -21,19 +21,18 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
     const [currentUser, setcurrentUser] = useState(readingUser);
     const  likeCallback = async ()=>{
         if(ExtraFunctions.isUserLoggedIn()){
-            console.log("sending as: " + currentUser);
-            //alert(postID);
             let result;
             if(isPostLikedByUser == 0){
                 result = await fetchSpecial("postLike", {postID: postID, clientName: currentUser}, false);
-                dispatch(changeLikeForSinglePost({postID:postID, likeAmount:1}));
+                console.log("aaa");
                 console.log(loadedPosts);
             }else{
                result = await fetchSpecial("postDislike", {postID: postID, clientName: currentUser}, false);
-               dispatch(changeLikeForSinglePost({postID:postID, likeAmount:-1}));
                console.log(result);
             }
             
+            dispatch(changeLikeForSinglePost({postID:postID, serverResult:result}));
+
             console.log(result);
         }else{
             alert("you must be logged in to like posts, VAJAG VELAK SATAISIT");

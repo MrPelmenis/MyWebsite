@@ -2,6 +2,7 @@ import './App.css';
 import MainPart from './MainPart/mainPart';
 import SingUpWindow from './SignUpWindow/SignUpWindow';
 import NewPostWindow from './NewPostWindow/NewPostWindow';
+import CommentWindow from './CommentWindow/CommentWindow';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -16,6 +17,7 @@ function App() {
         <DataLoader></DataLoader>
         <SingUpWindow></SingUpWindow>
         <NewPostWindow></NewPostWindow>
+        <CommentWindow></CommentWindow>
         <MainPart></MainPart>
       </Provider>
       

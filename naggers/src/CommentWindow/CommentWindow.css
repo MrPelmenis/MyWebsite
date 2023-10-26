@@ -1,0 +1,104 @@
+.AllCommentContainer {
+    background-color: rgba(200, 200, 200S, 0.5);
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    backdrop-filter: blur(5px);
+    display: flex;
+}
+
+
+
+.white-box {
+    background-color: white;
+    width: 30%;
+    height: 35%;
+    margin: auto;
+    display: flex;
+    border-radius: 5px;
+    flex-direction: column;
+}
+
+@media only screen and (width < 1300px) {
+    .white-box {
+        width: 80%;
+        height: 90%;
+    }
+}
+
+@media only screen and (width > 1300px) {
+    .white-box {
+        height: 60%;
+        height: 70%;
+    }
+}
+
+.CommentContainer{
+    margin-left: 20px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-bottom: 10px;
+}
+
+
+.CommentInput{
+    margin: 5px;
+    border-bottom: 2px solid lightgray;
+    height: 20%;
+    margin-top: 10px;
+}
+
+
+
+.CommentInputText{
+    font-weight: normal;
+    width: 90%;
+    height: 50%;
+    margin-left: 15px;
+    outline: none;
+    border: none;
+    word-wrap: break-word;
+    resize: none;
+    padding-left: 0;
+    padding-top: 0;
+    border-bottom: 1px solid gray;
+}
+
+.postCommentButton{
+    margin-bottom: 9px;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 70px;
+    height: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    position: relative;
+    left: calc((90% - 70px));
+    top: 5px;
+    transition: 0;
+}
+
+.close-button {
+    background-color: darkgrey;
+    transition: background-color 0s ease-in-out;
+    position: relative;
+    left: calc((100% - 30px));
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    background-color: red;
+}

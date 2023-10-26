@@ -10,12 +10,34 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeLikeForSinglePost } from '../store/loadedPosts';
 
 
+import { showCommentScreen } from '../store/commentWindow';
 
-export default function SinglePost({id, title, body, authorName, date, likeAmount, readingUser, isPostLikedByUser}) {
+import TextWithReadMoreButton from "../TextWithReadMoreButtons";
+
+
+
+export default function SinglePost({id, title, body, authorName, date, likeAmount, readingUser, isPostLikedByUser, isThisCommentPost}) {
     
     const dispatch = useDispatch();
     const loadedPosts = useSelector(state => state.loadedPosts);
     //dispatch(changePosts({posts:recentPosts}));
+
+    const commentWindowVisibility = useSelector(state => state.commentWindow).visible;
+    //alert(commentWindowVisibility);
+    
+    const [isPostInComments, setIsPostInComments] = useState(isThisCommentPost);
+
+    const showComments = () => {
+        if(!isPostInComments){
+            dispatch(showCommentScreen());
+        }else{
+            alert("vajag nosktolot lejaa uz komentariem jo sis posts jau ir komentaa");
+        }
+        
+       // alert(commentWindowVisibility);
+    };
+
+
 
     const [postID, setPostID] = useState(id);
     const [currentUser, setcurrentUser] = useState(readingUser);
@@ -50,7 +72,7 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
                     <img className="authorPic" src={require('../img/DefaultProfilePic.png')} ></img>
                     <div className="authorName">{authorName}</div>
                 </div>
-                <div className='dateInfoAboutPost'>{getTimeAgo(date)}</div>
+                <div className='dateInfoAboutPost'>{ExtraFunctions.getTimeAgo(date)}</div>
             </div>
 
             <div className='titleText'>{title}</div>
@@ -58,73 +80,9 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
 
             <div className='likesAndComments'>
                 <div onClick={()=>{likeCallback()}} style={{backgroundColor:(isPostLikedByUser ==1?"red":"white")}} className='likeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>{likeAmount}</div>
-                <div className='comment'>Comment ...</div>
+                <div className='comment' onClick={()=>{ showComments()  }}>Comment ...</div>
                 <div className='ThreeDotIcon' ><img src={require('../img/3Dots.png')} ></img></div>
             </div>
         </div>
     )
-}
-
-function convertUTCtoLocal(utcDate) {
-    var localDate = new Date(utcDate.getTime() - utcDate.getTimezoneOffset() * 60 * 1000);
-    return localDate;
-  }
-
-function getTimeAgo(dateTimeString) {
-    let givenDateTime = new Date(dateTimeString)
-    givenDateTime = convertUTCtoLocal(givenDateTime);
-    const currentDateTime = new Date();
-   // console.log("no servera: " + givenDateTime);
-   // console.log("tagad ir: " +  currentDateTime);
-    const timeDifference = Math.floor((currentDateTime - givenDateTime) / 1000); // Convert to seconds
-    //console.log("seconds: " + timeDifference);
-    if (timeDifference < 60) {
-      return timeDifference + " seconds ago";
-    } else if (timeDifference < 3600) {
-      const minutes = Math.floor(timeDifference / 60);
-      return minutes + " minutes ago";
-    } else if (timeDifference < 86400) {
-      const hours = Math.floor(timeDifference / 3600);
-      return hours + " hours ago";
-    } else {
-      const days = Math.floor(timeDifference / 86400);
-      return days + " days ago";
-    }
-  }
-
-
-function TextWithReadMoreButton(props) {
-
-    const maxTextLength = 200;
-
-
-    const [maxLength, setLength] = useState(maxTextLength);
-
-
-    const textShortener = (inputText, maxLength) => {
-        if (maxLength == -1) {
-            return inputText;
-        } else {
-            return inputText.substring(0, maxLength) + "...";
-        }
-    }
-
-    const changeLength = () => {
-        if (maxLength == -1) {
-            setLength(maxTextLength);
-        } else {
-            setLength(-1);
-        }
-
-    }
-
-    const buttonChecker = () => {
-        if (props.text.length > maxTextLength) {
-            return (<button className='readMoreOrLess' onClick={() => changeLength()}>{maxLength == -1 ? "Read Less" : "Read More"}</button>)
-        }
-    }
-
-    return (
-        <div>{textShortener(props.text, maxLength)}  {buttonChecker()}</div>
-    );
 }

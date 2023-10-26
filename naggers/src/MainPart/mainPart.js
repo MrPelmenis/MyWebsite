@@ -35,7 +35,7 @@ export default function MainPart() {
 
 
     const makeInsides = async () =>{
-        let recentPosts = ((await fetchSpecial("getRecentPosts", {clientName: currentUser.name}, (currentUser.name != "" ? false: true ))));        
+        let recentPosts = ((await fetchSpecial("getRecentPosts", {clientName: currentUser.name}, (currentUser.name != "" ? false: true ))));
         dispatch(changePosts({posts:recentPosts}));
     }
 

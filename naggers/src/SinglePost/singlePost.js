@@ -29,7 +29,7 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
 
     const showComments = () => {
         if(!isPostInComments){
-            dispatch(showCommentScreen());
+            dispatch(showCommentScreen({authorName:authorName, uploadDate: date, title:title, body:body, likeAmount:likeAmount, postID:id}));
         }else{
             alert("vajag nosktolot lejaa uz komentariem jo sis posts jau ir komentaa");
         }
@@ -42,23 +42,26 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
     const [postID, setPostID] = useState(id);
     const [currentUser, setcurrentUser] = useState(readingUser);
     const  likeCallback = async ()=>{
-        if(ExtraFunctions.isUserLoggedIn()){
-            let result;
-            if(isPostLikedByUser == 0){
-                result = await fetchSpecial("postLike", {postID: postID, clientName: currentUser}, false);
-                console.log("aaa");
-                console.log(loadedPosts);
+        if(!isThisCommentPost){
+            if(ExtraFunctions.isUserLoggedIn()){
+                let result;
+                if(isPostLikedByUser == 0){
+                    result = await fetchSpecial("postLike", {postID: postID, clientName: currentUser}, false);
+                    console.log("aaa");
+                    console.log(loadedPosts);
+                }else{
+                   result = await fetchSpecial("postDislike", {postID: postID, clientName: currentUser}, false);
+                   console.log(result);
+                }
+                
+                dispatch(changeLikeForSinglePost({postID:postID, serverResult:result}));
+    
+                console.log(result);
             }else{
-               result = await fetchSpecial("postDislike", {postID: postID, clientName: currentUser}, false);
-               console.log(result);
+                alert("you must be logged in to like posts, VAJAG VELAK SATAISIT");
             }
-            
-            dispatch(changeLikeForSinglePost({postID:postID, serverResult:result}));
-
-            console.log(result);
-        }else{
-            alert("you must be logged in to like posts, VAJAG VELAK SATAISIT");
         }
+       
     }
     
     
@@ -79,9 +82,11 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
             <div className='postText'><TextWithReadMoreButton text={body}></TextWithReadMoreButton></div>
 
             <div className='likesAndComments'>
-                <div onClick={()=>{likeCallback()}} style={{backgroundColor:(isPostLikedByUser ==1?"red":"white")}} className='likeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>{likeAmount}</div>
-                <div className='comment' onClick={()=>{ showComments()  }}>Comment ...</div>
-                <div className='ThreeDotIcon' ><img src={require('../img/3Dots.png')} ></img></div>
+                <div style={{display:"flex"}}>
+                    <div onClick={()=>{likeCallback()}} style={{backgroundColor:(isPostLikedByUser ==1?"red":"white")}} className='likeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>{likeAmount}</div>
+                    <div className='comment' onClick={()=>{ showComments()  }}>Comment ...</div>
+                </div>
+                {!isPostInComments && <div className='ThreeDotIcon' ><img src={require('../img/3Dots.png')} ></img></div>}
             </div>
         </div>
     )

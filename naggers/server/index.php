@@ -46,7 +46,7 @@ function getRecentPosts($isUserLoggedIn){
                         ELSE 1
                     END AS isLikedByCurrentUser
                 FROM Posts P 
-                LEFT OUTER JOIN likes L ON
+                LEFT OUTER JOIN Likes L ON
                 L.PostID = P.ID AND L.UserID = ".$userID." 
                 ORDER BY P.ID DESC LIMIT  ". 10 . " ;";
     }else{
@@ -66,6 +66,31 @@ if (isset($_GET["request"])) {
     if ($jwt) {
         //user ir logged in  
         switch ($_GET["request"]) {
+
+
+            case "uploadComment": {
+                $headers = getallheaders();
+                $email = ($jwt->email);
+                $gottenNickname = sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'");
+
+                $date = date('Y-m-d H:i:s');  
+
+                $text = htmlspecialchars($_POST["text"]);
+                $postID = htmlspecialchars($_POST["postID"]);
+
+                $accountExists = ($gottenNickname != "" ? true : false);
+                
+                $quer = "INSERT INTO Comments (AuthorName, Body, LikeAmount, Date_Time, PostID)
+                VALUES ('" . TDB($gottenNickname) . "','" . TDB($text) . "', 0, '" . TDB($date)."', ".TDB($postID).");";
+
+
+                if($accountExists){
+                    //echo($quer);
+                    sql_Execute($quer);
+                    echo (json_encode(array("answer" => true)));
+                }
+                break;
+            }
             
             case "getRecentPosts": {
                 getRecentPosts(true);
@@ -79,11 +104,11 @@ if (isset($_GET["request"])) {
                 $userID = sql_StringExecute("SELECT ID FROM Users WHERE `nickname` = '". $clientName ."';");
 
                 //echo("SELECT 1 FROM likes WHERE userid = '". $userID ."' AND postid = '". $postID .";");
-                $hasUserAllreadyLikedThePost = sql_StringExecute("SELECT 1 FROM likes WHERE userid = '". $userID ."' AND postid = ". $postID .";");    
+                $hasUserAllreadyLikedThePost = sql_StringExecute("SELECT 1 FROM Likes WHERE userid = '". $userID ."' AND postid = ". $postID .";");    
 
                 if($hasUserAllreadyLikedThePost == 1){
                     $res = sql_Execute_Transaction([
-                        "DELETE FROM likes WHERE PostID=".$postID." AND UserID = ".$userID.";",
+                        "DELETE FROM Likes WHERE PostID=".$postID." AND UserID = ".$userID.";",
                         "UPDATE Posts SET LikeAmount = LikeAmount - 1 WHERE ID = ". TDB($postID) .";"]);
                     echo (json_encode(array("statuss" => "disliked")));
                 }else{
@@ -100,11 +125,11 @@ if (isset($_GET["request"])) {
 
                 $userID = sql_StringExecute("SELECT ID FROM Users WHERE `nickname` = '". $clientName ."';");
 
-                $hasUserAllreadyLikedThePost = sql_StringExecute("SELECT 1 FROM likes WHERE userid = '". $userID ."' AND postid = '". $postID ."'; ");
+                $hasUserAllreadyLikedThePost = sql_StringExecute("SELECT 1 FROM Likes WHERE userid = '". $userID ."' AND postid = '". $postID ."'; ");
 
                 if($hasUserAllreadyLikedThePost != 1){
                     $res = sql_Execute_Transaction([
-                    "INSERT INTO likes (`postid`, `userid`) VALUES ('". TDB($postID) ."','".TDB($userID) ."' );",
+                    "INSERT INTO Likes (`postid`, `userid`) VALUES ('". TDB($postID) ."','".TDB($userID) ."' );",
                     "UPDATE Posts SET LikeAmount = LikeAmount + 1 WHERE ID = ". TDB($postID) ." ;" ]);
                     echo (json_encode(array("statuss" => "liked")));
                 }else{

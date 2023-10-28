@@ -96,12 +96,7 @@
     text-align: center;
     line-height: 30px;
     padding-right: 20px;
-
+    margin-right: 10px;
     border-radius: 10px;
 }
 
-.likesAndComments {
-    width: 100%;
-    margin-top: 5px;
-    height: 30px;
-}

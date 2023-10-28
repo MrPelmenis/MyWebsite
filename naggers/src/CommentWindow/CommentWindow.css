@@ -36,6 +36,21 @@
     }
 }
 
+
+@media only screen and (height < 600px) {
+    .white-box {
+        width: 80%;
+        height: 90%;
+    }
+}
+
+@media only screen and (width > 600px) {
+    .white-box {
+        height: 60%;
+        height: 70%;
+    }
+}
+
 .CommentContainer{
     margin-left: 20px;
     overflow: auto;

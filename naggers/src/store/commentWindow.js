@@ -3,11 +3,23 @@ import { createSlice } from '@reduxjs/toolkit'
 const slice = createSlice({
     name: 'commentWindow',
     initialState: {
-        visible: true,
+        visible: false,
+        authorName:"",
+        uploadDate:"",
+        title:"",
+        body:"",
+        likeAmount:"",
+        postID: ""
     },
     reducers: {
         showCommentScreenRed: (state, action) => {
             state.visible = true;
+            state.authorName = action.payload.authorName;
+            state.uploadDate = action.payload.uploadDate;
+            state.title = action.payload.title;
+            state.body = action.payload.body;
+            state.likeAmount = action.payload.likeAmount;
+            state.postID = action.payload.postID;
         },
         hideCommentScreenRed: (state, action) => {
             state.visible = false;
@@ -19,9 +31,9 @@ export default slice.reducer
 
 
 const { showCommentScreenRed, hideCommentScreenRed } = slice.actions
-export const showCommentScreen = () => async dispatch => {
+export const showCommentScreen = ({authorName,uploadDate, title, body, likeAmount, postID}) => async dispatch => {
     try {
-        dispatch(showCommentScreenRed());
+        dispatch(showCommentScreenRed({authorName,uploadDate, title, body, likeAmount, postID}));
     } catch (e) {
         return console.error(e.message);
     }

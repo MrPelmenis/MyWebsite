@@ -20,28 +20,52 @@ import { fetchSpecial } from '../serverComunication.js';
 
 
 
-import { hideCommentScreen } from '../store/commentWindow';
+import { hideCommentScreen, showCommentScreen } from '../store/commentWindow';
 
 import SinglePost from '../SinglePost/singlePost';
 import SingleComment from '../SingleComment/SingleComment';
+import { ExtraFunctions } from '../extraFunctions';
 
 export default function CommentWindow() {
 
     const dispatch = useDispatch();
-    const commentWindowVisibility = useSelector(state => state.commentWindow).visible;
+    const commentWindow = useSelector(state => state.commentWindow);
 
     const handleClose = () => {
         dispatch(hideCommentScreen());
     };
 
-    const uploadPost = ()=>{
-        alert("upload");
+    async function uploadPost (){
+        if(ExtraFunctions.isUserLoggedIn()){
+            if(myCommentText != ""){
+                let res = await fetchSpecial("uploadComment", { text: myCommentText, postID: commentWindow.postID }, false);
+                console.log(res);
+                if(res.answer){
+                    setMyCommentText("");
+                }
+            }else{
+                alert("You must enter something");
+            }
+        }else{
+            alert("You have to be logged in to comment on posts VAJAG VEL SATAISIT");
+        }
+        
     }
     
 
-    const [helperText, setHelperText] = useState("What name do you want to be known by ?");
+    //comment input code:
+    const [myCommentText, setMyCommentText] = useState('');
 
-    if (commentWindowVisibility) {
+    const handleChange = event => {
+        setMyCommentText(event.target.value);
+        console.log('value is:', myCommentText);
+    };
+
+
+    
+
+
+    if (commentWindow.visible) {
         return (
             <div className="AllCommentContainer">
                 <div className="white-box" style={{}}>
@@ -50,14 +74,14 @@ export default function CommentWindow() {
                             X
                         </div>
                     </div>
-
+                    
                     <div style={{height:140, border: "1px solid white", marginTop:-20, width: "100%"}}>
-                        <SinglePost isThisCommentPost={true} date={(new Date(new Date() - 100000) )} title={"aaa"} body={"gzsdrfbhijklsdftgbhiloysjdfgbhkl"}
-                        likeAmount={5} authorName={"kaka"}></SinglePost>
+                        <SinglePost isThisCommentPost={true} date={commentWindow.uploadDate} title={commentWindow.title} body={commentWindow.body}
+                        likeAmount={commentWindow.likeAmount} authorName={commentWindow.authorName}></SinglePost>
                     </div>
 
                     <div className='CommentInput'> 
-                        <textarea  placeholder='What Do You Think?' className='CommentInputText'></textarea>
+                        <textarea  placeholder='What Do You Think?'onChange={handleChange} value={myCommentText} className='CommentInputText'></textarea>
                         <button className='postCommentButton' onClick={()=>{uploadPost()}}>Post</button>
                     </div>
                     

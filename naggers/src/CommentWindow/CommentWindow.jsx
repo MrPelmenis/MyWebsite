@@ -62,7 +62,26 @@ export default function CommentWindow() {
     };
 
 
+    const [loadedComments, setLoadedComments] = useState([]);
+
+
+    const getCommentInfo = async () =>{
+    let commentsForPost = ((await fetchSpecial("getCommentsForPost", {postID:commentWindow.postID}, true)));
+        setLoadedComments(commentsForPost);
+    }
+
+    if(commentWindow.visible){
+        getCommentInfo();
+    }
     
+    const makeCommentsIntoReactObjects = (comments)=>{
+        return comments.map(comment => {
+            //console.log(post);
+            return (<SingleComment key={comment.ID}
+             date={comment.Date_Time} text={comment.Body}
+              likeAmount={comment.LikeAmount} authorName={comment.AuthorName} postId={comment.postID} ></SingleComment>)
+        });
+    }
 
 
     if (commentWindow.visible) {
@@ -87,13 +106,7 @@ export default function CommentWindow() {
                     
                     
                     <div className='CommentContainer'>
-                        <SingleComment text="sdfgnujklsdfgbnjklsjdfgbnklhsdrfgbhjk;sdgbhjk;sdfgbjk;bjk;dfgbhjk;kopcgusrhmtgu9prtchnoisdfgnujklsdfgbnjklsjdfgbnklhsdrfgbhjk;sdgbhjk;sdfgbjk;bjk;dfgbhjk;kopcgusrhmtgu9prtchnoidtcgh,rtdiumhsdfgnujklsdfgbnjklsjdfgbnklhsdrfgbhjk;sdgbhjk;sdfgbjk;bjk;dfgbhjk;kopcgusrhmtgu9prtchnoidtcgh,rtdiumhsdfgnujklsdfgbnjklsjdfgbnklhsdrfgbhjk;sdgbhjk;sdfgbjk;bjk;dfgbhjk;kopcgusrhmtgu9prtchnoidtcgh,rtdiumhdtcgh,rtdiumh"></SingleComment>
-                        <SingleComment text="aaa"></SingleComment>
-                        <SingleComment text="aaa"></SingleComment>
-                        <SingleComment text="aaa"></SingleComment>
-                        <SingleComment text="aaa"></SingleComment>
-                        <SingleComment text="aaa"></SingleComment>
-                        <SingleComment text="aaa"></SingleComment>
+                        {makeCommentsIntoReactObjects(loadedComments)}
                     </div>
 
                 </div>

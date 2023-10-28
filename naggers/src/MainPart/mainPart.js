@@ -27,7 +27,6 @@ export default function MainPart() {
 
 
     const [postArray, setPostArray] = useState([]);
-
     const dispatch = useDispatch();
 
     const currentUser = useSelector(state => state.currentUser);

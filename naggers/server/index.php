@@ -30,6 +30,15 @@ if (isset($_GET["requestAnonymus"])) {
     switch ($_GET["requestAnonymus"]) {
         case "getRecentPosts": {
             getRecentPosts(false);
+            break;
+        }
+        case "getCommentsForPost":{
+            $postID = htmlspecialchars($_POST["postID"]);
+            $postIDint = intval( $postID );
+            $sqlquer = "SELECT * FROM Comments WHERE PostID = ". TDB($postIDint)."
+            ORDER BY LikeAmount DESC;";
+            echo(json_encode(sql_MultipleRow($sqlquer)));
+            break;
         }
     }
 }

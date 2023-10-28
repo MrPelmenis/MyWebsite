@@ -16,7 +16,7 @@ export class ExtraFunctions {
     
 
     static getTimeAgo(dateTimeString) {
-        let givenDateTime = new Date(dateTimeString)
+        let givenDateTime = new Date(dateTimeString);
         givenDateTime = this.convertUTCtoLocal(givenDateTime);
         const currentDateTime = new Date();
        // console.log("no servera: " + givenDateTime);

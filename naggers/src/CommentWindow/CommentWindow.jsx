@@ -32,6 +32,7 @@ export default function CommentWindow() {
     const commentWindow = useSelector(state => state.commentWindow);
 
     const handleClose = () => {
+        setArePostsLoaded(false);
         dispatch(hideCommentScreen());
     };
 
@@ -49,6 +50,7 @@ export default function CommentWindow() {
         }else{
             alert("You have to be logged in to comment on posts VAJAG VEL SATAISIT");
         }
+        setArePostsLoaded(false);
         
     }
     
@@ -58,17 +60,23 @@ export default function CommentWindow() {
 
     const handleChange = event => {
         setMyCommentText(event.target.value);
-        console.log('value is:', myCommentText);
     };
 
 
     const [loadedComments, setLoadedComments] = useState([]);
 
+    const [arePostsLoaded, setArePostsLoaded] = useState(false);
 
     const getCommentInfo = async () =>{
-    let commentsForPost = ((await fetchSpecial("getCommentsForPost", {postID:commentWindow.postID}, true)));
-        setLoadedComments(commentsForPost);
+        if(!arePostsLoaded){
+            setArePostsLoaded(true);
+            console.log("updatojas komnetari");
+            let commentsForPost = ((await fetchSpecial("getCommentsForPost", {postID:commentWindow.postID}, true)));
+            setLoadedComments(commentsForPost);
+        }
+        
     }
+
 
     if(commentWindow.visible){
         getCommentInfo();
@@ -76,10 +84,14 @@ export default function CommentWindow() {
     
     const makeCommentsIntoReactObjects = (comments)=>{
         return comments.map(comment => {
-            //console.log(post);
-            return (<SingleComment key={comment.ID}
-             date={comment.Date_Time} text={comment.Body}
-              likeAmount={comment.LikeAmount} authorName={comment.AuthorName} postId={comment.postID} ></SingleComment>)
+            return (<SingleComment key={Math.random()*10 + Math.random()*2}
+            commentID={comment.ID}
+            date={comment.Date_Time}
+            text={comment.Body}
+            likeAmount={comment.LikeAmount}
+            authorName={comment.AuthorName}
+            postId={comment.postID}
+            ></SingleComment>);
         });
     }
 

@@ -62,7 +62,7 @@ export default function NewPostWindow() {
         return (
             <div className="Container">
                 <div className="white-box" style={{}}>
-                    <div className="signUpPart" ><div className="close-button" onClick={() => { handleClose() }}>
+                    <div className="newPostPart" ><div className="close-button" onClick={() => { handleClose() }}>
                         X
                     </div>
                     </div>
@@ -73,10 +73,8 @@ export default function NewPostWindow() {
 
                         <textarea type='text' placeholder='Your Thoughts...' className='PostTextInput'
                         onChange={handleTextInputChange} value={textInput}></textarea>
-                        
-                        <button className='postButton' onClick={()=>{uploadPost()}}>Post</button>
-
                     </div>
+                    <button className='postButton' onClick={()=>{uploadPost()}}>Post</button>
 
 
                 </div>

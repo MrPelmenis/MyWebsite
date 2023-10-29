@@ -105,8 +105,8 @@
     font-size: 14px;
     cursor: pointer;
     position: relative;
-    left: calc((90% - 70px));
-    top: 5px;
+    left: calc((90%));
+    bottom: 10px;
     transition: 0;
 }
 

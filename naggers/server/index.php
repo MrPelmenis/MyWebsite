@@ -77,6 +77,32 @@ if (isset($_GET["request"])) {
         switch ($_GET["request"]) {
 
 
+            case "commentLike": {
+                $commentID = htmlspecialchars($_POST["commentID"]);
+                $clientName = htmlspecialchars($_POST["clientName"]);
+
+                $userID = sql_StringExecute("SELECT ID FROM Users WHERE `nickname` = '". $clientName ."';");
+
+
+                $hasUserAllreadyLikedTheCommentQuery = "SELECT 1 FROM CommentLikes WHERE userid = '". $userID ."' AND commentId = '". $commentID ."'; ";
+                $hasUserAllreadyLikedTheComment = sql_StringExecute($hasUserAllreadyLikedTheCommentQuery);
+                
+                if($hasUserAllreadyLikedTheComment != 1){
+                    $res = sql_Execute_Transaction([
+                    "INSERT INTO CommentLikes (`commentid`, `userid`) VALUES ('". TDB($commentID) ."','".TDB($userID) ."' );",
+                    "UPDATE Comments SET LikeAmount = LikeAmount + 1 WHERE ID = ". TDB($commentID) ." ;" ]);
+                    echo (json_encode(array("statuss" => "liked")));
+                }else{
+                    $deleteQuer = [
+                        "DELETE FROM CommentLikes WHERE CommentID=".$commentID." AND UserID = ".$userID.";",
+                        "UPDATE Comments SET LikeAmount = LikeAmount - 1 WHERE ID = ". TDB($commentID) .";"];
+                    $res = sql_Execute_Transaction($deleteQuer);
+                    echo (json_encode(array("statuss" => "disliked")));
+                }
+
+                break;
+            }
+
             case "uploadComment": {
                 $headers = getallheaders();
                 $email = ($jwt->email);

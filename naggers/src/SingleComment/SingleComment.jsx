@@ -11,25 +11,23 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 export default function SingleComment(props) {
-    const [isCommentLikedByUser, setIsCommentLikedByUser] = useState(0);
+
+    const [isCommentLikedByUser, setIsCommentLikedByUser] = useState(props.isCommentLikedByCurrentUser);
+    const [currentLikeAmount, setCurrentLikeAmount] = useState(props.likeAmount);
 
     const currentUser = useSelector(state => state.currentUser);
-
+    
+    console.log("iscommentlikedbycurrent user: " + isCommentLikedByUser);
 
     const commentLikeCallback = async () => {
         if(ExtraFunctions.isUserLoggedIn()){
             let result;
-            if(isCommentLikedByUser == 0){
-                console.log(props);
-                result = await fetchSpecial("commentLike", {commentID: props.commentID, clientName: currentUser.name}, false);
-                console.log(result);
-            }else{
-               //result = await fetchSpecial("postDislike", {postID: postID, clientName: currentUser}, false);
-            }
+            console.log(props);
+            result = await fetchSpecial("commentLike", {commentID: props.commentID, clientName: currentUser.name}, false);
+            setIsCommentLikedByUser(result.statuss == "liked" ? 1: 0);
+            setCurrentLikeAmount(result.currentLikeAmount);
+            console.log(result); 
             
-            //dispatch(changeLikeForSinglePost({postID:postID, serverResult:result}));
-
-            //console.log(result);
         }else{
             alert("you must be logged in to like comments, VAJAG VELAK SATAISIT");
         }
@@ -49,7 +47,7 @@ export default function SingleComment(props) {
             <div className='commentText'><TextWithReadMoreButton text={props.text}></TextWithReadMoreButton></div>
 
             <div className='likesAndSettings'>
-                <div onClick={()=>{commentLikeCallback()}} className='likeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>{props.likeAmount}</div>
+                <div onClick={()=>{commentLikeCallback();}} style={{backgroundColor:(isCommentLikedByUser =="1"?"red":"white")}} className='likeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>{currentLikeAmount}</div>
                 <div className='ThreeDotIcon' ><img src={require('../img/3Dots.png')} ></img></div>
             </div>
         </div>

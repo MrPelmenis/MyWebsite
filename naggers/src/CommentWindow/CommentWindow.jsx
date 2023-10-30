@@ -30,7 +30,7 @@ export default function CommentWindow() {
 
     const dispatch = useDispatch();
     const commentWindow = useSelector(state => state.commentWindow);
-
+    const currentUser = useSelector(state => state.currentUser);
     const handleClose = () => {
         setArePostsLoaded(false);
         dispatch(hideCommentScreen());
@@ -71,7 +71,10 @@ export default function CommentWindow() {
         if(!arePostsLoaded){
             setArePostsLoaded(true);
             console.log("updatojas komnetari");
-            let commentsForPost = ((await fetchSpecial("getCommentsForPost", {postID:commentWindow.postID}, true)));
+            let commentsForPost = ((await fetchSpecial("getCommentsForPost", {postID:commentWindow.postID, clientName:currentUser.name}, !ExtraFunctions.isUserLoggedIn())));
+            //ir ! jo mainigais ir is user anonymous
+
+            console.log(commentsForPost);
             setLoadedComments(commentsForPost);
         }
         
@@ -91,6 +94,7 @@ export default function CommentWindow() {
             likeAmount={comment.LikeAmount}
             authorName={comment.AuthorName}
             postId={comment.postID}
+            isCommentLikedByCurrentUser={comment.isLikedByCurrentUser}
             ></SingleComment>);
         });
     }

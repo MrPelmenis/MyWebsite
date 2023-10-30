@@ -33,11 +33,7 @@ if (isset($_GET["requestAnonymus"])) {
             break;
         }
         case "getCommentsForPost":{
-            $postID = htmlspecialchars($_POST["postID"]);
-            $postIDint = intval( $postID );
-            $sqlquer = "SELECT * FROM Comments WHERE PostID = ". TDB($postIDint)."
-            ORDER BY LikeAmount DESC;";
-            echo(json_encode(sql_MultipleRow($sqlquer)));
+            getCommentsForPost(false);
             break;
         }
     }
@@ -69,36 +65,74 @@ function getRecentPosts($isUserLoggedIn){
     echo(json_encode(sql_MultipleRow($sqlquer)));
 }
 
+function getCommentsForPost($isUserLoggedIn){
+    $postID = htmlspecialchars($_POST["postID"]);
+    $clientName = htmlspecialchars($_POST["clientName"]);
+    $userID = sql_StringExecute("SELECT ID FROM Users WHERE `nickname` = '". $clientName ."';");
+
+    if($isUserLoggedIn){
+        //userLoggedIn
+        $sqlquer = "
+            SELECT C.*,
+                CASE
+                    WHEN CL.CommentID = C.ID AND CL.UserID = " . TDB($userID) . " THEN 1
+                    ELSE 0
+                END AS isLikedByCurrentUser
+            FROM Comments C 
+            LEFT OUTER JOIN CommentLikes CL ON C.ID = CL.CommentID
+            WHERE C.PostID = " . TDB($postID) . "
+            ORDER BY C.LikeAmount DESC LIMIT 10;";
+        //echo($sqlquer);
+    }else{
+        //userNotloggedIn
+        $sqlquer = "
+                SELECT *, 0 as isLikedByCurrentUser
+                FROM Comments
+                ORDER BY LikeAmount DESC LIMIT  ". 10 . ";";
+    }
+    echo(json_encode(sql_MultipleRow($sqlquer)));
+}
+
+
 
 if (isset($_GET["request"])) {
     $jwt = parseJwt($_SERVER["HTTP_JWT"]);
     if ($jwt) {
         //user ir logged in  
         switch ($_GET["request"]) {
-
+            
+            case "getCommentsForPost":{
+                getCommentsForPost(true);
+                break;
+            }
 
             case "commentLike": {
                 $commentID = htmlspecialchars($_POST["commentID"]);
                 $clientName = htmlspecialchars($_POST["clientName"]);
 
-                $userID = sql_StringExecute("SELECT ID FROM Users WHERE `nickname` = '". $clientName ."';");
+                $userID = sql_StringExecute("SELECT ID FROM Users WHERE `nickname` = '". TDB($clientName) ."';");
 
 
-                $hasUserAllreadyLikedTheCommentQuery = "SELECT 1 FROM CommentLikes WHERE userid = '". $userID ."' AND commentId = '". $commentID ."'; ";
+                $hasUserAllreadyLikedTheCommentQuery = "SELECT 1 FROM CommentLikes WHERE userid = '". TDB($userID) ."' AND commentId = '". TDB($commentID) ."'; ";
                 $hasUserAllreadyLikedTheComment = sql_StringExecute($hasUserAllreadyLikedTheCommentQuery);
                 
+                $likedOrDisliked = "";
+                $currentLikeAmount = "";
+
                 if($hasUserAllreadyLikedTheComment != 1){
                     $res = sql_Execute_Transaction([
                     "INSERT INTO CommentLikes (`commentid`, `userid`) VALUES ('". TDB($commentID) ."','".TDB($userID) ."' );",
                     "UPDATE Comments SET LikeAmount = LikeAmount + 1 WHERE ID = ". TDB($commentID) ." ;" ]);
-                    echo (json_encode(array("statuss" => "liked")));
+                    $likedOrDisliked = "liked"; 
+
                 }else{
-                    $deleteQuer = [
-                        "DELETE FROM CommentLikes WHERE CommentID=".$commentID." AND UserID = ".$userID.";",
-                        "UPDATE Comments SET LikeAmount = LikeAmount - 1 WHERE ID = ". TDB($commentID) .";"];
-                    $res = sql_Execute_Transaction($deleteQuer);
-                    echo (json_encode(array("statuss" => "disliked")));
+                    $res = sql_Execute_Transaction([
+                        "DELETE FROM CommentLikes WHERE CommentID=".TDB($commentID)." AND UserID = ".TDB($userID).";",
+                        "UPDATE Comments SET LikeAmount = LikeAmount - 1 WHERE ID = ". TDB($commentID) .";"]);
+                    $likedOrDisliked = "disliked";     
                 }
+                $currentLikeAmount =  sql_StringExecute("SELECT LikeAmount FROM Comments WHERE ID='" . TDB($commentID) . "'");
+                echo(json_encode(array("statuss" => $likedOrDisliked, "currentLikeAmount" => $currentLikeAmount)));
 
                 break;
             }

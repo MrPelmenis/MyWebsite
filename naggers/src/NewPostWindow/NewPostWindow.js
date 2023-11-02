@@ -16,11 +16,16 @@ import configData from "../config.json";
 import { fetchSpecial } from '../serverComunication.js';
 
 
+import { changePosts } from '../store/loadedPosts';
+
+
 
 export default function NewPostWindow() {
 
     const dispatch = useDispatch();
     const newPostWindow = useSelector(state => state.newPostWindow);
+    const loadedPosts = useSelector(state => state.loadedPosts);
+    const currentUser = useSelector(state=>state.currentUser);
 
     function handleClose() {
         dispatch(hidePostScreen());
@@ -42,11 +47,15 @@ export default function NewPostWindow() {
         if(titleInput != "" && textInput != ""){
             let res = await fetchSpecial("uploadPost", { title: titleInput, body: textInput }, false);
             console.log(res);
-            if(res.answer){
+            if(res.postID){
+                let recentPost = ((await fetchSpecial("getRecentPosts", {clientName: currentUser.name, postID:res.postID}, (currentUser.name != "" ? false: true ))))[0];
+
+
                 setTitleInput("");
                 setTextInput("");
                 dispatch(hidePostScreen());
-                window.location.href = "/";
+                dispatch(changePosts({posts:[recentPost, ...loadedPosts.posts]}));
+                //window.location.href = "/";
             }
         }else{
             alert("You must enter something");

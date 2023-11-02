@@ -29,7 +29,7 @@ return $header;
 if (isset($_GET["requestAnonymus"])) {
     switch ($_GET["requestAnonymus"]) {
         case "getRecentPosts": {
-            getRecentPosts(false);
+            getRecentPosts(false, ""); //gives "" because it can't be filled
             break;
         }
         case "getCommentsForPost":{
@@ -39,7 +39,7 @@ if (isset($_GET["requestAnonymus"])) {
     }
 }
 
-function getRecentPosts($isUserLoggedIn){
+function getRecentPosts($isUserLoggedIn, $postID){
     $result = "";
     if($isUserLoggedIn){
         $clientName = htmlspecialchars($_POST["clientName"]);
@@ -52,12 +52,18 @@ function getRecentPosts($isUserLoggedIn){
                     END AS isLikedByCurrentUser
                 FROM Posts P 
                 LEFT OUTER JOIN Likes L ON
-                L.PostID = P.ID AND L.UserID = ".$userID." 
+                L.PostID = P.ID AND L.UserID = ".$userID."
+                
+                ". ($postID == ""?"":"WHERE P.ID=" .$postID. "") ."
+                
                 ORDER BY P.ID DESC LIMIT  ". 10 . " ;";
     }else{
         $sqlquer = "
                 SELECT *, 0 as isLikedByCurrentUser
                 FROM Posts
+
+                ". ($postID == ""?"":"WHERE Posts.ID=" .$postID. "") ."
+
                 ORDER BY ID DESC LIMIT  ". 10 . ";";
     }
     
@@ -162,7 +168,8 @@ if (isset($_GET["request"])) {
             }
             
             case "getRecentPosts": {
-                getRecentPosts(true);
+                $postID = htmlspecialchars($_POST["postID"]);
+                getRecentPosts(true, $postID);
                 break;
             }
 
@@ -216,7 +223,7 @@ if (isset($_GET["request"])) {
                 $email = ($jwt->email);
                 $gottenNickname = sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'");
 
-                $date = date('Y-m-d H:i:s');  
+                $date = date('Y-m-d H:i:s');
 
                 $title = htmlspecialchars($_POST["title"]);
                 $body = htmlspecialchars($_POST["body"]);
@@ -227,7 +234,7 @@ if (isset($_GET["request"])) {
                     sql_Execute("INSERT INTO Posts (TITLE, BODY, AuthorName, AuthorEmail, LikeAmount, DATE_TIME)
                      VALUES ('" . TDB($title) . "', '" . TDB($body) . "', '" . TDB($gottenNickname) .
                      "', '" . TDB($email) . "', 0, '" . TDB($date) . "'); ");
-                     echo (json_encode(array("answer" => true)));
+                     echo (json_encode(array("postID" => sql_StringExecute("SELECT MAX(Posts.ID) from Posts"))));
                 }
                 
 

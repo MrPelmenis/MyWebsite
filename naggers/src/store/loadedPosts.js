@@ -29,6 +29,9 @@ export default slice.reducer;
 
 const { changePostsReducer } = slice.actions;
 export const changePosts = ({ posts }) => dispatch => {
+
+    console.log("gottenPosts:");
+    console.log(posts);
     try {
         dispatch(changePostsReducer({ posts }));
     } catch (e) {

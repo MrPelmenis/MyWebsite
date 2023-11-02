@@ -34,13 +34,12 @@ export default function MainPart() {
 
 
     const makeInsides = async () =>{
-        let recentPosts = ((await fetchSpecial("getRecentPosts", {clientName: currentUser.name}, (currentUser.name != "" ? false: true ))));
+        let recentPosts = ((await fetchSpecial("getRecentPosts", {clientName: currentUser.name, postID:""}, (currentUser.name != "" ? false: true ))));
         dispatch(changePosts({posts:recentPosts}));
     }
 
     const makePostsIntoReactObjects = (posts)=>{
         return posts.map(post => {
-            //console.log(post);
             return (<SinglePost key={(post.TITLE + post.BODY + post.DATE_TIME)}
              date={post.DATE_TIME} title={post.TITLE} body={post.BODY}
               likeAmount={post.LikeAmount} authorName={post.AuthorName} id={post.ID} readingUser={currentUser.name} isPostLikedByUser={post.isLikedByCurrentUser}></SinglePost>)

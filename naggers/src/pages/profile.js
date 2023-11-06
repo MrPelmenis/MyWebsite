@@ -1,11 +1,16 @@
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, RouterProvider, Routes, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+
+import ProfileContainer from "./ProfilePageComponents/ProfileContainer/ProfileContainer.jsx";
 
 import configData from "../config.json";
 
+import store from "../store";
+import { Provider } from 'react-redux';
 
 const Profile = () => {
     const navigate = useNavigate();
+    
 
     useEffect(() => {
     });
@@ -16,10 +21,11 @@ const Profile = () => {
     }
 
     return (
-        <>
-            <div style={{ marginTop: 300, fontSize: 50, width: 500, height: 500 }}>Luuk Tavs PRofils</div>
-            <button onClick={logOut}>Log Out</button>
-        </>
+        <Provider store={store}>
+            <ProfileContainer>
+                <button onClick={logOut}>Log Out</button>
+            </ProfileContainer>
+        </Provider>
     )
 };
 

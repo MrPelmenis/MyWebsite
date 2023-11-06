@@ -1,0 +1,56 @@
+.ProfileContainer{
+   width: 100%;
+   height: 100%;
+   margin-top: 100px;
+   border: 2px solid red; 
+}
+
+.ProfileNameDisplay{
+   font-size: 40px;
+}
+
+.editImgIcon{
+   position: relative;
+   top: 50px;
+   left: -15px;
+   width: 25px;
+   height: 25px;
+   line-height: 25px;
+   text-align: center;
+
+   background-color: white;
+   border: 1px solid gray;
+   border-radius: 40px;
+   transition: 0.1s;
+}
+
+.editImgIcon:hover{
+   width: 26px;
+   height: 26px;
+   line-height: 26px;
+   cursor: pointer;
+   user-select: none;
+}
+
+input[type="file"] {
+   display: none;
+}
+
+.changeUsernameButton{
+   color:gray;
+   font-size: 15px;
+   cursor: pointer;
+   user-select: none;
+   transition: 0.1s;
+}
+
+.changeUsernameButton:hover{
+   transform:translate(5px, 0px);
+}
+
+.ProfileImg{
+   width: 80px;
+   height: 80px;
+   background-color: #0C4A60;
+   border-radius: 50px;
+}

@@ -65,6 +65,8 @@ function ProfilePicOnTop() {
         navigate("/profile");
     }
 
+
+
     return (
         <>
             <img onClick={openProfile} src={require('../img/DefaultProfilePic.png')} className='profilePicOnTop'></img>
@@ -122,8 +124,14 @@ function SignInButton({ value }) {
 }
 
 function TopBarImg({ src, style }) {
+    const navigate = useNavigate();
+
+    const openMain = () => {
+        navigate("/");
+    }
+
     return (
-        <img className="TopBarImg" style={style} alt={"a"} src={src}></img>
+        <img onClick={openMain} className="TopBarImg" style={style} src={src}></img>
     )
 }
 

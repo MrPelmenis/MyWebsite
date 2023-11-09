@@ -26,6 +26,7 @@ return $header;
 */
 
 
+
 if (isset($_GET["requestAnonymus"])) {
     switch ($_GET["requestAnonymus"]) {
         case "getRecentPosts": {
@@ -38,10 +39,15 @@ if (isset($_GET["requestAnonymus"])) {
         }
 
         case "getProfilePictureForUser":{
+
+            $clientName =$_GET["clientName"];
+//            echo($clientName);
             $imgSrc = sql_StringExecute("SELECT ProfilePicture
             from Users
-            WHERE Nickname = '" . $_GET["clientName"] . "';");
-            echo (json_encode(array("imgSrc" => $imgSrc)));
+            WHERE Nickname = '" . TDB($clientName) . "';");
+            //header('Content-type:image/png');
+            
+            echo ($imgSrc=="Default" ? "../img/DefaultProfilePic.png" : $imgSrc);
             break;
         }
     }

@@ -14,6 +14,8 @@ import { showCommentScreen } from '../store/commentWindow';
 
 import TextWithReadMoreButton from "../TextWithReadMoreButtons";
 
+import configData from "../config.json";
+
 
 
 export default function SinglePost({id, title, body, authorName, date, likeAmount, readingUser, isPostLikedByUser, isThisCommentPost}) {
@@ -28,6 +30,7 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
     //alert(commentWindowVisibility);
     
     const [isPostInComments, setIsPostInComments] = useState(isThisCommentPost);
+    const [postAuthorName, setPostAuthorName] = useState(authorName);
 
     const showComments = () => {
         if(!isPostInComments){
@@ -67,8 +70,9 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
     }
     
     
-    const getImgSrc = ()=>{
-        return "http://localhost:3001/getProfilePictureForUser?clientName=" + authorName;
+    const getImgSrc =  () => {
+        let url = `${configData.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=` + postAuthorName;
+        return (url);
     }
     
     
@@ -77,7 +81,7 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
         <div className='SinglePost'>
             <div className='authorDateInfo'>
                 <div style={{ display: "flex", justifyContent: "left" }}>
-                    <img className="authorPic" src={require('../img/DefaultProfilePic.png')} ></img>
+                    <img className="authorPic" src={(getImgSrc())} ></img>
                     <div className="authorName">{authorName}</div>
                 </div>
                 <div className='dateInfoAboutPost'>{ExtraFunctions.getTimeAgo(date)}</div>

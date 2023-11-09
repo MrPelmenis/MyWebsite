@@ -67,6 +67,9 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
     }
     
     
+    const getImgSrc = ()=>{
+        return "http://localhost:3001/getProfilePictureForUser?clientName=" + authorName;
+    }
     
     
     

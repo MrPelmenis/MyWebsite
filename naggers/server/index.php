@@ -36,6 +36,14 @@ if (isset($_GET["requestAnonymus"])) {
             getCommentsForPost(false);
             break;
         }
+
+        case "getProfilePictureForUser":{
+            $imgSrc = sql_StringExecute("SELECT ProfilePicture
+            from Users
+            WHERE Nickname = '" . $_GET["clientName"] . "';");
+            echo (json_encode(array("imgSrc" => $imgSrc)));
+            break;
+        }
     }
 }
 
@@ -106,6 +114,17 @@ if (isset($_GET["request"])) {
     if ($jwt) {
         //user ir logged in  
         switch ($_GET["request"]) {
+
+            case "profileImgUpdate":{
+                $clientName = htmlspecialchars($_POST["clientName"]);
+                $imgSrc = htmlspecialchars($_POST["imgSrc"]);
+                $userID = sql_StringExecute("SELECT ID FROM Users WHERE `nickname` = '". TDB($clientName) ."';");
+
+                sql_Execute("UPDATE Users SET ProfilePicture = '". TDB($imgSrc) ."' WHERE ID = ". TDB($userID) ." ;");
+                echo (json_encode(array("answer" => true)));
+                break;
+            }
+
             
             case "getCommentsForPost":{
                 getCommentsForPost(true);

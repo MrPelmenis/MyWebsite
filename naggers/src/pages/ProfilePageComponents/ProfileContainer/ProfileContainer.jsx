@@ -6,6 +6,8 @@ import "./ProfileContainer.css";
 
 import defaultProfilePic from '../../../img/DefaultProfilePic.png';
 
+import { fetchSpecial } from '../../../serverComunication';
+
 export default function ProfileContainer() {
     
     const dispatch = useDispatch();
@@ -16,15 +18,17 @@ export default function ProfileContainer() {
     const uploadImg = (event) => {
         let file = event.target.files[0];
         console.log(file);
-        
+        //pretty much getting an image src from the uploaded file and sending it to the server
         if (file) {
           let data = new FormData();
           data.append('file', file);
            
           const reader = new FileReader();
-           reader.onload = ()=>{
-            alert("aaa");
-            setProfilePicSrc(reader.result);
+           reader.onload = async ()=>{
+                console.log(reader.result);
+                setProfilePicSrc(reader.result);
+                let res = await fetchSpecial("profileImgUpdate", {clientName: currentUserState.name, imgSrc: reader.result}, false);
+                console.log(res);
            } 
            reader.readAsDataURL(file);
           
@@ -32,7 +36,7 @@ export default function ProfileContainer() {
     }
 
     
-    //dispatch(changePosts({posts:recentPosts}));
+    
 
     
     return (

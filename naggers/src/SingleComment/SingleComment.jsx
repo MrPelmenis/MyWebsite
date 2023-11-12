@@ -9,6 +9,7 @@ import TextWithReadMoreButton from "../TextWithReadMoreButtons";
 import { fetchSpecial } from '../serverComunication';
 import { useDispatch, useSelector } from 'react-redux';
 
+import configData from "../config.json";
 
 export default function SingleComment(props) {
 
@@ -38,7 +39,7 @@ export default function SingleComment(props) {
         <div className='SingleComment'>
             <div className='CommentAuthorDateInfo'>
                 <div style={{ display: "flex", justifyContent: "left" }}>
-                    <img className="CommentAuthorPic" src={require('../img/DefaultProfilePic.png')} ></img>
+                    <img className="CommentAuthorPic" src={`${configData.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=${props.authorName}`} ></img>
                     <div className="CommentAuthorName">{props.authorName}</div>
                 </div>
                 <div className='dateInfoAboutComment'>{ExtraFunctions.getTimeAgo(props.date)}</div>

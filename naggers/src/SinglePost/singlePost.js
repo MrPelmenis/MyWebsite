@@ -69,19 +69,13 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
        
     }
     
-    
-    const getImgSrc =  () => {
-        let url = `${configData.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=` + postAuthorName;
-        return (url);
-    }
-    
-    
+   
     
     return (
         <div className='SinglePost'>
             <div className='authorDateInfo'>
                 <div style={{ display: "flex", justifyContent: "left" }}>
-                    <img className="authorPic" src={(getImgSrc())} ></img>
+                    <img className="authorPic" src={`${configData.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=${postAuthorName}`} ></img>
                     <div className="authorName">{authorName}</div>
                 </div>
                 <div className='dateInfoAboutPost'>{ExtraFunctions.getTimeAgo(date)}</div>

@@ -41,13 +41,15 @@ if (isset($_GET["requestAnonymus"])) {
         case "getProfilePictureForUser":{
 
             $clientName =$_GET["clientName"];
-//            echo($clientName);
             $imgSrc = sql_StringExecute("SELECT ProfilePicture
             from Users
             WHERE Nickname = '" . TDB($clientName) . "';");
-            //header('Content-type:image/png');
-            
-            echo ($imgSrc=="Default" ? "../img/DefaultProfilePic.png" : $imgSrc);
+            header('Content-type:image/png');
+            if(is_null($imgSrc))
+            {
+                $imgSrc = file_get_contents('./DefaultProfilePic.png');
+            }
+            echo($imgSrc);
             break;
         }
     }
@@ -123,10 +125,17 @@ if (isset($_GET["request"])) {
 
             case "profileImgUpdate":{
                 $clientName = htmlspecialchars($_POST["clientName"]);
-                $imgSrc = htmlspecialchars($_POST["imgSrc"]);
-                $userID = sql_StringExecute("SELECT ID FROM Users WHERE `nickname` = '". TDB($clientName) ."';");
+                $imgSrc = $_POST["imgSrc"];
+                $imgSrc = explode (",", $imgSrc)[1];  
+                //Removes the "png;base64, part from html..."
 
-                sql_Execute("UPDATE Users SET ProfilePicture = '". TDB($imgSrc) ."' WHERE ID = ". TDB($userID) ." ;");
+                $userID = sql_StringExecute("SELECT ID FROM Users WHERE `nickname` = '". TDB($clientName) ."';");
+                $imgSrc = base64_decode($imgSrc);            
+                
+
+                $imgSrc = addslashes($imgSrc);
+                $sql = "UPDATE Users SET ProfilePicture = '".$imgSrc."' WHERE ID = ". TDB($userID) ." ;";
+                sql_Execute($sql);
                 echo (json_encode(array("answer" => true)));
                 break;
             }

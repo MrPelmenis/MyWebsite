@@ -54,5 +54,5 @@ function sql_MultipleRow($myQuery){
 function TDB($a)
 {
     global $conn;
-    return  mysqli_real_escape_string($conn, $a);
+    return  $conn -> real_escape_string($a);
 }

@@ -61,6 +61,8 @@ function googleLogin() {
 function ProfilePicOnTop() {
     const navigate = useNavigate();
 
+    const currentUserState = useSelector(state => state.currentUser);
+
     const openProfile = () => {
         navigate("/profile");
     }
@@ -69,7 +71,9 @@ function ProfilePicOnTop() {
 
     return (
         <>
-            <img onClick={openProfile} src={require('../img/DefaultProfilePic.png')} className='profilePicOnTop'></img>
+            <img onClick={openProfile} 
+            src={`${configData.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=${currentUserState.name}`}
+            className='profilePicOnTop'></img>
         </>
     )
 }

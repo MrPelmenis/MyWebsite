@@ -8,6 +8,8 @@ import defaultProfilePic from '../../../img/DefaultProfilePic.png';
 
 import { fetchSpecial } from '../../../serverComunication';
 
+import configData from "../../../config.json";
+
 export default function ProfileContainer() {
     
     const dispatch = useDispatch();
@@ -29,6 +31,7 @@ export default function ProfileContainer() {
                 setProfilePicSrc(reader.result);
                 let res = await fetchSpecial("profileImgUpdate", {clientName: currentUserState.name, imgSrc: reader.result}, false);
                 console.log(res);
+                window.location.href="/profile";
            } 
            reader.readAsDataURL(file);
           
@@ -42,7 +45,7 @@ export default function ProfileContainer() {
     return (
         <div className='ProfileContainer'>
             <div style={{display:"flex", justifyContent:"left"}}>
-                <img  src={profilePicSrc} className='ProfileImg'></img>
+                <img src={`${configData.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=${currentUserState.name}`} className='ProfileImg'></img>
                 
                 <input onChange={uploadImg} type="file" id="imgInput" accept="image/png, image/jpeg"/>
                 <label htmlFor="imgInput"><div className='editImgIcon'> &#9998;</div></label>

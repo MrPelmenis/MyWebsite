@@ -53,4 +53,5 @@ input[type="file"] {
    height: 80px;
    background-color: #0C4A60;
    border-radius: 50px;
+   border: 1px solid black;
 }

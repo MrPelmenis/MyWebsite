@@ -8,6 +8,10 @@ import configData from "../config.json";
 import store from "../store";
 import { Provider } from 'react-redux';
 
+import ChangeNameWindow from './../ChangeNameWindow/ChangeNameWindow';
+
+import { showChangeNameScreen } from '../store/changeNameWindow';
+
 const Profile = () => {
     const navigate = useNavigate();
     
@@ -22,6 +26,7 @@ const Profile = () => {
 
     return (
         <Provider store={store}>
+            <ChangeNameWindow></ChangeNameWindow>
             <ProfileContainer>
                 <button onClick={logOut}>Log Out</button>
             </ProfileContainer>

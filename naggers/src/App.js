@@ -3,6 +3,7 @@ import MainPart from './MainPart/mainPart';
 import SingUpWindow from './SignUpWindow/SignUpWindow';
 import NewPostWindow from './NewPostWindow/NewPostWindow';
 import CommentWindow from './CommentWindow/CommentWindow';
+import ChangeNameWindow from './ChangeNameWindow/ChangeNameWindow';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -15,6 +16,7 @@ function App() {
     <div >
       <Provider store={store}>
         <DataLoader></DataLoader>
+        <ChangeNameWindow></ChangeNameWindow>
         <SingUpWindow></SingUpWindow>
         <NewPostWindow></NewPostWindow>
         <CommentWindow></CommentWindow>

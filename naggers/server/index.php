@@ -285,6 +285,36 @@ if (isset($_GET["request"])) {
                     break;
                 }
 
+
+            
+                case "changeUserName":{
+                    $nickname = htmlspecialchars($_POST["nickname"]);
+                    $email = ($jwt->email);
+
+                    $currentName = sql_StringExecute("SELECT Nickname FROM Users WHERE `Email` = '". TDB($email) ."';");
+
+                    $checkq = "SELECT 1 FROM Users WHERE Nickname='" . TDB($nickname) . "';";
+                    $checkName = sql_StringExecute($checkq);
+
+                    if($checkName == ""){
+                        sql_Execute("UPDATE Users SET Nickname = '" . TDB($nickname) . "' WHERE Email = '" . TDB($email) . "'");
+
+                        //postos
+                        $qqq = "UPDATE Posts SET AuthorName = '" . TDB($nickname) . "' WHERE AuthorName = '" . TDB($currentName) . "'";
+                        sql_Execute("UPDATE Posts SET AuthorName = '" . TDB($nickname) . "' WHERE AuthorName = '" . TDB($currentName) . "'");
+
+                        //komentos
+                        sql_Execute("UPDATE Comments SET AuthorName = '" . TDB($nickname) . "' WHERE AuthorName = '" . TDB($currentName) . "'");
+
+                        echo (json_encode(array("success" => true)));
+                    }else{
+                        echo (json_encode(array("success" => false)));
+                    }
+
+                break;
+            }
+        
+
             case 'nickNameUpdate': {
                     $nickname = htmlspecialchars($_POST["nickname"]);
                     $email = ($jwt->email);

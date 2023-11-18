@@ -10,6 +10,8 @@ import { fetchSpecial } from '../../../serverComunication';
 
 import configData from "../../../config.json";
 
+import { showChangeNameScreen } from './../../../store/changeNameWindow';
+
 export default function ProfileContainer() {
     
     const dispatch = useDispatch();
@@ -56,7 +58,7 @@ export default function ProfileContainer() {
                     height = Math.round((img.height / img.width) * width);
                     yOffset = (width - height)/2;
                 }
-
+//
                 console.log("image stuff:");
                 console.log("width: " + width);
                 console.log("height: " + height);
@@ -83,6 +85,10 @@ export default function ProfileContainer() {
         }
     }
 
+    const openChangeNameWindow = () =>{
+        dispatch(showChangeNameScreen());
+    }
+
     
     
 
@@ -97,9 +103,10 @@ export default function ProfileContainer() {
 
                 <div className='ProfileNameDisplay'>
                     {currentUserState.name}
-                    <div className='changeUsernameButton'>Change your name &#9998;</div>
+                    <div onClick={()=>{openChangeNameWindow();}} className='changeUsernameButton'>Change your name &#9998;</div>
                 </div>
             </div>
+
         </div>
     )
 }

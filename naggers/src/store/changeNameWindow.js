@@ -19,7 +19,7 @@ export default slice.reducer
 
 
 const { showChangeNameWindow, hideChangeNameWindow } = slice.actions
-export const showPostScreen = () => async dispatch => {
+export const showChangeNameScreen = () => async dispatch => {
     try {
         dispatch(showChangeNameWindow());
     } catch (e) {
@@ -27,7 +27,7 @@ export const showPostScreen = () => async dispatch => {
     }
 }
 
-export const hidePostScreen = () => async dispatch => {
+export const hideChangeNameScreen = () => async dispatch => {
     try {
         return dispatch(hideChangeNameWindow())
     } catch (e) {

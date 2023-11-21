@@ -89,6 +89,12 @@ export default function ProfileContainer() {
         dispatch(showChangeNameScreen());
     }
 
+
+    const logoutCallback = ()=>{
+        localStorage.setItem("JWT", "");
+        window.location.href = "/";
+    }
+
     
     
 
@@ -105,8 +111,12 @@ export default function ProfileContainer() {
                     {currentUserState.name}
                     <div onClick={()=>{openChangeNameWindow();}} className='changeUsernameButton'>Change your name &#9998;</div>
                 </div>
-            </div>
 
+                
+            </div>
+            <div onClick={()=>{logoutCallback()}} className='logOutButton'>
+                 Log Out
+            </div>
         </div>
     )
 }

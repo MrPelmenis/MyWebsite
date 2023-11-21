@@ -37,6 +37,23 @@ export default function ChangeNameWindow() {
         if (nicknameInput == "") {
             setHelperText("You cannot be named -");
         } else {
+            let allowedChars = [
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'," ",
+            ];
+            
+            for(let i=0;i<nicknameInput.length; i++){
+                console.log(nicknameInput[i]);
+                if(allowedChars.indexOf(nicknameInput[i]) == -1){
+                    setHelperText('Cannot use symbols such as ' + nicknameInput[i] + ', #, $...');
+                    return;
+                }
+            }
+
+
             const data = await fetchSpecial("changeUserName", { nickname: nicknameInput });
             if (data.success) {
                 handleClose();

@@ -17,7 +17,7 @@ export default function MainPart() {
         makeInsides();
 
         const handleResize = () => {
-            setWidth(window.innerWidth);
+            setWidth("60%");
         };
         window.addEventListener("resize", handleResize);
         return () => {
@@ -51,7 +51,7 @@ export default function MainPart() {
       
 
     return (
-        <div className='MainPart' id='MainPart' style={{ width: mainPartWidth }}>
+        <div className='MainPart' id='MainPart' style={{ width: "40%" }}>
             {makePostsIntoReactObjects(loadedPosts.posts)}
         </div>
     )

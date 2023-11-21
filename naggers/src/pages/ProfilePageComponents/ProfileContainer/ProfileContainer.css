@@ -1,9 +1,13 @@
 .ProfileContainer{
-   width: 100%;
+   width: 40%;
    height: 100%;
-   margin-top: 100px;
-   border: 2px solid red; 
+
+   margin: auto;
+   margin-top: 110px;
 }
+
+
+
 
 .ProfileNameDisplay{
    font-size: 40px;
@@ -54,4 +58,23 @@ input[type="file"] {
    background-color: #0C4A60;
    border-radius: 50px;
    border: 1px solid black;
+}
+
+.logOutButton{
+   background-color: blue;
+   color: white;
+   border: none;
+   border-radius: 5px;
+   width: 80px;
+   text-align: center;
+   height: 30px;
+   font-size: 20px;
+   cursor: pointer;
+   position: relative;
+   left: calc(100% - 100px);
+   transition: 0.2;
+}
+
+.logOutButton:hover {
+   transform: scale(1.02,1.02);
 }

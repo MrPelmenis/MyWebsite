@@ -1,31 +1,11 @@
 <?php
 
-
 include 'config.php';
 include 'sql.php';
 
-/////////////////
-/*
-$servername;
-$username;
-$password;
-*/
-////////////////
+
 
 cors();
-
-
-//echo sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . "normundsmalnacs@gmail.com" . "'");
-
-
-/*$header = $_SERVER['HTTP_X_TOKEN'];
-if (!$header) {
-    return null;
-}
-return $header;
-*/
-
-
 
 if (isset($_GET["requestAnonymus"])) {
     switch ($_GET["requestAnonymus"]) {
@@ -119,7 +99,14 @@ function getCommentsForPost($isUserLoggedIn){
 
 if (isset($_GET["request"])) {
     $jwt = parseJwt($_SERVER["HTTP_JWT"]);
-    if ($jwt) {
+   /* $jwtString = json_encode($jwt);
+    $isValid = validateGoogleJWT($jwtString);
+    if ($isValid) {
+        echo 'Token is valid';
+    } else {
+        echo 'Token is invalid';
+    }*/
+    if (($jwt)) {
         //user ir logged in  
         switch ($_GET["request"]) {
 
@@ -259,9 +246,9 @@ if (isset($_GET["request"])) {
 
                 $date = date('Y-m-d H:i:s');
 
-                $title = htmlspecialchars($_POST["title"]);
-                $body = htmlspecialchars($_POST["body"]);
-
+                $title = ($_POST["title"]);
+                $body = ($_POST["body"]);
+                //echo($body);
                 $accountExists = ($gottenNickname != "" ? true : false);
 
                 if($accountExists){
@@ -339,6 +326,8 @@ if (isset($_GET["request"])) {
         //userIsnt logged in
     }
 }
+
+
 
 
 function cors()

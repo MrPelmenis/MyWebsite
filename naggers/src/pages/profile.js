@@ -8,27 +8,18 @@ import configData from "../config.json";
 import store from "../store";
 import { Provider } from 'react-redux';
 
-import ChangeNameWindow from './../ChangeNameWindow/ChangeNameWindow';
-
-import { showChangeNameScreen } from '../store/changeNameWindow';
+import ChangeNameWindow from './../ChangeNameWindow/ChangeNameWindow'; 
 
 const Profile = () => {
     const navigate = useNavigate();
     
-
     useEffect(() => {
     });
-
-    const logOut = () => {
-        localStorage.setItem("JWT", "");
-        window.location.href = "/";
-    }
 
     return (
         <Provider store={store}>
             <ChangeNameWindow></ChangeNameWindow>
             <ProfileContainer>
-                <button onClick={logOut}>Log Out</button>
             </ProfileContainer>
         </Provider>
     )

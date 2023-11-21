@@ -43,13 +43,38 @@ export default function NewPostWindow() {
        // alert(titleInput);
     };
 
+
+    function convertToHtmlRegexSymbols(inputString) {
+        const symbolMapping = {
+            '<': '&lt;',
+            '>': '&gt;',
+            '[': '&#91;',
+            ']': '&#93;',
+            '*': '&#42;'
+            // You can add more symbols and their HTML regex equivalents here
+        };
+    
+        let outputString = '';
+    
+        for (let i = 0; i < inputString.length; i++) {
+            const char = inputString[i];
+            if (symbolMapping[char] !== undefined) {
+                outputString += symbolMapping[char];
+            } else {
+                outputString += char;
+            }
+        }
+    
+        return outputString;
+    }
+
+
     async function uploadPost (){
         if(titleInput != "" && textInput != ""){
             let res = await fetchSpecial("uploadPost", { title: titleInput, body: textInput }, false);
             console.log(res);
             if(res.postID){
                 let recentPost = ((await fetchSpecial("getRecentPosts", {clientName: currentUser.name, postID:res.postID}, (currentUser.name != "" ? false: true ))))[0];
-
 
                 setTitleInput("");
                 setTextInput("");

@@ -107,7 +107,7 @@
 }
 
 .changeNameButton:hover {
-    border: 1px solid white;
+    transform: scale(1.02,1.02);
 }
 
 .helperText {

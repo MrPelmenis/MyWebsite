@@ -23,7 +23,14 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
     const dispatch = useDispatch();
     const loadedPosts = useSelector(state => state.loadedPosts);
 
-    
+
+    console.log("BBBBBBBBBBBBBBBBBBBBBBBB");
+    console.log(body);
+    const [readyBody, setReadyBody]  = useState(body);
+    console.log(readyBody);
+
+
+
     //dispatch(changePosts({posts:recentPosts}));
 
     const commentWindowVisibility = useSelector(state => state.commentWindow).visible;
@@ -33,16 +40,15 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
     const [postAuthorName, setPostAuthorName] = useState(authorName);
 
     const showComments = () => {
+
         if(!isPostInComments){
-            dispatch(showCommentScreen({authorName:authorName, uploadDate: date, title:title, body:body, likeAmount:likeAmount, postID:id}));
+            dispatch(showCommentScreen({authorName:authorName, uploadDate: date, title:title, body:readyBody, likeAmount:likeAmount, postID:id}));
         }else{
             alert("vajag nosktolot lejaa uz komentariem jo sis posts jau ir komentaa");
         }
         
        // alert(commentWindowVisibility);
     };
-
-
 
     const [postID, setPostID] = useState(id);
     const [currentUser, setcurrentUser] = useState(readingUser);
@@ -82,7 +88,7 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
             </div>
 
             <div className='titleText'>{title}</div>
-            <div className='postText'><TextWithReadMoreButton text={body}></TextWithReadMoreButton></div>
+            <div className='postText'><TextWithReadMoreButton text={readyBody}></TextWithReadMoreButton></div>
 
             <div className='likesAndComments'>
                 <div style={{display:"flex"}}>

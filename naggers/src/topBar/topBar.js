@@ -165,7 +165,7 @@ function NewPostButton() {
     if (ExtraFunctions.isUserLoggedIn()) {
         return (
             <>
-                <button className="NewPostButton" onClick={openNewPostWindow}>New Post</button>
+                <button className="NewPostButton" onClick={openNewPostWindow}>+</button>
             </>
         )
     } else {

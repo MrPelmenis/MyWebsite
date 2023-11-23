@@ -43,7 +43,7 @@
     }
 }
 
-@media only screen and (width > 600px) {
+@media only screen and (height > 600px) {
     .white-box {
         height: 60%;
         height: 70%;

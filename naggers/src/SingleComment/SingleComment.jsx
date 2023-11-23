@@ -47,8 +47,8 @@ export default function SingleComment(props) {
 
             <div className='commentText'><TextWithReadMoreButton text={props.text}></TextWithReadMoreButton></div>
 
-            <div className='likesAndSettings'>
-                <div onClick={()=>{commentLikeCallback();}} style={{backgroundColor:(isCommentLikedByUser =="1"?"red":"white")}} className='likeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>{currentLikeAmount}</div>
+            <div className='CommentLikesAndComments'>
+                <div onClick={()=>{commentLikeCallback();}} style={{backgroundColor:(isCommentLikedByUser =="1"?"red":"white")}} className='CommentlikeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>{currentLikeAmount}</div>
                 <div className='ThreeDotIcon' ><img src={require('../img/3Dots.png')} ></img></div>
             </div>
         </div>

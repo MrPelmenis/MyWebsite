@@ -13,7 +13,11 @@ export default function TextWithReadMoreButton(props) {
         if (maxLength == -1) {
             return inputText;
         } else {
-            return inputText.substring(0, maxLength) + "...";
+            if(inputText.length< maxLength){
+                return inputText;
+            }else{
+                return inputText.substring(0, maxLength) + "...";
+            }
         }
     }
 

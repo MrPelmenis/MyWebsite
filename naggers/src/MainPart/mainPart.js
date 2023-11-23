@@ -13,16 +13,7 @@ import { changePosts } from '../store/loadedPosts';
 export default function MainPart() {
     const [mainPartWidth, setWidth] = useState(window.innerWidth);
     useEffect( () => {
-
         makeInsides();
-
-        const handleResize = () => {
-            setWidth("60%");
-        };
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
     }, []);
 
 
@@ -51,7 +42,7 @@ export default function MainPart() {
       
 
     return (
-        <div className='MainPart' id='MainPart' style={{ width: "40%" }}>
+        <div className='MainPart' id='MainPart'>
             {makePostsIntoReactObjects(loadedPosts.posts)}
         </div>
     )

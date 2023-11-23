@@ -3,8 +3,20 @@
     padding-left: 5px;
     padding-right: 5px;
     background-color: #e1dddb;
-    height: 2000px;
     margin: auto;
     z-index: 1;
     margin-top: 100px;
+}
+
+
+@media only screen and (width < 1300px) {
+    .MainPart {
+        width: 100%;
+    }
+}
+
+@media only screen and (width > 1300px) {
+    .MainPart {
+        width: 40%;
+    }
 }

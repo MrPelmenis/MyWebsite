@@ -17,6 +17,10 @@ import TextWithReadMoreButton from "../TextWithReadMoreButtons";
 import configData from "../config.json";
 
 
+import { AiOutlineLike } from "react-icons/ai";
+import { AiFillLike } from "react-icons/ai";
+import { AiOutlineComment } from "react-icons/ai";
+
 
 export default function SinglePost({id, title, body, authorName, date, likeAmount, readingUser, isPostLikedByUser, isThisCommentPost}) {
     
@@ -92,10 +96,14 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
 
             <div className='likesAndComments'>
                 <div style={{display:"flex"}}>
-                    <div onClick={()=>{likeCallback()}} style={{backgroundColor:(isPostLikedByUser ==1?"red":"white")}} className='likeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>{likeAmount}</div>
-                    <div className='comment' onClick={()=>{ showComments()  }}>Comment ...</div>
+                    <div className='likeIconAndCount' onClick={()=>{likeCallback()}} >
+                        {isPostLikedByUser != 1 ? (<AiOutlineLike style={{ width:"25px", height:"25px" }}/>) : (<AiFillLike style={{ width:"25px", height:"25px" }}/>)}
+                        <span style={{margin:"auto"}}>{likeAmount}</span>
+                    </div>
+                    <div style={{marginRight:10}}>|</div>
+                    <div className='comment' onClick={()=>{ showComments()  }}><AiOutlineComment  style={{marginLeft:"15px",paddingRight:"15px", width:"25px", height:"25px"}}/></div>
                 </div>
-                {!isPostInComments && <div className='ThreeDotIcon' ><img src={require('../img/3Dots.png')} ></img></div>}
+                
             </div>
         </div>
     )

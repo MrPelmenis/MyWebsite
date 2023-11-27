@@ -13,6 +13,7 @@ const slice = createSlice({
     },
     reducers: {
         showCommentScreenRed: (state, action) => {
+            console.log("actionpayload: " + action.payload.isPostLikedByUser);
             state.visible = true;
             state.authorName = action.payload.authorName;
             state.uploadDate = action.payload.uploadDate;
@@ -20,6 +21,7 @@ const slice = createSlice({
             state.body = action.payload.body;
             state.likeAmount = action.payload.likeAmount;
             state.postID = action.payload.postID;
+            state.isPostLikedByUser = action.payload.isPostLikedByUser;
         },
         hideCommentScreenRed: (state, action) => {
             state.visible = false;
@@ -31,9 +33,9 @@ export default slice.reducer
 
 
 const { showCommentScreenRed, hideCommentScreenRed } = slice.actions
-export const showCommentScreen = ({authorName,uploadDate, title, body, likeAmount, postID}) => async dispatch => {
+export const showCommentScreen = ({authorName,uploadDate, title, body, isPostLikedByUser, likeAmount, postID}) => async dispatch => {
     try {
-        dispatch(showCommentScreenRed({authorName,uploadDate, title, body, likeAmount, postID}));
+        dispatch(showCommentScreenRed({authorName,uploadDate, title, body,isPostLikedByUser, likeAmount, postID}));
     } catch (e) {
         return console.error(e.message);
     }

@@ -17,8 +17,6 @@ export default function SingleComment(props) {
     const [currentLikeAmount, setCurrentLikeAmount] = useState(props.likeAmount);
 
     const currentUser = useSelector(state => state.currentUser);
-    
-    console.log("iscommentlikedbycurrent user: " + isCommentLikedByUser);
 
     const commentLikeCallback = async () => {
         if(ExtraFunctions.isUserLoggedIn()){
@@ -49,7 +47,6 @@ export default function SingleComment(props) {
 
             <div className='CommentLikesAndComments'>
                 <div onClick={()=>{commentLikeCallback();}} style={{backgroundColor:(isCommentLikedByUser =="1"?"red":"white")}} className='CommentlikeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>{currentLikeAmount}</div>
-                <div className='ThreeDotIcon' ><img src={require('../img/3Dots.png')} ></img></div>
             </div>
         </div>
     )

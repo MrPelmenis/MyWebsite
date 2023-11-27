@@ -1,19 +1,12 @@
 import '../App.css';
 import { useState } from 'react';
 import "./singlePost.css";
-
 import { ExtraFunctions } from "../extraFunctions";
 import { fetchSpecial } from '../serverComunication';
-
 import { useDispatch, useSelector } from 'react-redux';
-
 import { changeLikeForSinglePost } from '../store/loadedPosts';
-
-
 import { showCommentScreen } from '../store/commentWindow';
-
 import TextWithReadMoreButton from "../TextWithReadMoreButtons";
-
 import configData from "../config.json";
 
 
@@ -23,41 +16,32 @@ import { AiOutlineComment } from "react-icons/ai";
 
 
 export default function SinglePost({id, title, body, authorName, date, likeAmount, readingUser, isPostLikedByUser, isThisCommentPost}) {
-    
+
     const dispatch = useDispatch();
     const loadedPosts = useSelector(state => state.loadedPosts);
-
-
     console.log("BBBBBBBBBBBBBBBBBBBBBBBB");
     console.log(body);
     const [readyBody, setReadyBody]  = useState(body);
     console.log(readyBody);
-
-
-
     //dispatch(changePosts({posts:recentPosts}));
-
     const commentWindowVisibility = useSelector(state => state.commentWindow).visible;
     //alert(commentWindowVisibility);
     
     const [isPostInComments, setIsPostInComments] = useState(isThisCommentPost);
     const [postAuthorName, setPostAuthorName] = useState(authorName);
-
     const showComments = () => {
-
         if(!isPostInComments){
-            dispatch(showCommentScreen({authorName:authorName, uploadDate: date, title:title, body:readyBody, likeAmount:likeAmount, postID:id}));
+            dispatch(showCommentScreen({authorName:authorName, isPostLikedByUser:isPostLikedByUser, uploadDate: date, title:title, body:readyBody, likeAmount:likeAmount, postID:id}));
         }else{
             alert("vajag nosktolot lejaa uz komentariem jo sis posts jau ir komentaa");
         }
         
        // alert(commentWindowVisibility);
     };
-
     const [postID, setPostID] = useState(id);
     const [currentUser, setcurrentUser] = useState(readingUser);
     const  likeCallback = async ()=>{
-        if(!isThisCommentPost){
+        if(!isPostInComments){
             if(ExtraFunctions.isUserLoggedIn()){
                 let result;
                 if(isPostLikedByUser == 0){
@@ -90,9 +74,9 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
                 </div>
                 <div className='dateInfoAboutPost'>{ExtraFunctions.getTimeAgo(date)}</div>
             </div>
-
             <div className='titleText'>{title}</div>
             <div className='postText'><TextWithReadMoreButton text={readyBody}></TextWithReadMoreButton></div>
+
 
             <div className='likesAndComments'>
                 <div style={{display:"flex"}}>
@@ -101,10 +85,12 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
                         <span style={{margin:"auto"}}>{likeAmount}</span>
                     </div>
                     <div style={{marginRight:10}}>|</div>
+
                     <div className='comment' onClick={()=>{ showComments()  }}><AiOutlineComment  style={{marginLeft:"15px",paddingRight:"15px", width:"25px", height:"25px"}}/></div>
                 </div>
-                
             </div>
+
+
         </div>
     )
 }

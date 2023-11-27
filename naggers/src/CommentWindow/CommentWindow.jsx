@@ -73,8 +73,6 @@ export default function CommentWindow() {
             console.log("updatojas komnetari");
             let commentsForPost = ((await fetchSpecial("getCommentsForPost", {postID:commentWindow.postID, clientName:currentUser.name}, !ExtraFunctions.isUserLoggedIn())));
             //ir ! jo mainigais ir is user anonymous
-
-            console.log(commentsForPost);
             setLoadedComments(commentsForPost);
         }
         
@@ -86,6 +84,7 @@ export default function CommentWindow() {
     }
     
     const makeCommentsIntoReactObjects = (comments)=>{
+        
         return comments.map(comment => {
             return (<SingleComment key={Math.random()*10 + Math.random()*2}
             commentID={comment.ID}
@@ -99,8 +98,8 @@ export default function CommentWindow() {
         });
     }
 
-
     if (commentWindow.visible) {
+        console.log(commentWindow);
         return (
             <div className="AllCommentContainer">
                 <div className="white-box" style={{}}>
@@ -110,9 +109,9 @@ export default function CommentWindow() {
                         </div>
                     </div>
                     
-                    <div style={{height:140, border: "1px solid white", marginTop:-20, width: "100%"}}>
+                    <div style={{ border: "1px solid red", marginTop:-20, width: "100%"}}>
                         <SinglePost isThisCommentPost={true} date={commentWindow.uploadDate} title={commentWindow.title} body={commentWindow.body}
-                        likeAmount={commentWindow.likeAmount} authorName={commentWindow.authorName}></SinglePost>
+                        likeAmount={commentWindow.likeAmount} isPostLikedByUser={commentWindow.isPostLikedByUser} id={commentWindow.postID} readingUser={currentUser.name} authorName={commentWindow.authorName}></SinglePost>
                     </div>
 
                     <div className='CommentInput'> 

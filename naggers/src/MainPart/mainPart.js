@@ -33,7 +33,7 @@ export default function MainPart() {
         return posts.map(post => {
             return (<SinglePost key={(post.TITLE + post.BODY + post.DATE_TIME)}
              date={post.DATE_TIME} title={post.TITLE} body={post.BODY}
-              likeAmount={post.LikeAmount} authorName={post.AuthorName} id={post.ID} readingUser={currentUser.name} isPostLikedByUser={post.isLikedByCurrentUser}></SinglePost>)
+             likeAmount={post.LikeAmount} authorName={post.AuthorName} id={post.ID} readingUser={currentUser.name} isPostLikedByUser={post.isLikedByCurrentUser}></SinglePost>)
         });
     }
 

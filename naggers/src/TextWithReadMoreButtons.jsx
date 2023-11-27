@@ -10,14 +10,18 @@ export default function TextWithReadMoreButton(props) {
 
 
     const textShortener = (inputText, maxLength) => {
-        if (maxLength == -1) {
-            return inputText;
-        } else {
-            if(inputText.length< maxLength){
+        if(inputText){
+            if (maxLength == -1) {
                 return inputText;
-            }else{
-                return inputText.substring(0, maxLength) + "...";
+            } else {
+                if(inputText.length< maxLength){
+                    return inputText;
+                }else{
+                    return inputText.substring(0, maxLength) + "...";
+                }
             }
+        }else{
+            return "";
         }
     }
 

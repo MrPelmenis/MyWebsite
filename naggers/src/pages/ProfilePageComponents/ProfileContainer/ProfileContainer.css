@@ -2,8 +2,23 @@
    width: 40%;
    height: 100%;
 
-   margin: auto;
+   
    margin-top: 110px;
+}
+
+
+@media only screen and (width > 1300px) {
+   .white-box {
+       width: 40%;
+       margin: auto;
+   }
+}
+
+@media only screen and (width < 1300px) {
+   .white-box {
+       width: 100%;
+       margin-left:0;
+   }
 }
 
 

@@ -11,6 +11,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import configData from "../config.json";
 
+
+import { AiOutlineLike } from "react-icons/ai";
+import { AiFillLike } from "react-icons/ai";
+
 export default function SingleComment(props) {
 
     const [isCommentLikedByUser, setIsCommentLikedByUser] = useState(props.isCommentLikedByCurrentUser);
@@ -26,7 +30,6 @@ export default function SingleComment(props) {
             setIsCommentLikedByUser(result.statuss == "liked" ? 1: 0);
             setCurrentLikeAmount(result.currentLikeAmount);
             console.log(result); 
-            
         }else{
             alert("you must be logged in to like comments, VAJAG VELAK SATAISIT");
         }
@@ -46,7 +49,10 @@ export default function SingleComment(props) {
             <div className='commentText'><TextWithReadMoreButton text={props.text}></TextWithReadMoreButton></div>
 
             <div className='CommentLikesAndComments'>
-                <div onClick={()=>{commentLikeCallback();}} style={{backgroundColor:(isCommentLikedByUser =="1"?"red":"white")}} className='CommentlikeIconAndCount'><img src={require('../img/like2.png')} className='likeComment'></img>{currentLikeAmount}</div>
+            <div className='CommentlikeIconAndCount' onClick={()=>{commentLikeCallback()}} >
+                    {isCommentLikedByUser != 1 ? (<AiOutlineLike style={{ width:"25px", height:"25px" }}/>) : (<AiFillLike style={{ width:"25px", height:"25px" }}/>)}
+                    <span style={{margin:"auto"}}>{currentLikeAmount}</span>
+                </div>
             </div>
         </div>
     )

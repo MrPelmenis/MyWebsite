@@ -104,7 +104,11 @@
     border-radius: 10px;
 }
 
-.likeIconAndCount:hover {
+.notCommentPost{
+    text-align: center;
+}
+
+.notCommentPost:hover {
     background-color: rgba(200, 200, 200, 1);
 }
 

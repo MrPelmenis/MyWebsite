@@ -25,6 +25,7 @@ import { hideCommentScreen, showCommentScreen } from '../store/commentWindow';
 import SinglePost from '../SinglePost/singlePost';
 import SingleComment from '../SingleComment/SingleComment';
 import { ExtraFunctions } from '../extraFunctions';
+import { light } from '@mui/material/styles/createPalette';
 
 export default function CommentWindow() {
 
@@ -84,18 +85,23 @@ export default function CommentWindow() {
     }
     
     const makeCommentsIntoReactObjects = (comments)=>{
-        
-        return comments.map(comment => {
-            return (<SingleComment key={Math.random()*10 + Math.random()*2}
-            commentID={comment.ID}
-            date={comment.Date_Time}
-            text={comment.Body}
-            likeAmount={comment.LikeAmount}
-            authorName={comment.AuthorName}
-            postId={comment.postID}
-            isCommentLikedByCurrentUser={comment.isLikedByCurrentUser}
-            ></SingleComment>);
-        });
+            if(comments.length < 1){
+                return(
+                    <div style={{width:"100%", height:"100%", textAlign:"center", lineHeight:"200px", fontSize:"30px", color:'gray', userSelect: "none"}}> Be the first one to comment... </div>
+                )
+            }else{
+                return comments.map(comment => {
+                    return (<SingleComment key={Math.random()*10 + Math.random()*2}
+                    commentID={comment.ID}
+                    date={comment.Date_Time}
+                    text={comment.Body}
+                    likeAmount={comment.LikeAmount}
+                    authorName={comment.AuthorName}
+                    postId={comment.postID}
+                    isCommentLikedByCurrentUser={comment.isLikedByCurrentUser}
+                    ></SingleComment>);
+                });
+            }
     }
 
     if (commentWindow.visible) {
@@ -109,7 +115,7 @@ export default function CommentWindow() {
                         </div>
                     </div>
                     
-                    <div style={{ border: "1px solid red", marginTop:-20, width: "100%"}}>
+                    <div style={{ marginTop:-20, width: "100%"}}>
                         <SinglePost isThisCommentPost={true} date={commentWindow.uploadDate} title={commentWindow.title} body={commentWindow.body}
                         likeAmount={commentWindow.likeAmount} isPostLikedByUser={commentWindow.isPostLikedByUser} id={commentWindow.postID} readingUser={currentUser.name} authorName={commentWindow.authorName}></SinglePost>
                     </div>

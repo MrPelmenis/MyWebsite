@@ -60,7 +60,29 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
                 alert("you must be logged in to like posts, VAJAG VELAK SATAISIT");
             }
         }
-       
+    }
+
+
+    const correctLikeCommentButtons= ()=>{
+        if(!isPostInComments){
+           return (<div className='likesAndComments'>
+            <div style={{display:"flex"}}>
+                <div className='likeIconAndCount notCommentPost' onClick={()=>{likeCallback()}} >
+                    {isPostLikedByUser != 1 ? (<AiOutlineLike style={{ width:"25px", height:"25px" }}/>) : (<AiFillLike style={{ width:"25px", height:"25px" }}/>)}
+                    <span style={{margin:"auto"}}>{likeAmount}</span>
+                </div>
+                <div style={{marginRight:10}}>|</div>
+    
+                <div className='comment' onClick={()=>{ showComments()  }}><AiOutlineComment  style={{marginLeft:"15px",paddingRight:"15px", width:"25px", height:"25px"}}/></div>
+            </div>
+        </div>)
+        }else{
+            return (<div className='likeIconAndCount' style={{marginLeft:10}} onClick={()=>{likeCallback()}} >
+                {isPostLikedByUser != 1 ? (<AiOutlineLike style={{ width:"25px", height:"25px" }}/>) : (<AiFillLike style={{ width:"25px", height:"25px" }}/>)}
+                <span style={{margin:"auto"}}>{likeAmount}</span>
+        </div>)
+        }
+         
     }
     
    
@@ -72,25 +94,13 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
                     <img className="authorPic" src={`${configData.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=${postAuthorName}`} ></img>
                     <div className="authorName">{authorName}</div>
                 </div>
-                <div className='dateInfoAboutPost'>{ExtraFunctions.getTimeAgo(date)}</div>
+                <div className='dateInfoAboutPost' >{ExtraFunctions.getTimeAgo(date)}</div>
             </div>
             <div className='titleText'>{title}</div>
             <div className='postText'><TextWithReadMoreButton text={readyBody}></TextWithReadMoreButton></div>
 
-
-            <div className='likesAndComments'>
-                <div style={{display:"flex"}}>
-                    <div className='likeIconAndCount' onClick={()=>{likeCallback()}} >
-                        {isPostLikedByUser != 1 ? (<AiOutlineLike style={{ width:"25px", height:"25px" }}/>) : (<AiFillLike style={{ width:"25px", height:"25px" }}/>)}
-                        <span style={{margin:"auto"}}>{likeAmount}</span>
-                    </div>
-                    <div style={{marginRight:10}}>|</div>
-
-                    <div className='comment' onClick={()=>{ showComments()  }}><AiOutlineComment  style={{marginLeft:"15px",paddingRight:"15px", width:"25px", height:"25px"}}/></div>
-                </div>
-            </div>
-
-
+            {correctLikeCommentButtons()}
+            
         </div>
     )
 }

@@ -36,7 +36,6 @@ async function getUserDataFromServer() {
         // console.log("data:");
 
         if (data.accountExists) {
-            console.log("from server");
             return ({ name: data.nickname, accountExists: true });
 
         } else {

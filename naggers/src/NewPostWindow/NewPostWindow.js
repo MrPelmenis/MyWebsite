@@ -21,6 +21,13 @@ import { changePosts } from '../store/loadedPosts';
 
 
 export default function NewPostWindow() {
+    const [helperText, setHelperText] = useState("");
+    useEffect(() => {
+        setTimeout(() => {
+            setHelperText("");
+        }, 0);
+      }, []);
+
 
     const dispatch = useDispatch();
     const newPostWindow = useSelector(state => state.newPostWindow);
@@ -80,10 +87,12 @@ export default function NewPostWindow() {
                 setTextInput("");
                 dispatch(hidePostScreen());
                 dispatch(changePosts({posts:[recentPost, ...loadedPosts.posts]}));
+
+                setHelperText("");
                 //window.location.href = "/";
             }
         }else{
-            alert("You must enter something");
+            setHelperText("You must enter something...");
         }
     }
 
@@ -95,7 +104,7 @@ export default function NewPostWindow() {
     if (newPostWindow.visible) {
         return (
             <div className="Container">
-                <div className="white-box" style={{}}>
+                <div className="newPost-white-box" style={{}}>
                     <div className="newPostPart" ><div className="close-button" onClick={() => { handleClose() }}>
                         X
                     </div>
@@ -107,6 +116,7 @@ export default function NewPostWindow() {
 
                         <textarea type='text' placeholder='Your Thoughts...' className='PostTextInput'
                         onChange={handleTextInputChange} value={textInput}></textarea>
+                        <div className='helperText'>{helperText}</div>
                     </div>
                     <button className='postButton' onClick={()=>{uploadPost()}}>Post</button>
 

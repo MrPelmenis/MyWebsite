@@ -86,7 +86,6 @@ function SignInButton({ value }) {
 
 
     let currentUserName = currentUserState.name;
-    console.log(currentUserState.name);
     if (ExtraFunctions.isUserLoggedIn() && !currentUserState.accountExists) {
         dispatch(showScreen());
     }

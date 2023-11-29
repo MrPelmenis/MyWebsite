@@ -19,10 +19,7 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
 
     const dispatch = useDispatch();
     const loadedPosts = useSelector(state => state.loadedPosts);
-    console.log("BBBBBBBBBBBBBBBBBBBBBBBB");
-    console.log(body);
     const [readyBody, setReadyBody]  = useState(body);
-    console.log(readyBody);
     //dispatch(changePosts({posts:recentPosts}));
     const commentWindowVisibility = useSelector(state => state.commentWindow).visible;
     //alert(commentWindowVisibility);

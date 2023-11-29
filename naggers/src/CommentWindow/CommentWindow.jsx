@@ -29,6 +29,15 @@ import { light } from '@mui/material/styles/createPalette';
 
 export default function CommentWindow() {
 
+    
+    const [helperText, setHelperText] = useState("");
+    useEffect(() => {
+        setTimeout(() => {
+            setHelperText("");
+            setLoadedComments([]);
+        }, 0);
+      }, [])
+
     const dispatch = useDispatch();
     const commentWindow = useSelector(state => state.commentWindow);
     const currentUser = useSelector(state => state.currentUser);
@@ -37,19 +46,23 @@ export default function CommentWindow() {
         dispatch(hideCommentScreen());
     };
 
-    async function uploadPost (){
+
+    
+
+    async function uploadComment (){
         if(ExtraFunctions.isUserLoggedIn()){
             if(myCommentText != ""){
                 let res = await fetchSpecial("uploadComment", { text: myCommentText, postID: commentWindow.postID }, false);
                 console.log(res);
                 if(res.answer){
                     setMyCommentText("");
+                    setHelperText("");
                 }
             }else{
-                alert("You must enter something");
+                setHelperText("You must enter something...");
             }
         }else{
-            alert("You have to be logged in to comment on posts VAJAG VEL SATAISIT");
+            setHelperText("You have to be logged in to comment on posts VAJAG VEL SATAISIT");
         }
         setArePostsLoaded(false);
         
@@ -73,6 +86,7 @@ export default function CommentWindow() {
             setArePostsLoaded(true);
             console.log("updatojas komnetari");
             let commentsForPost = ((await fetchSpecial("getCommentsForPost", {postID:commentWindow.postID, clientName:currentUser.name}, !ExtraFunctions.isUserLoggedIn())));
+            console.log(commentsForPost);
             //ir ! jo mainigais ir is user anonymous
             setLoadedComments(commentsForPost);
         }
@@ -105,7 +119,6 @@ export default function CommentWindow() {
     }
 
     if (commentWindow.visible) {
-        console.log(commentWindow);
         return (
             <div className="AllCommentContainer">
                 <div className="white-box" style={{}}>
@@ -122,7 +135,8 @@ export default function CommentWindow() {
 
                     <div className='CommentInput'> 
                         <textarea  placeholder='What Do You Think?'onChange={handleChange} value={myCommentText} className='CommentInputText'></textarea>
-                        <button className='postCommentButton' onClick={()=>{uploadPost()}}>Post</button>
+                        <div className='helpText'>{helperText}</div>
+                        <button className='postCommentButton' onClick={()=>{uploadComment()}}>Post</button>
                     </div>
                     
                     

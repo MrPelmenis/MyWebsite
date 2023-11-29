@@ -73,15 +73,15 @@ function getCommentsForPost($isUserLoggedIn){
     $userID = sql_StringExecute("SELECT ID FROM Users WHERE `nickname` = '". $clientName ."';");
 
     if($isUserLoggedIn){
-        //userLoggedIn
+        //userLoggedIn.........
         $sqlquer = "
             SELECT C.*,
                 CASE
-                    WHEN CL.CommentID = C.ID AND CL.UserID = " . TDB($userID) . " THEN 1
+                    WHEN CL.ID IS NOT NULL THEN 1
                     ELSE 0
                 END AS isLikedByCurrentUser
             FROM Comments C 
-            LEFT OUTER JOIN CommentLikes CL ON C.ID = CL.CommentID
+            LEFT OUTER JOIN CommentLikes CL ON C.ID = CL.CommentID AND CL.UserID = " . TDB($userID) . "
             WHERE C.PostID = " . TDB($postID) . "
             ORDER BY C.LikeAmount DESC LIMIT 10;";
         //echo($sqlquer);
@@ -92,6 +92,7 @@ function getCommentsForPost($isUserLoggedIn){
                 FROM Comments
                 ORDER BY LikeAmount DESC LIMIT  ". 10 . ";";
     }
+    //echo($sqlquer);
     echo(json_encode(sql_MultipleRow($sqlquer)));
 }
 
@@ -171,7 +172,7 @@ if (isset($_GET["request"])) {
 
                 $date = date('Y-m-d H:i:s');  
 
-                $text = htmlspecialchars($_POST["text"]);
+                $text = ($_POST["text"]);
                 $postID = htmlspecialchars($_POST["postID"]);
 
                 $accountExists = ($gottenNickname != "" ? true : false);

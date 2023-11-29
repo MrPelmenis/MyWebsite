@@ -12,7 +12,7 @@
 
 
 
-.white-box {
+.newPost-white-box {
     background-color: white;
     margin: auto;
     display: flex;
@@ -21,33 +21,35 @@
     box-shadow: 0 0 10px lightgray;
 }
 
-@media only screen and (width < 1300px) {
-    .white-box {
+@media only screen and (width < 1000px) {
+    .newPost-white-box {
         width: 100%;
-        height: 100%;
     }
 }
 
 @media only screen and (width > 1300px) {
-    .white-box {
-        width: 60%;
-        height: 70%;
+    .newPost-white-box{
+        width: 30%;
     }
 }
 
 
 @media only screen and (height < 600px) {
-    .white-box {
-        width: 100%;
+    .newPost-white-box {
         height: 100%;
     }
 }
 
-@media only screen and (height > 600px) {
-    .white-box {
-        height: 60%;
-        height: 70%;
+@media only screen and (height > 800px) {
+    .newPost-white-box {
+        height: 30%;
     }
+}
+
+.helpText{
+    color: red;
+    margin-left: 15px;
+    font-size: 15px;
 }
 
 .CommentContainer{

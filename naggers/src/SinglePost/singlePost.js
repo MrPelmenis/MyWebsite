@@ -1,7 +1,6 @@
 import '../App.css';
 import { useState } from 'react';
 import "./singlePost.css";
-import { ExtraFunctions } from "../extraFunctions";
 import { fetchSpecial } from '../serverComunication';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeLikeForSinglePost } from '../store/loadedPosts';
@@ -14,6 +13,9 @@ import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
 import { AiOutlineComment } from "react-icons/ai";
 
+import { changeHelpText} from '../store/commentWindow';
+
+import { ExtraFunctions } from '../extraFunctions';
 
 export default function SinglePost({id, title, body, authorName, date, likeAmount, readingUser, isPostLikedByUser, isThisCommentPost}) {
 
@@ -28,12 +30,9 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
     const [postAuthorName, setPostAuthorName] = useState(authorName);
     const showComments = () => {
         if(!isPostInComments){
+            dispatch(changeHelpText({helpText:""}));
             dispatch(showCommentScreen({authorName:authorName, isPostLikedByUser:isPostLikedByUser, uploadDate: date, title:title, body:readyBody, likeAmount:likeAmount, postID:id}));
-        }else{
-            alert("vajag nosktolot lejaa uz komentariem jo sis posts jau ir komentaa");
-        }
-        
-       // alert(commentWindowVisibility);
+        }        
     };
     const [postID, setPostID] = useState(id);
     const [currentUser, setcurrentUser] = useState(readingUser);
@@ -54,7 +53,7 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
     
                 console.log(result);
             }else{
-                alert("you must be logged in to like posts, VAJAG VELAK SATAISIT");
+                ExtraFunctions.googleLogin();
             }
         }
     }

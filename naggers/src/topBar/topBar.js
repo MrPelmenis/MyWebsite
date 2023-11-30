@@ -14,13 +14,11 @@ import store from '../store';
 
 
 import { showScreen } from '../store/signInWindow';
-import { showPostScreen } from '../store/newPostWindow';
+import { showPostScreen, changeHelpText } from '../store/newPostWindow';
 
 
 import { useSelector } from 'react-redux';
 
-
-import configData from "../config.json";
 
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 
@@ -29,6 +27,8 @@ import { fetchSpecial } from "../serverComunication.js";
 import { changeUser } from '../store/currentUser';
 
 import { ExtraFunctions } from '../extraFunctions';
+
+import configData from "../config.json";
 
 
 export default function TopBar() {
@@ -43,18 +43,6 @@ export default function TopBar() {
 
 
 
-
-
-function googleLogin() {
-    let url =
-        `https://accounts.google.com/o/oauth2/v2/auth?` +
-        `response_type=code&` +
-        `client_id=${configData.CLIENT_ID}&` +
-        `scope=openid%20email&` +
-        `redirect_uri=${configData.REDIRECT_URL}&` +
-        `nonce=0394852-3190485-2490358&`;
-    window.location.href = url;
-}
 
 
 
@@ -100,7 +88,7 @@ function SignInButton({ value }) {
 
 
     const googleAuth = () => {
-        googleLogin();
+        ExtraFunctions.googleLogin();
     }
 
 
@@ -126,7 +114,7 @@ function SignInButton({ value }) {
 
 }
 
-function TopBarImg({ src, style }) {
+function TopBarImg({ src }) {
     const navigate = useNavigate();
 
     const openMain = () => {
@@ -134,7 +122,7 @@ function TopBarImg({ src, style }) {
     }
 
     return (
-        <img onClick={openMain} className="TopBarImg" style={style} src={src}></img>
+        <img onClick={openMain} className="TopBarImg" src={src}></img>
     )
 }
 
@@ -143,7 +131,7 @@ function TopBarImg({ src, style }) {
 function TopBarLeftSide() {
     return (
         <div className="TopBarLSide">
-            <TopBarImg style={{ width: 90, height: 90 }} src={logo}> </TopBarImg>
+            <TopBarImg src={logo}> </TopBarImg>
         </div>
     )
 }
@@ -158,6 +146,7 @@ function NewPostButton() {
     //dispatch(showPostScreen());
 
     const openNewPostWindow = () => {
+        dispatch(changeHelpText({helpText:""}));
         dispatch(showPostScreen());
     }
 

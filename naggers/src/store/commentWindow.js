@@ -26,13 +26,16 @@ const slice = createSlice({
         hideCommentScreenRed: (state, action) => {
             state.visible = false;
         },
+        changeHelpTextReducer: (state, action) => {
+            state.helpText = action.payload.helpText;
+        },
     },
 });
 export default slice.reducer
 
 
 
-const { showCommentScreenRed, hideCommentScreenRed } = slice.actions
+const { showCommentScreenRed, hideCommentScreenRed, changeHelpTextReducer } = slice.actions
 export const showCommentScreen = ({authorName,uploadDate, title, body, isPostLikedByUser, likeAmount, postID}) => async dispatch => {
     try {
         dispatch(showCommentScreenRed({authorName,uploadDate, title, body,isPostLikedByUser, likeAmount, postID}));
@@ -44,6 +47,14 @@ export const showCommentScreen = ({authorName,uploadDate, title, body, isPostLik
 export const hideCommentScreen = () => async dispatch => {
     try {
         return dispatch(hideCommentScreenRed())
+    } catch (e) {
+        return console.error(e.message);
+    }
+}
+
+export const changeHelpText = ({helpText}) => async dispatch => {
+    try {
+         dispatch(changeHelpTextReducer({helpText}));
     } catch (e) {
         return console.error(e.message);
     }

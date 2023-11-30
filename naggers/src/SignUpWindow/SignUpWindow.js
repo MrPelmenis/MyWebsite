@@ -30,7 +30,6 @@ export default function SingUpWindow() {
     const handleClose = () => {
         dispatch(hideScreen());
         localStorage.setItem("JWT", "");
-        alert("logOut");
         window.location.href = "/";
     };
 
@@ -81,27 +80,10 @@ export default function SingUpWindow() {
     const [whiteWidth, setWhiteWidth] = useState("35%");
     const [whiteHeight, setWhiteHeight] = useState("35%");
 
-    const handleResize = () => {
-        if (window.innerWidth < 900 || window.innerHeight < 900) {
-            setWhiteWidth("75%");
-            setWhiteHeight("75%");
-        } else {
-            setWhiteWidth("40%");
-            setWhiteHeight("40%");
-        }
-    };
-
-    useEffect(() => {
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
-
     if (signInWindow.visible) {
         return (
             <div className="Container">
-                <div className="white-box" style={{ width: whiteWidth, height: whiteHeight }}>
+                <div className="sign-up-white-box">
                     <div className="signUpPart" ><div className="close-button" onClick={handleClose}>
                         X
                     </div>
@@ -115,9 +97,8 @@ export default function SingUpWindow() {
                     <div className="signUpPart" style={{ height: 80 }}>
                         <div className="inputDiv">
                             <input type="text" placeholder="Nickname" onChange={handleNickChange} value={nicknameInput} className="signUpInput"></input>
-                            <div className="helperText">{helperText}</div>
+                            <div className="signUpHelperText">{helperText}</div>
                             <div className="signInButtonHolder"><button className='signUpButton' onClick={handleClick}>Sign Up</button></div>
-
                         </div>
                     </div>
 

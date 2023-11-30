@@ -21,7 +21,7 @@
     box-shadow: 0 0 10px lightgray;
 }
 
-@media only screen and (width < 1000px) {
+@media only screen and (width <= 1300px) {
     .newPost-white-box {
         width: 100%;
     }
@@ -34,7 +34,7 @@
 }
 
 
-@media only screen and (height < 600px) {
+@media only screen and (height <= 600px) {
     .newPost-white-box {
         height: 100%;
     }
@@ -65,7 +65,7 @@
 .CommentInput{
     margin: 5px;
     border-bottom: 2px solid lightgray;
-    height: 20%;
+    height: calc(20% + 20px);
     margin-top: 10px;
 }
 

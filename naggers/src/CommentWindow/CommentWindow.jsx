@@ -20,12 +20,14 @@ import { fetchSpecial } from '../serverComunication.js';
 
 
 
-import { hideCommentScreen, showCommentScreen } from '../store/commentWindow';
+import { hideCommentScreen, changeHelpText} from '../store/commentWindow';
 
 import SinglePost from '../SinglePost/singlePost';
 import SingleComment from '../SingleComment/SingleComment';
 import { ExtraFunctions } from '../extraFunctions';
 import { light } from '@mui/material/styles/createPalette';
+
+
 
 export default function CommentWindow() {
 
@@ -56,16 +58,15 @@ export default function CommentWindow() {
                 console.log(res);
                 if(res.answer){
                     setMyCommentText("");
-                    setHelperText("");
+                    dispatch(changeHelpText({helpText:""}));
                 }
             }else{
-                setHelperText("You must enter something...");
+                dispatch(changeHelpText({helpText:"You must enter something..."}));
             }
         }else{
-            setHelperText("You have to be logged in to comment on posts VAJAG VEL SATAISIT");
+            ExtraFunctions.googleLogin();
         }
         setArePostsLoaded(false);
-        
     }
     
 
@@ -135,7 +136,7 @@ export default function CommentWindow() {
 
                     <div className='CommentInput'> 
                         <textarea  placeholder='What Do You Think?'onChange={handleChange} value={myCommentText} className='CommentInputText'></textarea>
-                        <div className='helpText'>{helperText}</div>
+                        <div className='helpText'>{commentWindow.helpText}</div>
                         <button className='postCommentButton' onClick={()=>{uploadComment()}}>Post</button>
                     </div>
                     

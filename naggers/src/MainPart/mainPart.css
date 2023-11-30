@@ -9,7 +9,7 @@
 }
 
 
-@media only screen and (width < 1300px) {
+@media only screen and (width <= 1300px) {
     .MainPart {
         width: 100%;
     }

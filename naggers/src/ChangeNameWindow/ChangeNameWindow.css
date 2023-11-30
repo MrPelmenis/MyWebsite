@@ -22,31 +22,27 @@
     box-shadow: 0 0 10px lightgray;
 }
 
-@media only screen and (width < 1300px) {
+@media only screen and (width <= 1300px) {
     .change-name-white-box {
         width: 90%;
-        height: 90%;
     }
 }
 
 @media only screen and (width > 1300px) {
     .change-name-white-box {
         width: 30%;
-        height: 45%;
     }
 }
 
 
-@media only screen and (height < 600px) {
+@media only screen and (height <= 800px) {
     .change-name-white-box {
-        width: 90%;
-        height: 90%;
+        height: 70%;
     }
 }
 
-@media only screen and (height > 600px) {
+@media only screen and (height > 800px) {
     .change-name-white-box {
-        height: 30%;
         height: 45%;
     }
 }
@@ -59,6 +55,8 @@
 
 
 .inputDiv {
+    margin: auto;
+    width: 80%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -101,7 +99,7 @@
     font-size: 14px;
     cursor: pointer;
     position: relative;
-    left: calc((75% - 60px));
+    left: calc((70%));
     top: 5px;
     transition: 0;
 }
@@ -110,10 +108,9 @@
     transform: scale(1.02,1.02);
 }
 
-.helperText {
+.changeName-helperText {
     width: 100%;
-    padding-left: 25%;
-    padding-bottom: 5px;
+    text-align: center;
 }
 
 

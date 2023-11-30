@@ -1,9 +1,11 @@
+import { AssistWalker } from '@mui/icons-material';
 import { createSlice } from '@reduxjs/toolkit'
 // Slice
 const slice = createSlice({
     name: 'newPostWindow',
     initialState: {
         visible: false,
+        helpText: "",
     },
     reducers: {
         showNewPostScreen: (state, action) => {
@@ -12,13 +14,16 @@ const slice = createSlice({
         hideNewPostScreen: (state, action) => {
             state.visible = false;
         },
+        changeHelpTextReducer: (state, action) => {
+            state.helpText = action.payload.helpText;
+        },
     },
 });
-export default slice.reducer
+export default slice.reducer;
 
 
 
-const { showNewPostScreen, hideNewPostScreen } = slice.actions
+const { showNewPostScreen, hideNewPostScreen, changeHelpTextReducer} = slice.actions
 export const showPostScreen = () => async dispatch => {
     try {
         dispatch(showNewPostScreen());
@@ -29,7 +34,15 @@ export const showPostScreen = () => async dispatch => {
 
 export const hidePostScreen = () => async dispatch => {
     try {
-        return dispatch(hideNewPostScreen())
+        dispatch(hideNewPostScreen())
+    } catch (e) {
+        return console.error(e.message);
+    }
+}
+
+export const changeHelpText = ({helpText}) => async dispatch => {
+    try {
+         dispatch(changeHelpTextReducer({helpText}));
     } catch (e) {
         return console.error(e.message);
     }

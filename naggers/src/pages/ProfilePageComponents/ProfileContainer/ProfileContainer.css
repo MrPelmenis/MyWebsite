@@ -12,7 +12,7 @@
    }
 }
 
-@media only screen and (width < 1300px) {
+@media only screen and (width <= 1300px) {
    .ProfileContainer{
       width: 100%;
    }

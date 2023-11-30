@@ -3,7 +3,6 @@ import { useState } from 'react';
 
 
 import "./SingleComment.css";
-import { ExtraFunctions } from "../extraFunctions";
 import TextWithReadMoreButton from "../TextWithReadMoreButtons";
 
 import { fetchSpecial } from '../serverComunication';
@@ -14,6 +13,8 @@ import configData from "../config.json";
 
 import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
+
+import { ExtraFunctions } from '../extraFunctions';
 
 export default function SingleComment(props) {
 
@@ -31,7 +32,7 @@ export default function SingleComment(props) {
             setCurrentLikeAmount(result.currentLikeAmount);
             console.log(result); 
         }else{
-            alert("you must be logged in to like comments, VAJAG VELAK SATAISIT");
+            ExtraFunctions.googleLogin();
         }
     }
 

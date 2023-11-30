@@ -6,7 +6,7 @@ import React from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { hidePostScreen } from '../store/newPostWindow';
+import { changeHelpText, hidePostScreen } from '../store/newPostWindow';
 
 
 import logoPic from '../img/labsLogo.png';
@@ -21,12 +21,8 @@ import { changePosts } from '../store/loadedPosts';
 
 
 export default function NewPostWindow() {
-    const [helperText, setHelperText] = useState("");
-    useEffect(() => {
-        setTimeout(() => {
-            setHelperText("");
-        }, 0);
-      }, []);
+
+
 
 
     const dispatch = useDispatch();
@@ -47,33 +43,7 @@ export default function NewPostWindow() {
     const [titleInput, setTitleInput] = useState('');
     const handleTitleInputChange = event => {
         setTitleInput (event.target.value);
-       // alert(titleInput);
     };
-
-
-    function convertToHtmlRegexSymbols(inputString) {
-        const symbolMapping = {
-            '<': '&lt;',
-            '>': '&gt;',
-            '[': '&#91;',
-            ']': '&#93;',
-            '*': '&#42;'
-            // You can add more symbols and their HTML regex equivalents here
-        };
-    
-        let outputString = '';
-    
-        for (let i = 0; i < inputString.length; i++) {
-            const char = inputString[i];
-            if (symbolMapping[char] !== undefined) {
-                outputString += symbolMapping[char];
-            } else {
-                outputString += char;
-            }
-        }
-    
-        return outputString;
-    }
 
 
     async function uploadPost (){
@@ -85,14 +55,16 @@ export default function NewPostWindow() {
 
                 setTitleInput("");
                 setTextInput("");
+
                 dispatch(hidePostScreen());
                 dispatch(changePosts({posts:[recentPost, ...loadedPosts.posts]}));
 
-                setHelperText("");
+                dispatch(changeHelpText({helpText:""}));
                 //window.location.href = "/";
             }
         }else{
-            setHelperText("You must enter something...");
+            dispatch(changeHelpText({helpText:"You must enter something..."}));
+            console.log(newPostWindow.helpText);
         }
     }
 
@@ -116,7 +88,7 @@ export default function NewPostWindow() {
 
                         <textarea type='text' placeholder='Your Thoughts...' className='PostTextInput'
                         onChange={handleTextInputChange} value={textInput}></textarea>
-                        <div className='helperText'>{helperText}</div>
+                        <div className='helperText'>{newPostWindow.helpText}</div>
                     </div>
                     <button className='postButton' onClick={()=>{uploadPost()}}>Post</button>
 

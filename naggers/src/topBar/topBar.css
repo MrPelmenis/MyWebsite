@@ -9,6 +9,10 @@
     position: fixed;
 }
 
+.logoPic:hover{
+    width: 200px;
+}
+
 .TopBarLSide {
     height: 100%;
     display: flex;
@@ -87,6 +91,12 @@
     text-align: center;
     background-color: transparent;
     margin: auto;
+    width: 90px;
+    height: 90px;
+}
+
+.TopBarImg:hover{
+    cursor: pointer;
 }
 
 .profilePicOnTop {
@@ -94,6 +104,10 @@
     height: 50px;
     margin: auto;
     border-radius: 50%;
+}
+
+.profilePicOnTop:hover{
+    cursor: pointer;
 }
 
 .profileDisplayOnTop {

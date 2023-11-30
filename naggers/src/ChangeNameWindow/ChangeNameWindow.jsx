@@ -3,27 +3,26 @@ import { useState, useEffect } from 'react';
 import './ChangeNameWindow.css';
 import React from 'react';
 
-
 import { useDispatch, useSelector } from 'react-redux';
 
-
 import { hideChangeNameScreen } from '../store/changeNameWindow';
-
 
 import { fetchSpecial } from '../serverComunication.js';
 
 import logoPic from '../img/labsLogo.png';
+
+import { changeHelpText } from '../store/changeNameWindow';
+
 
 
 export default function ChangeNameWindow() {
 
     const dispatch = useDispatch();
     const changeNameWindow = useSelector(state => state.changeNameWindow);
-
     const handleClose = () => {
+       dispatch(changeHelpText({helpText:"What's the name you want now?"}));
        dispatch(hideChangeNameScreen());
     };
-
 
     const [nicknameInput, setNicknameInput] = useState('');
     const [updatednicknameInput, setUpdatednicknameInput] = useState(nicknameInput);
@@ -35,7 +34,7 @@ export default function ChangeNameWindow() {
     const handleClick = async () => {
         setUpdatednicknameInput(nicknameInput);
         if (nicknameInput == "") {
-            setHelperText("You cannot be named -");
+            dispatch(changeHelpText({helpText:"You must type something..."}));
         } else {
             let allowedChars = [
                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
@@ -48,7 +47,7 @@ export default function ChangeNameWindow() {
             for(let i=0;i<nicknameInput.length; i++){
                 console.log(nicknameInput[i]);
                 if(allowedChars.indexOf(nicknameInput[i]) == -1){
-                    setHelperText('Cannot use symbols such as ' + nicknameInput[i] + ', #, $...');
+                    dispatch(changeHelpText({helpText:'Cannot use symbols such as ' + nicknameInput[i] + ', #, $...'}));
                     return;
                 }
             }
@@ -59,12 +58,11 @@ export default function ChangeNameWindow() {
                 handleClose();
                 window.location.href="./profile";
             } else {
-                setHelperText('Username allready in use');
+                dispatch(changeHelpText({helpText:'Username allready in use'}));
             }
         }
     };
 
-    const [helperText, setHelperText] = useState("What's the name you want now?");
 
 
 
@@ -88,8 +86,8 @@ export default function ChangeNameWindow() {
                     <div className="signUpPart" style={{ height: 80 }}>
                         <div className="inputDiv">
                             <input type="text" placeholder="Nickname" onChange={handleNickChange} value={nicknameInput} className="changeNameInput"></input>
-                            <div className="helperText">{helperText}</div>
-                            <div className="changeNameButtonHolder"><button className='signUpButton' onClick={handleClick}>Change</button></div>
+                            <div className="changeName-helperText">{changeNameWindow.helpText}</div>
+                            <div className="changeNameButtonHolder"><button className='changeNameButton' onClick={handleClick}>Change</button></div>
 
                         </div>
                     </div>

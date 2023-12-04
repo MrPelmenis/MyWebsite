@@ -88,7 +88,7 @@ export default function NewPostWindow() {
 
                         <textarea type='text' placeholder='Your Thoughts...' className='PostTextInput'
                         onChange={handleTextInputChange} value={textInput}></textarea>
-                        <div className='helperText'>{newPostWindow.helpText}</div>
+                        <div className='newPosthelperText'>{newPostWindow.helpText}</div>
                     </div>
                     <button className='postButton' onClick={()=>{uploadPost()}}>Post</button>
 

@@ -1,12 +1,12 @@
 .MainPart {
-    width: 60%;
     padding-left: 5px;
     padding-right: 5px;
     background-color: #e1dddb;
+    position:relative;
     margin: auto;
-    z-index: 1;
-    margin-top: 100px;
 }
+
+/*changing top and left manually for the canvas that's behind it*/
 
 
 @media only screen and (width <= 1300px) {

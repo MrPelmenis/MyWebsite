@@ -106,10 +106,9 @@
     outline: none;
 }
 
-.helperText{
+.newPosthelperText{
     color: red;
     position: relative;
-    right: calc(25%);
 }
 
 .postButton {

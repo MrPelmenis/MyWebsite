@@ -4,6 +4,7 @@
     background-color: #e1dddb;
     position:relative;
     margin: auto;
+    box-shadow: 5px 0 5px -5px rgba(0, 0, 0, 0.2), -5px 0 5px -5px rgba(0, 0, 0, 0.2);
 }
 
 /*changing top and left manually for the canvas that's behind it*/

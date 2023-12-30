@@ -11,14 +11,14 @@ import MainPart from '../MainPart/mainPart';
 
 
 export default function MainPartBackground() {
-    const [rockets, setRockets] = useState([]);
+    const [rockets, setRockets] = useState([<Rocket key={Math.random()} />]);
 
     useEffect(() => {
         setTimeout(() => {
-            if(rockets.length< 3){
+            if(rockets.length< 8){
                 setRockets(prevRockets => [...prevRockets, <Rocket key={Math.random()} />]);
             }
-        }, 5000);
+        }, 1000);
     }, [rockets]);
 
 

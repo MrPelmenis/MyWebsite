@@ -12,10 +12,19 @@ import configData from "../config.json";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
 import { AiOutlineComment } from "react-icons/ai";
+import { MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
+import { MdOutlineNavigateNext } from "react-icons/md";
+import { MdOutlineNavigateBefore } from "react-icons/md";
+import { MdOutlineMore } from "react-icons/md";
+import { MdMoreHoriz } from "react-icons/md";
 
 import { changeHelpText} from '../store/commentWindow';
 
 import { ExtraFunctions } from '../extraFunctions';
+import { width } from '@mui/system';
+
+
 
 export default function SinglePost({id, title, body, authorName, date, likeAmount, readingUser, isPostLikedByUser, isThisCommentPost}) {
 
@@ -76,13 +85,13 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
             return (<div className='likeIconAndCount' style={{marginLeft:10}} onClick={()=>{likeCallback()}} >
                 {isPostLikedByUser != 1 ? (<AiOutlineLike style={{ width:"25px", height:"25px" }}/>) : (<AiFillLike style={{ width:"25px", height:"25px" }}/>)}
                 <span style={{margin:"auto"}}>{likeAmount}</span>
+
+                
         </div>)
         }
-         
     }
-    
-   
-    
+
+
     return (
         <div className='SinglePost'>
             <div className='authorDateInfo'>
@@ -95,8 +104,51 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
             <div className='titleText'>{title}</div>
             <div className='postText'><TextWithReadMoreButton text={readyBody}></TextWithReadMoreButton></div>
 
-            {correctLikeCommentButtons()}
-            
+            <div style={{ width:"100%", display:"flex", justifyContent:"space-between"}}>
+                {correctLikeCommentButtons()}
+                <HiddenEditDelteButtons showMe={(authorName == currentUser && !isPostInComments)}/>
+            </div>
+
         </div>
     )
+}
+
+
+function HiddenEditDelteButtons({showMe}){
+    const [showMyself, setShowMyself] = useState(showMe);
+    const [show, setShow] = useState(false);
+
+    const correctEditDeleteButtons = () => {
+        return (<div className='editAndDelete'>
+                <div className='comment' onClick={()=>{alert("edit")}} >
+                    <MdEdit style={{ width:"25px", height:"25px" }}/>
+                </div>
+
+                <span>|</span>
+    
+                <div className='comment' onClick={()=>{ alert("delete")  }}>
+                    <MdDelete  style={{width:"25px", height:"25px"}}/>
+                </div>
+            </div>)
+    }
+
+
+
+    if(showMe){
+        if(!show){
+            return(
+                <div onClick={()=>setShow(!show)} className='hiddenEditDelete'><MdMoreHoriz  style={{width:25,height: 25, margin:"auto"}}/></div>
+            )
+        }else{
+            return(
+                <div className='editDeleteHidecontainer'>
+                    {correctEditDeleteButtons()}
+                    <div onClick={()=>setShow(!show)} className='hiddenEditDelete'><MdOutlineNavigateBefore  style={{width:25,height: 25, margin:"auto"}}/></div>
+                </div>
+            )
+        }
+    }else{
+        return <></>;
+    }
+
 }

@@ -21,6 +21,11 @@ import { MdMoreHoriz } from "react-icons/md";
 
 import { changeHelpText} from '../store/commentWindow';
 
+
+import { showPostEditScreen, editPostTitleBody, changeEditHelpText } from '../store/editPostWindow';
+
+import {showDeleteScreen, changeDeletePost} from "../store/deletePostWindow";
+
 import { ExtraFunctions } from '../extraFunctions';
 import { width } from '@mui/system';
 
@@ -92,6 +97,11 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
     }
 
 
+    
+    
+    
+
+
     return (
         <div className='SinglePost'>
             <div className='authorDateInfo'>
@@ -106,7 +116,7 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
 
             <div style={{ width:"100%", display:"flex", justifyContent:"space-between"}}>
                 {correctLikeCommentButtons()}
-                <HiddenEditDelteButtons showMe={(authorName == currentUser && !isPostInComments)}/>
+                <HiddenEditDelteButtons showMe={(authorName == currentUser && !isPostInComments)} title={title} body={readyBody} PostId={id}/>
             </div>
 
         </div>
@@ -114,19 +124,32 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
 }
 
 
-function HiddenEditDelteButtons({showMe}){
+function HiddenEditDelteButtons({showMe, title, body, PostId}){
     const [showMyself, setShowMyself] = useState(showMe);
     const [show, setShow] = useState(false);
 
+
+    const dispatch = useDispatch();
+    const showEditPostScreen = ()=>{
+        dispatch(editPostTitleBody({title: title, body: body}))
+        dispatch(changeEditHelpText({helpText:""}));
+        dispatch(showPostEditScreen({PostId:PostId}));
+    }
+
+    const showDeletePostScreen =()=>{
+        dispatch(changeDeletePost({PostId:PostId}));
+        dispatch(showDeleteScreen());
+    }
+
     const correctEditDeleteButtons = () => {
         return (<div className='editAndDelete'>
-                <div className='comment' onClick={()=>{alert("edit")}} >
+                <div className='comment' onClick={showEditPostScreen} >
                     <MdEdit style={{ width:"25px", height:"25px" }}/>
                 </div>
 
                 <span>|</span>
     
-                <div className='comment' onClick={()=>{ alert("delete")  }}>
+                <div className='comment' onClick={()=>{ showDeletePostScreen()  }}>
                     <MdDelete  style={{width:"25px", height:"25px"}}/>
                 </div>
             </div>)

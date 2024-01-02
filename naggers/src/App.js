@@ -4,7 +4,9 @@ import SingUpWindow from './SignUpWindow/SignUpWindow';
 import NewPostWindow from './NewPostWindow/NewPostWindow';
 import CommentWindow from './CommentWindow/CommentWindow';
 import ChangeNameWindow from './ChangeNameWindow/ChangeNameWindow';
-import MainPartBackground from './MainPartBackground/MainPartBackground'
+import MainPartBackground from './MainPartBackground/MainPartBackground';
+import EditPostWindow from './EditPostWindow/EditPostWindow';
+import DeletePostWindow from './DeletePostWindow/DeletePostWindow';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -22,6 +24,8 @@ function App() {
         <SingUpWindow></SingUpWindow>
         <NewPostWindow></NewPostWindow>
         <CommentWindow></CommentWindow>
+        <EditPostWindow></EditPostWindow>
+        <DeletePostWindow></DeletePostWindow>
         <MainPartBackground> 
         </MainPartBackground>
         

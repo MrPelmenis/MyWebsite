@@ -86,7 +86,7 @@ function getCommentsForPost($isUserLoggedIn){
             ORDER BY C.LikeAmount DESC LIMIT 10;";
         //echo($sqlquer);
     }else{
-        //userNotloggedIn
+        //userNotloggedInN
         $sqlquer = "
                 SELECT *, 0 as isLikedByCurrentUser
                 FROM Comments

@@ -1,0 +1,148 @@
+.Container {
+    background-color: rgba(200, 200, 200S, 0.5);
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    display: flex;
+}
+
+.Edit-Post-white-box {
+    background-color: white;
+    height: 35%;
+    margin: auto;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px lightgray;
+}
+
+
+@media only screen and (width < 1000px) {
+    .Edit-Post-white-box {
+        width: 90%;
+    }
+}
+
+@media only screen and (width > 1300px) {
+    .Edit-Post-white-box {
+        width: 40%;
+    }
+}
+
+
+@media only screen and (height < 600px) {
+    .Edit-Post-white-box {
+        height: 90%;
+    }
+}
+
+@media only screen and (height > 800px) {
+    .Edit-Post-white-box {
+        height: 50%;
+    }
+}
+
+
+
+.editPostPart {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+}
+
+.newPostText {
+    margin: auto;
+}
+
+
+.postInputHolder {
+   top: 0;
+}
+
+.TitleInput {
+    font-weight: 200;
+    height: 30px;
+    font-size: 20px;
+    width: 90%;
+    margin-left: 5px;
+    margin-bottom: 3px;
+    outline: none;
+    word-wrap: break-word;
+    border: none;
+    border-bottom: 1px solid gray;
+}
+
+.PostTextInput {
+    font-weight: 50;
+    width: 90%;
+    height: 70%;
+    margin-left: 5px;
+    outline: none;
+    border: none;
+    word-wrap: break-word;
+    resize: none;
+    padding-left: 0;
+    padding-top: 0;
+    border-bottom: 1px solid gray;
+}
+
+
+.inputDiv {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.signUpInput:focus {
+    outline: none;
+}
+
+.newPosthelperText{
+    color: red;
+    position: relative;
+}
+
+.postButton {
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 70px;
+    height: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    position: relative;
+    left: calc((100% - 80px));
+    bottom: 10px;
+    transition: 0;
+}
+
+.postButton:hover {
+    border: 1px solid white;
+}
+
+
+
+
+.close-button {
+    background-color: darkgrey;
+    transition: background-color 0s ease-in-out;
+    position: relative;
+    left: calc((100% - 30px));
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    background-color: red;
+}

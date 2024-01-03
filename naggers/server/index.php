@@ -39,7 +39,7 @@ function getRecentPosts($isUserLoggedIn, $postID){
     $result = "";
     if($isUserLoggedIn){
         $clientName = htmlspecialchars($_POST["clientName"]);
-        $userID = sql_StringExecute("SELECT ID FROM Users WHERE `nickname` = '". $clientName ."';");
+        $userID = sql_StringExecute("SELECT ID FROM Users WHERE `nickname` = '". TDB($clientName) ."';");
         $sqlquer = "
                 SELECT P.*,
                     CASE

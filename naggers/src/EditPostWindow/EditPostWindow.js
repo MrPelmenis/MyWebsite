@@ -48,11 +48,16 @@ export default function EditPostWindow() {
         if(editPostWindow.title != "" && editPostWindow.body != ""){
             let res = await fetchSpecial("updatePost", {postID: editPostWindow.postID, title: editPostWindow.title, body:editPostWindow.body}, false);
             dispatch(hidePostEditScreen());
-            window.location.href = "/";
+
+            let recentPost = (await fetchSpecial("getRecentPosts", {clientName: currentUser.name, postID: editPostWindow.postID}, (currentUser.name != "" ? false: true )))[0];
+            let filteredLoadedPosts =  loadedPosts.posts.filter(post =>{
+                console.log(post.ID);
+                return post.ID != recentPost.ID;
+            })
+            dispatch(changePosts({posts:[recentPost, ...filteredLoadedPosts]}));
         }else{
             dispatch(changeEditHelpText({helpText:"You must type something..."}));
         }
-        
     }
 
 

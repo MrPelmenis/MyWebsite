@@ -10,7 +10,7 @@ import {hideDeleteScreen, changeDeletePost} from "../store/deletePostWindow";
 
 
 import { fetchSpecial } from '../serverComunication.js';
-
+import { changePosts } from '../store/loadedPosts';
 
 
 
@@ -20,6 +20,9 @@ export default function DeletePostWindow() {
     const dispatch = useDispatch();
     const deletePostWindow = useSelector(state => state.deletePostWindow);
 
+    const newPostWindow = useSelector(state => state.newPostWindow);
+    const loadedPosts = useSelector(state => state.loadedPosts);
+    const currentUser = useSelector(state=>state.currentUser);
 
 
 
@@ -31,7 +34,11 @@ export default function DeletePostWindow() {
     async function deletePost(){          
         let res = await fetchSpecial("deletePost", {postID: deletePostWindow.PostId}, false);
         dispatch(hideDeleteScreen());
-        window.location.href = "/";
+        
+        let filteredLoadedPosts =  loadedPosts.posts.filter(post =>{
+            return post.ID != deletePostWindow.PostId;
+        })
+        dispatch(changePosts({posts:[...filteredLoadedPosts]}));
     }
 
     if (deletePostWindow.visible) {

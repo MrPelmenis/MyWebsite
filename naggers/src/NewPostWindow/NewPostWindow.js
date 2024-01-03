@@ -22,9 +22,6 @@ import { changePosts } from '../store/loadedPosts';
 
 export default function NewPostWindow() {
 
-
-
-
     const dispatch = useDispatch();
     const newPostWindow = useSelector(state => state.newPostWindow);
     const loadedPosts = useSelector(state => state.loadedPosts);

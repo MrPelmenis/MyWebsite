@@ -6,7 +6,7 @@ import React from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import {  hidePostEditScreen, editPostTitleBody } from '../store/editPostWindow';
+import {  hidePostEditScreen, editPostTitleBody, changeEditHelpText } from '../store/editPostWindow';
 
 
 import logoPic from '../img/labsLogo.png';
@@ -17,14 +17,12 @@ import { fetchSpecial } from '../serverComunication.js';
 
 
 import { changePosts } from '../store/loadedPosts';
+import { Co2Sharp } from '@mui/icons-material';
+
 
 
 
 export default function EditPostWindow() {
-
-
-
-
     const dispatch = useDispatch();
     const editPostWindow = useSelector(state => state.editPostWindow);
 
@@ -36,45 +34,26 @@ export default function EditPostWindow() {
     function handleClose() {
         dispatch(hidePostEditScreen());
     };
-
-
     
-    const [textInput, setTextInput] = useState(editPostWindow.body);
     const handleTextInputChange = event => {
-        dispatch(editPostTitleBody({title:editPostWindow.title, body:event.target.value}));
+        dispatch(editPostTitleBody({title:editPostWindow.title, body:event.target.value,  postID: editPostWindow.postID}));
     };
 
-    const [titleInput, setTitleInput] = useState(editPostWindow.title);
     const handleTitleInputChange = event => {
-        dispatch(editPostTitleBody({title:event.target.value, body:editPostWindow.body}));
+        dispatch(editPostTitleBody({title:event.target.value, body:editPostWindow.body, postID: editPostWindow.postID}));
     };
 
 
-
-    async function uploadPost (){
-        /*if(titleInput != "" && textInput != ""){
-            let res = await fetchSpecial("uploadPost", { title: titleInput, body: textInput }, false);
-            console.log(res);
-            if(res.postID){
-                setTitleInput("");
-                setTextInput("");
-
-                
-                handleClose();
-
-
-                dispatch(changeEditHelpText({helpText:""}));
-                //window.location.href = "/";
-            }
+    const updatePost = async () =>{
+        if(editPostWindow.title != "" && editPostWindow.body != ""){
+            let res = await fetchSpecial("updatePost", {postID: editPostWindow.postID, title: editPostWindow.title, body:editPostWindow.body}, false);
+            dispatch(hidePostEditScreen());
+            window.location.href = "/";
         }else{
-            dispatch(changeEditHelpText({helpText:"You must enter something..."}));
-            console.log(newPostWindow.helpText);
-        }*/
+            dispatch(changeEditHelpText({helpText:"You must type something..."}));
+        }
+        
     }
-
-    ///////////////////////////////////////////////////////
-    //WYSIWYG editors tas ir eee takaa eeee fancy textbox//
-    ///////////////////////////////////////////////////////
 
 
     if (editPostWindow.visible) {
@@ -97,7 +76,7 @@ export default function EditPostWindow() {
                     </div>
 
 
-                    <button className='postButton' onClick={()=>{uploadPost()}}>Change</button>
+                    <button className='postButton' onClick={()=>{updatePost()}}>Change</button>
                 </div>
             </div>
         );

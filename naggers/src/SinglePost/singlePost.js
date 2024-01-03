@@ -96,12 +96,6 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
         }
     }
 
-
-    
-    
-    
-
-
     return (
         <div className='SinglePost'>
             <div className='authorDateInfo'>
@@ -131,7 +125,7 @@ function HiddenEditDelteButtons({showMe, title, body, PostId}){
 
     const dispatch = useDispatch();
     const showEditPostScreen = ()=>{
-        dispatch(editPostTitleBody({title: title, body: body}))
+        dispatch(editPostTitleBody({title: title, body: body, postID: PostId}))
         dispatch(changeEditHelpText({helpText:""}));
         dispatch(showPostEditScreen({PostId:PostId}));
     }
@@ -166,7 +160,7 @@ function HiddenEditDelteButtons({showMe, title, body, PostId}){
             return(
                 <div className='editDeleteHidecontainer'>
                     {correctEditDeleteButtons()}
-                    <div onClick={()=>setShow(!show)} className='hiddenEditDelete'><MdOutlineNavigateBefore  style={{width:25,height: 25, margin:"auto"}}/></div>
+                    <div onClick={()=>setShow(!show)} className='hiddenEditDelete'><MdMoreHoriz  style={{width:25,height: 25, margin:"auto", backgroundColor: "rgb(185, 183, 183)", borderRadius:50}}/></div>
                 </div>
             )
         }

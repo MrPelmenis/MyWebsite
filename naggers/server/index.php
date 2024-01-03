@@ -111,6 +111,33 @@ if (isset($_GET["request"])) {
         //user ir logged in  
         switch ($_GET["request"]) {
 
+
+            case "updatePost":{
+                $postID = $_POST["postID"];
+                $title = $_POST["title"];
+                $body = $_POST["body"];
+
+                $sql = "UPDATE Posts SET BODY = '" . TDB($body) . "', TITLE = '" . TDB($title) . "' WHERE ID = " . TDB($postID) . ";";
+                //echo($sql);
+
+                sql_Execute($sql);
+
+                echo (json_encode(array("updated" => true)));
+                break;
+            }
+
+            case "deletePost":{
+                $postID = $_POST["postID"];
+
+                $sqlPosts = "DELETE FROM Posts WHERE ID=". TDB($postID) .";";
+                $sqlComments = "DELETE FROM Comments WHERE PostID=". TDB($postID) .";";
+                $sqlLike = "DELETE FROM Likes WHERE PostID=". TDB($postID) .";";                
+                sql_Execute_Transaction([$sqlComments, $sqlPosts, $sqlLike]);
+
+                echo (json_encode(array("deleted" => true)));
+                break;
+            }
+
             case "profileImgUpdate":{
                 $clientName = htmlspecialchars($_POST["clientName"]);
                 $imgSrc = $_POST["imgSrc"];

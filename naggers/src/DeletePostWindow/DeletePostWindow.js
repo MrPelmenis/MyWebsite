@@ -28,8 +28,10 @@ export default function DeletePostWindow() {
     };
 
 
-    function deletePost(){
-        alert(deletePostWindow.PostId);
+    async function deletePost(){          
+        let res = await fetchSpecial("deletePost", {postID: deletePostWindow.PostId}, false);
+        dispatch(hideDeleteScreen());
+        window.location.href = "/";
     }
 
     if (deletePostWindow.visible) {

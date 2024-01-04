@@ -112,7 +112,7 @@ export default function CommentWindow() {
                     text={comment.Body}
                     likeAmount={comment.LikeAmount}
                     authorName={comment.AuthorName}
-                    postId={comment.postID}
+                    commentId={comment.postID}
                     isCommentLikedByCurrentUser={comment.isLikedByCurrentUser}
                     ></SingleComment>);
                 });

@@ -125,13 +125,13 @@ function HiddenEditDelteButtons({showMe, title, body, PostId}){
 
     const dispatch = useDispatch();
     const showEditPostScreen = ()=>{
-        dispatch(editPostTitleBody({title: title, body: body, postID: PostId}))
+        dispatch(editPostTitleBody({title: title, body: body, postID: PostId, isThisPostEdit: true}));
         dispatch(changeEditHelpText({helpText:""}));
         dispatch(showPostEditScreen({PostId:PostId}));
     }
 
     const showDeletePostScreen =()=>{
-        dispatch(changeDeletePost({PostId:PostId}));
+        dispatch(changeDeletePost({PostId:PostId, deletePost: true}));
         dispatch(showDeleteScreen());
     }
 

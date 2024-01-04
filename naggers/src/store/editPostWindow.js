@@ -9,6 +9,7 @@ const slice = createSlice({
         title:"",
         body: "",
         postID: "",
+        isThisPostEdit: true,
     },
     reducers: {
         showEditPostScreen: (state, action) => {
@@ -25,7 +26,7 @@ const slice = createSlice({
             state.title = action.payload.title;
             state.body = action.payload.body;
             state.postID = action.payload.postID;
-            console.log("postID = ", state.postID);
+            state.isThisPostEdit = action.payload.isThisPostEdit;
         },
     },
 });
@@ -59,9 +60,9 @@ export const changeEditHelpText = ({helpText}) => async dispatch => {
 }
 
 
-export const editPostTitleBody = ({title, body, postID}) => async dispatch => {
+export const editPostTitleBody = ({title, body, postID, isThisPostEdit}) => async dispatch => {
     try {
-         dispatch(changeEditTitleBody({title,body, postID}));
+         dispatch(changeEditTitleBody({title,body, postID, isThisPostEdit}));
     } catch (e) {
         return console.error(e.message);
     }

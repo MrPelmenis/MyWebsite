@@ -31,14 +31,20 @@ export default function DeletePostWindow() {
     };
 
 
-    async function deletePost(){          
-        let res = await fetchSpecial("deletePost", {postID: deletePostWindow.PostId}, false);
-        dispatch(hideDeleteScreen());
-        
-        let filteredLoadedPosts =  loadedPosts.posts.filter(post =>{
-            return post.ID != deletePostWindow.PostId;
-        })
-        dispatch(changePosts({posts:[...filteredLoadedPosts]}));
+    async function deletePost(){
+        if(deletePostWindow.deletePost){
+            let res = await fetchSpecial("deletePost", {postID: deletePostWindow.PostId}, false);
+            dispatch(hideDeleteScreen());
+            
+            let filteredLoadedPosts =  loadedPosts.posts.filter(post =>{
+                return post.ID != deletePostWindow.PostId;
+            })
+            dispatch(changePosts({posts:[...filteredLoadedPosts]}));
+        }else{
+            console.log(deletePostWindow);
+            alert("deleteComment id: "+ deletePostWindow.PostId);
+        }          
+       
     }
 
     if (deletePostWindow.visible) {
@@ -49,7 +55,7 @@ export default function DeletePostWindow() {
                         X
                     </div>
                     </div>
-                    <div className='editPostPart' style={{ textAlign: "center", height: 40, fontSize: 30, marginTop: -20 }}>Remove Your Post</div>
+                    <div className='editPostPart' style={{ textAlign: "center", height: 40, fontSize: 30, marginTop: -20 }}>{deletePostWindow.deletePost ? "Remove Your Post":"Remove Your Comment"}</div>
                     <div className='areYouSure'>Are you sure? You worked so hard on it...</div>
                     <div className='cancel-delete-buttons'>
                         <button className='cancelButton' onClick={()=>{handleClose()}}>Cancel</button>

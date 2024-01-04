@@ -20,6 +20,12 @@ import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { MdMoreHoriz } from "react-icons/md";
 
+
+
+import { showPostEditScreen, editPostTitleBody, changeEditHelpText } from '../store/editPostWindow';
+import {showDeleteScreen, changeDeletePost} from "../store/deletePostWindow";
+
+
 export default function SingleComment(props) {
 
     const [isCommentLikedByUser, setIsCommentLikedByUser] = useState(props.isCommentLikedByCurrentUser);
@@ -55,8 +61,6 @@ export default function SingleComment(props) {
             </div>)
     }
 
-
-
     return (
         <div className='SingleComment'>
             <div className='CommentAuthorDateInfo'>
@@ -74,7 +78,7 @@ export default function SingleComment(props) {
                         {isCommentLikedByUser != 1 ? (<AiOutlineLike style={{ width:"25px", height:"25px", marginTop: "2px" }}/>) : (<AiFillLike style={{ width:"25px", height:"25px" }}/>)}
                         <span style={{margin:"auto"}}>{currentLikeAmount}</span>
                 </div>
-                <HiddenEditDelteCommentButtons showMe={(props.authorName == currentUser)} title={props.title} body={props.body} commentID={props.id} />
+                <HiddenEditDelteCommentButtons showMe={(props.authorName == currentUser)} body={props.text} commentID={props.commentID} />
             </div>
         </div>
     )
@@ -83,16 +87,24 @@ export default function SingleComment(props) {
 
 
 
-function HiddenEditDelteCommentButtons({showMe, title, body, PostId}){
+function HiddenEditDelteCommentButtons({showMe, body, commentID}){
     const [show, setShow] = useState(showMe);
     const dispatch = useDispatch();
 
+    console.log(body);
+    console.log(showMe);
+    console.log(commentID);
+
+
     const showEditPostScreen = ()=>{
-        alert("editcomment");
+        dispatch(editPostTitleBody({title: "", body: body, postID: commentID, isThisPostEdit: false}));
+        dispatch(changeEditHelpText({helpText:""}));
+        dispatch(showPostEditScreen({PostId:commentID}));
     }
 
     const showDeletePostScreen =()=>{
-        alert("deleteComment");
+        dispatch(changeDeletePost({PostId:commentID, deletePost: false}));
+        dispatch(showDeleteScreen());
     }
 
     const correctEditDeleteButtons = () => {

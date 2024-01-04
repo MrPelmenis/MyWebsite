@@ -6,7 +6,8 @@ const slice = createSlice({
     initialState: {
         visible: false,
         helpText: "",
-        PostId:""
+        PostId:"",
+        deletePost:true,
     },
     reducers: {
         showDeletePostScreen: (state, action) => {
@@ -16,7 +17,8 @@ const slice = createSlice({
             state.visible = false;
         },
         changeDeletablePost: (state, action) => {
-            state.PostId = action.payload.PostId
+            state.PostId = action.payload.PostId;
+            state.deletePost = action.payload.deletePost;
         },
     },
 });
@@ -41,9 +43,9 @@ export const hideDeleteScreen = () => async dispatch => {
     }
 }
 
-export const changeDeletePost = ({PostId}) => async dispatch => {
+export const changeDeletePost = ({PostId, deletePost}) => async dispatch => {
     try {
-         dispatch(changeDeletablePost({PostId}));
+         dispatch(changeDeletablePost({PostId, deletePost}));
     } catch (e) {
         return console.error(e.message);
     }

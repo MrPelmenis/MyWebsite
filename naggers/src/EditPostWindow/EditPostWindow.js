@@ -36,25 +36,27 @@ export default function EditPostWindow() {
     };
     
     const handleTextInputChange = event => {
-        dispatch(editPostTitleBody({title:editPostWindow.title, body:event.target.value,  postID: editPostWindow.postID}));
+        dispatch(editPostTitleBody({title:editPostWindow.title, body:event.target.value,  postID: editPostWindow.postID, isThisPostEdit: editPostWindow.isThisPostEdit}));
     };
-
     const handleTitleInputChange = event => {
-        dispatch(editPostTitleBody({title:event.target.value, body:editPostWindow.body, postID: editPostWindow.postID}));
+        dispatch(editPostTitleBody({title:event.target.value, body:editPostWindow.body, postID: editPostWindow.postID, isThisPostEdit: editPostWindow.isThisPostEdit}));
     };
-
 
     const updatePost = async () =>{
-        if(editPostWindow.title != "" && editPostWindow.body != ""){
-            let res = await fetchSpecial("updatePost", {postID: editPostWindow.postID, title: editPostWindow.title, body:editPostWindow.body}, false);
-            dispatch(hidePostEditScreen());
-
-            let recentPost = (await fetchSpecial("getRecentPosts", {clientName: currentUser.name, postID: editPostWindow.postID}, (currentUser.name != "" ? false: true )))[0];
-            let filteredLoadedPosts =  loadedPosts.posts.filter(post =>{
-                console.log(post.ID);
-                return post.ID != recentPost.ID;
-            })
-            dispatch(changePosts({posts:[recentPost, ...filteredLoadedPosts]}));
+        if((editPostWindow.title != "" && editPostWindow.body != "") || (!editPostWindow.isThisPostEdit && editPostWindow.body != "")){
+            if(editPostWindow.isThisPostEdit){
+                let res = await fetchSpecial("updatePost", {postID: editPostWindow.postID, title: editPostWindow.title, body:editPostWindow.body}, false);
+                dispatch(hidePostEditScreen());
+    
+                let recentPost = (await fetchSpecial("getRecentPosts", {clientName: currentUser.name, postID: editPostWindow.postID}, (currentUser.name != "" ? false: true )))[0];
+                let filteredLoadedPosts =  loadedPosts.posts.filter(post =>{
+                    console.log(post.ID);
+                    return post.ID != recentPost.ID;
+                })
+                dispatch(changePosts({posts:[recentPost, ...filteredLoadedPosts]}));
+            }else{
+                alert("editComment");
+            }
         }else{
             dispatch(changeEditHelpText({helpText:"You must type something..."}));
         }
@@ -69,14 +71,13 @@ export default function EditPostWindow() {
                         X
                     </div>
                     </div>
-                    <div className='editPostPart' style={{ textAlign: "center", height: 40, fontSize: 30, marginTop: -20 }}>Edit Your Post</div>
+                    <div className='editPostPart' style={{ textAlign: "center", height: 40, fontSize: 30, marginTop: -20 }}>{editPostWindow.isThisPostEdit ? "Edit Your Post" : "Edit Your Comment"}</div>
 
                     <div className="postInputHolder" style={{width: "80%", margin: "auto" }}>
-                        <input type='text' placeholder='Title' className='TitleInput'
-                        onChange={handleTitleInputChange} value={editPostWindow.title}></input>
+                    {editPostWindow.isThisPostEdit ? (<input type='text' placeholder='Title' className='TitleInput' onChange={handleTitleInputChange} value={editPostWindow.title}></input>): <></> }
 
                         <textarea type='text' placeholder='Your Thoughts...' className='PostTextInput'
-                        onChange={handleTextInputChange} value={editPostWindow.body}></textarea>
+                        onChange={handleTextInputChange} value={editPostWindow.body} style={{}}></textarea>
                         <div className='newPosthelperText'>{editPostWindow.helpText}</div>
                     </div>
 

@@ -64,7 +64,7 @@
    top: 0;
 }
 
-.TitleInput {
+.TitleEditInput {
     font-weight: 200;
     height: 30px;
     font-size: 20px;
@@ -74,10 +74,9 @@
     outline: none;
     word-wrap: break-word;
     border: none;
-    border-bottom: 1px solid gray;
 }
 
-.PostTextInput {
+.PostEditTextInput {
     font-weight: 50;
     width: 90%;
     height: 70%;
@@ -88,6 +87,7 @@
     resize: none;
     padding-left: 0;
     padding-top: 0;
+    border-top: 1px solid gray;
     border-bottom: 1px solid gray;
 }
 

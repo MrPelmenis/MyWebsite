@@ -112,6 +112,33 @@ if (isset($_GET["request"])) {
         switch ($_GET["request"]) {
 
 
+            case "deleteComment":{
+                $commentID = $_POST["commentID"];
+
+                $sqlComments = "DELETE FROM Comments WHERE ID=". TDB($commentID) .";";
+                $sqlLike = "DELETE FROM CommentLikes WHERE CommentID=". TDB($commentID) .";";
+
+
+                sql_Execute_Transaction([$sqlComments, $sqlLike]);
+
+                echo (json_encode(array("deleted" => true)));
+                break;
+            }
+
+
+            case "updateComment":{
+                $commentID = $_POST["commentID"];
+                $body = $_POST["body"];
+
+                $sql = "UPDATE Comments SET Body = '" . TDB($body) . "' WHERE ID = " . TDB($commentID) . ";";
+                //echo($sql);
+
+                sql_Execute($sql);
+
+                echo (json_encode(array("updated" => true)));
+                break;
+            }
+
             case "updatePost":{
                 $postID = $_POST["postID"];
                 $title = $_POST["title"];

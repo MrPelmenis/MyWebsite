@@ -20,29 +20,22 @@ import { fetchSpecial } from '../serverComunication.js';
 
 
 
-import { hideCommentScreen, changeHelpText} from '../store/commentWindow';
+import { hideCommentScreen, changeHelpText, changeLoadedComments} from '../store/commentWindow';
 
 import SinglePost from '../SinglePost/singlePost';
 import SingleComment from '../SingleComment/SingleComment';
 import { ExtraFunctions } from '../extraFunctions';
 import { light } from '@mui/material/styles/createPalette';
+import { Dialpad } from '@mui/icons-material';
 
 
 
 export default function CommentWindow() {
 
-    
-    const [helperText, setHelperText] = useState("");
-    useEffect(() => {
-        setTimeout(() => {
-            setHelperText("");
-            setLoadedComments([]);
-        }, 0);
-      }, [])
-
     const dispatch = useDispatch();
     const commentWindow = useSelector(state => state.commentWindow);
     const currentUser = useSelector(state => state.currentUser);
+    let loadedComments = commentWindow.loadedComments;
     const handleClose = () => {
         setArePostsLoaded(false);
         dispatch(hideCommentScreen());
@@ -77,9 +70,6 @@ export default function CommentWindow() {
         setMyCommentText(event.target.value);
     };
 
-
-    const [loadedComments, setLoadedComments] = useState([]);
-
     const [arePostsLoaded, setArePostsLoaded] = useState(false);
 
     const getCommentInfo = async () =>{
@@ -87,9 +77,7 @@ export default function CommentWindow() {
             setArePostsLoaded(true);
             console.log("updatojas komnetari");
             let commentsForPost = ((await fetchSpecial("getCommentsForPost", {postID:commentWindow.postID, clientName:currentUser.name}, !ExtraFunctions.isUserLoggedIn())));
-            console.log(commentsForPost);
-            //ir ! jo mainigais ir is user anonymous
-            setLoadedComments(commentsForPost);
+            dispatch(changeLoadedComments({comments: commentsForPost}));
         }
         
     }
@@ -100,6 +88,7 @@ export default function CommentWindow() {
     }
     
     const makeCommentsIntoReactObjects = (comments)=>{
+        console.log(commentWindow);
             if(comments.length < 1){
                 return(
                     <div style={{width:"100%", height:"100%", textAlign:"center", lineHeight:"200px", fontSize:"30px", color:'gray', userSelect: "none"}}> Be the first one to comment... </div>
@@ -142,7 +131,7 @@ export default function CommentWindow() {
                     
                     
                     <div className='CommentContainer'>
-                        {makeCommentsIntoReactObjects(loadedComments)}
+                        {makeCommentsIntoReactObjects(commentWindow.loadedComments)}
                     </div>
 
                 </div>

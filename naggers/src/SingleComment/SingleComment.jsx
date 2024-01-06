@@ -24,6 +24,7 @@ import { MdMoreHoriz } from "react-icons/md";
 
 import { showPostEditScreen, editPostTitleBody, changeEditHelpText } from '../store/editPostWindow';
 import {showDeleteScreen, changeDeletePost} from "../store/deletePostWindow";
+import { current } from '@reduxjs/toolkit';
 
 
 export default function SingleComment(props) {
@@ -36,11 +37,9 @@ export default function SingleComment(props) {
     const commentLikeCallback = async () => {
         if(ExtraFunctions.isUserLoggedIn()){
             let result;
-            console.log(props);
             result = await fetchSpecial("commentLike", {commentID: props.commentID, clientName: currentUser.name}, false);
             setIsCommentLikedByUser(result.statuss == "liked" ? 1: 0);
             setCurrentLikeAmount(result.currentLikeAmount);
-            console.log(result); 
         }else{
             ExtraFunctions.googleLogin();
         }
@@ -78,7 +77,7 @@ export default function SingleComment(props) {
                         {isCommentLikedByUser != 1 ? (<AiOutlineLike style={{ width:"25px", height:"25px", marginTop: "2px" }}/>) : (<AiFillLike style={{ width:"25px", height:"25px" }}/>)}
                         <span style={{margin:"auto"}}>{currentLikeAmount}</span>
                 </div>
-                <HiddenEditDelteCommentButtons showMe={(props.authorName == currentUser)} body={props.text} commentID={props.commentID} />
+                {(props.authorName == currentUser.name) ? (<HiddenEditDelteCommentButtons showMe={(props.authorName == currentUser)} body={props.text} commentID={props.commentID} />):<></>}
             </div>
         </div>
     )
@@ -90,10 +89,6 @@ export default function SingleComment(props) {
 function HiddenEditDelteCommentButtons({showMe, body, commentID}){
     const [show, setShow] = useState(showMe);
     const dispatch = useDispatch();
-
-    console.log(body);
-    console.log(showMe);
-    console.log(commentID);
 
 
     const showEditPostScreen = ()=>{

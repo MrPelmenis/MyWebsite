@@ -9,7 +9,8 @@ const slice = createSlice({
         title:"",
         body:"",
         likeAmount:"",
-        postID: ""
+        postID: "",
+        loadedComments: [],
     },
     reducers: {
         showCommentScreenRed: (state, action) => {
@@ -29,13 +30,28 @@ const slice = createSlice({
         changeHelpTextReducer: (state, action) => {
             state.helpText = action.payload.helpText;
         },
+
+        changeLoadedCommentsRed: (state, action) => {
+            state.loadedComments = action.payload.comments;
+        },
     },
 });
-export default slice.reducer
+export default slice.reducer;
 
 
 
-const { showCommentScreenRed, hideCommentScreenRed, changeHelpTextReducer } = slice.actions
+const { showCommentScreenRed, hideCommentScreenRed, changeHelpTextReducer, changeLoadedCommentsRed } = slice.actions;
+
+
+export const changeLoadedComments = ({comments}) => async dispatch => {
+    try {
+        dispatch(changeLoadedCommentsRed({comments}));
+    } catch (e) {
+        return console.error(e.message);
+    }
+}
+
+
 export const showCommentScreen = ({authorName,uploadDate, title, body, isPostLikedByUser, likeAmount, postID}) => async dispatch => {
     try {
         dispatch(showCommentScreenRed({authorName,uploadDate, title, body,isPostLikedByUser, likeAmount, postID}));
@@ -43,6 +59,7 @@ export const showCommentScreen = ({authorName,uploadDate, title, body, isPostLik
         return console.error(e.message);
     }
 }
+
 
 export const hideCommentScreen = () => async dispatch => {
     try {

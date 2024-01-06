@@ -15,9 +15,12 @@ import configData from "../config.json";
 
 import { fetchSpecial } from '../serverComunication.js';
 
+import { changeLoadedComments} from '../store/commentWindow';
 
 import { changePosts } from '../store/loadedPosts';
 import { Co2Sharp } from '@mui/icons-material';
+
+import { ExtraFunctions } from '../extraFunctions';
 
 
 
@@ -30,6 +33,7 @@ export default function EditPostWindow() {
     const newPostWindow = useSelector(state => state.newPostWindow);
     const loadedPosts = useSelector(state => state.loadedPosts);
     const currentUser = useSelector(state=>state.currentUser);
+    const commentWindow = useSelector(state => state.commentWindow);
 
     function handleClose() {
         dispatch(hidePostEditScreen());
@@ -50,12 +54,14 @@ export default function EditPostWindow() {
     
                 let recentPost = (await fetchSpecial("getRecentPosts", {clientName: currentUser.name, postID: editPostWindow.postID}, (currentUser.name != "" ? false: true )))[0];
                 let filteredLoadedPosts =  loadedPosts.posts.filter(post =>{
-                    console.log(post.ID);
                     return post.ID != recentPost.ID;
                 })
                 dispatch(changePosts({posts:[recentPost, ...filteredLoadedPosts]}));
             }else{
-                alert("editComment");
+                let res = await fetchSpecial("updateComment", {commentID: editPostWindow.postID, body:editPostWindow.body}, false);
+                dispatch(hidePostEditScreen());
+                let commentsForPost = ((await fetchSpecial("getCommentsForPost", {postID:commentWindow.postID, clientName:currentUser.name}, !ExtraFunctions.isUserLoggedIn())));
+                dispatch(changeLoadedComments({comments: commentsForPost}));
             }
         }else{
             dispatch(changeEditHelpText({helpText:"You must type something..."}));

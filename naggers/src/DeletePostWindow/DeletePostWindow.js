@@ -12,7 +12,8 @@ import {hideDeleteScreen, changeDeletePost} from "../store/deletePostWindow";
 import { fetchSpecial } from '../serverComunication.js';
 import { changePosts } from '../store/loadedPosts';
 
-
+import { changeLoadedComments} from '../store/commentWindow';
+import { ExtraFunctions } from '../extraFunctions';
 
 
 export default function DeletePostWindow() {
@@ -23,7 +24,7 @@ export default function DeletePostWindow() {
     const newPostWindow = useSelector(state => state.newPostWindow);
     const loadedPosts = useSelector(state => state.loadedPosts);
     const currentUser = useSelector(state=>state.currentUser);
-
+    const commentWindow = useSelector(state => state.commentWindow);
 
 
     function handleClose() {
@@ -41,8 +42,10 @@ export default function DeletePostWindow() {
             })
             dispatch(changePosts({posts:[...filteredLoadedPosts]}));
         }else{
-            console.log(deletePostWindow);
-            alert("deleteComment id: "+ deletePostWindow.PostId);
+            let res = await fetchSpecial("deleteComment", {commentID: deletePostWindow.PostId}, false);
+            handleClose();
+            let commentsForPost = ((await fetchSpecial("getCommentsForPost", {postID:commentWindow.postID, clientName:currentUser.name}, !ExtraFunctions.isUserLoggedIn())));
+            dispatch(changeLoadedComments({comments: commentsForPost}));
         }          
        
     }

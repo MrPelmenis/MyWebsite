@@ -1,7 +1,7 @@
 import '../App.css';
 import { useState } from 'react';
 import "./MainPartBackground.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 import Rocket from './Rocket';
 
@@ -15,7 +15,7 @@ export default function MainPartBackground() {
 
     useEffect(() => {
         setTimeout(() => {
-            if(rockets.length< 8){
+            if(rockets.length< 2){
                 setRockets(prevRockets => [...prevRockets, <Rocket key={Math.random()} />]);
             }
         }, 1000);
@@ -23,7 +23,7 @@ export default function MainPartBackground() {
 
 
     return (
-        <div style={{position:"relative"}} className='MainPartBackground'>
+        <div style={{position:"relative"}} className='MainPartBackground' > 
             {(rockets)}
             <MainPart></MainPart>
         </div>

@@ -15,7 +15,7 @@ const Login = () => {
 
     return (
         <>
-            <div style={{ marginTop: 300, fontSize: 50, width: 500, height: 500 }}>tu gejs</div>
+            <div style={{ marginTop: 300, fontSize: 50, width: 500, height: 500 }}>Loading...</div>
         </>
     )
 };

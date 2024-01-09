@@ -12,10 +12,9 @@ import ChangeNameWindow from './../ChangeNameWindow/ChangeNameWindow';
 
 const Profile = () => {
     const navigate = useNavigate();
-    
     useEffect(() => {
     });
-
+    
     return (
         <Provider store={store}>
             <ChangeNameWindow></ChangeNameWindow>

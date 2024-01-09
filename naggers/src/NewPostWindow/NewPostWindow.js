@@ -8,11 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { changeHelpText, hidePostScreen } from '../store/newPostWindow';
 
-
-import logoPic from '../img/labsLogo.png';
-
-import configData from "../config.json";
-
 import { fetchSpecial } from '../serverComunication.js';
 
 
@@ -49,15 +44,11 @@ export default function NewPostWindow() {
             console.log(res);
             if(res.postID){
                 let recentPost = ((await fetchSpecial("getRecentPosts", {clientName: currentUser.name, postID:res.postID}, (currentUser.name != "" ? false: true ))))[0];
-
                 setTitleInput("");
                 setTextInput("");
-
                 dispatch(hidePostScreen());
                 dispatch(changePosts({posts:[recentPost, ...loadedPosts.posts]}));
-
                 dispatch(changeHelpText({helpText:""}));
-                //window.location.href = "/";
             }
         }else{
             dispatch(changeHelpText({helpText:"You must enter something..."}));

@@ -11,12 +11,11 @@ import MainPart from '../MainPart/mainPart';
 
 
 export default function Rocket() {
-
     const [y, setY] = useState(Math.random() * window.screen.height);
 
     const [x, setX] = useState(Math.random() * window.screen.width );
 
-    const [speed, setSpeed] = useState(1);
+    const [speed, setSpeed] = useState(Math.random()*1+1);
 
     const [angle, setAngle] = useState(2 * Math.PI * Math.random());
 
@@ -30,9 +29,21 @@ export default function Rocket() {
     }, []);
 
     useEffect(() => {
-
         setY(prevY => prevY + Math.sin(angle - Math.PI / 4) * speed);
         setX(prevX => prevX + Math.cos(angle - Math.PI / 4) * speed);
+        if(x < 0){
+            setX(window.screen.width - 10);
+        }
+        if(y < 0){
+            setY(window.screen.height - 10);
+        }
+        if(x > window.screen.width){
+            setX(10);
+        }
+        if(y > window.screen.height){
+            setY(10);
+        }
+
 
     }, [angle, speed]);
 

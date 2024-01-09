@@ -80,6 +80,11 @@
     border: none;
     margin: auto;
     margin-right: 10px;
+    text-align: center;
+    font-weight: bold;
+    line-height: 45px;
+    user-select: none;
+    cursor: pointer;
 }
 
 .NewPostButton:hover {
@@ -119,4 +124,37 @@
 
     flex-direction: column;
     align-items: flex-start;
+}
+
+
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltiptext {
+    visibility: hidden;
+    width: 60px;
+    background-color: #0C4A60;
+    border: 1px solid white;
+    color: #fff;
+    font-size: 13px;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    top: 40px;
+    left: 15px;
+    z-index: 1;
+    font-weight: normal;
+    line-height: 15px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }

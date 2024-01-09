@@ -3,7 +3,7 @@
     background-color: #d6d3d3;
     z-index: 0;
     margin-top: 100px;
-    position: fixed;
+    position: static;
 }
 
 .mainPartBackgroundContainer{

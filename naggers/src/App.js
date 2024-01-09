@@ -1,5 +1,4 @@
 import './App.css';
-import MainPart from './MainPart/mainPart';
 import SingUpWindow from './SignUpWindow/SignUpWindow';
 import NewPostWindow from './NewPostWindow/NewPostWindow';
 import CommentWindow from './CommentWindow/CommentWindow';
@@ -15,7 +14,6 @@ import { DataLoader } from './DataLoader';
 
 
 function App() {
-  //mainPartBackground includes main part
   return (
     <div >
       <Provider store={store}>
@@ -26,9 +24,7 @@ function App() {
         <CommentWindow></CommentWindow>
         <EditPostWindow></EditPostWindow>
         <DeletePostWindow></DeletePostWindow>
-        <MainPartBackground> 
-        </MainPartBackground>
-        
+        <MainPartBackground></MainPartBackground>
       </Provider>
       
     </div>

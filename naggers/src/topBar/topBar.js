@@ -30,7 +30,6 @@ import { ExtraFunctions } from '../extraFunctions';
 
 import configData from "../config.json";
 
-
 export default function TopBar() {
     return (
         <div className="TopBar">
@@ -99,7 +98,6 @@ function SignInButton({ value }) {
                     <ProfilePicOnTop> </ProfilePicOnTop>
                     <div style={{ color: "white" }}>{currentUserState.name}</div>
                 </div>
-
             </>
         )
     } else {
@@ -143,21 +141,20 @@ function TopBarLeftSide() {
 function NewPostButton() {
     let dispatch = useDispatch();
     const newPostWindow = useSelector(state => state.newPostWindow);
-    //dispatch(showPostScreen());
-
+    const navigate = useNavigate();
     const openNewPostWindow = () => {
         dispatch(changeHelpText({helpText:""}));
         dispatch(showPostScreen());
+        navigate("/");
     }
-
     if (ExtraFunctions.isUserLoggedIn()) {
         return (
             <>
-                <button className="NewPostButton" onClick={openNewPostWindow}>+</button>
+                <div className="NewPostButton tooltip" alt="New Post" onClick={openNewPostWindow}>+ <span className="tooltiptext">New Post</span></div>
             </>
         )
     } else {
-
+        return (<></>)
     }
 }
 

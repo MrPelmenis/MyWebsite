@@ -94,10 +94,6 @@ export default function ProfileContainer() {
         localStorage.setItem("JWT", "");
         window.location.href = "/";
     }
-
-    
-    
-
     
     return (
         <div className='ProfileContainer'>

@@ -358,7 +358,8 @@ if (isset($_GET["request"])) {
         
 
             case 'nickNameUpdate': {
-                    $nickname = htmlspecialchars($_POST["nickname"]);
+                    $nickname = ($_POST["nickname"]);
+                    echo($nickname);
                     $email = ($jwt->email);
                     $checkName = sql_StringExecute("SELECT 1 FROM Users WHERE Nickname='" . TDB($nickname) . "' AND Email <> '" . TDB($email) . "'");
 
@@ -366,7 +367,7 @@ if (isset($_GET["request"])) {
                     if ($checkName == "") {
                         if ($accountExistsCheck == "") {
                             sql_Execute("INSERT INTO Users (Email, Nickname) VALUES ('" . TDB($email) . "', '" . TDB($nickname) . "')");
-                            echo (json_encode(array("success" => true)));
+                            echo (json_encode(array("success" => false)));
                         } else {
                             sql_Execute("UPDATE Users SET Nickname = '" . TDB($nickname) . "' WHERE Email = '" . TDB($email) . "'");
                             echo (json_encode(array("success" => false)));

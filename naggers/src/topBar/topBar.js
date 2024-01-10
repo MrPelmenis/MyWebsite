@@ -32,17 +32,15 @@ import configData from "../config.json";
 
 export default function TopBar() {
     return (
-        <div className="TopBar">
-            <TopBarLeftSide></TopBarLeftSide>
-            <TopBarRightSide></TopBarRightSide>
-        </div >
+        <div className='topBarHolder'>
+            <div className="TopBar">
+                <TopBarLeftSide></TopBarLeftSide>
+                <TopBarRightSide></TopBarRightSide>
+            </div>
+            <div className='gradient-blur'></div>
+        </div>
     )
-
 }
-
-
-
-
 
 
 function ProfilePicOnTop() {

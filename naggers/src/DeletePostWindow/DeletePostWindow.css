@@ -23,26 +23,26 @@
 
 @media only screen and (width < 1000px) {
     .Delete-Post-white-box {
-        width: 50%;
+        width: 80%;
     }
 }
 
-@media only screen and (width > 1300px) {
+@media only screen and (width > 1000px) {
     .Delete-Post-white-box {
-        width: 30%;
+        width:60%;
     }
 }
 
 
-@media only screen and (height < 600px) {
+@media only screen and (height < 500px) {
     .Delete-Post-white-box {
-        height: 40%;
+        height: 70%;
     }
 }
 
-@media only screen and (height > 800px) {
+@media only screen and (height > 500px) {
     .Delete-Post-white-box {
-        height: 30%;
+        height: 50%;
     }
 }
 
@@ -148,7 +148,7 @@
 
 .areYouSure{
     margin: auto;
-    margin-top: 20px;
+    margin-top: 50px;
     margin-bottom: 0;
 }
 

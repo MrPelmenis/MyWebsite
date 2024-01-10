@@ -3,7 +3,7 @@ import SingUpWindow from './SignUpWindow/SignUpWindow';
 import NewPostWindow from './NewPostWindow/NewPostWindow';
 import CommentWindow from './CommentWindow/CommentWindow';
 import ChangeNameWindow from './ChangeNameWindow/ChangeNameWindow';
-import MainPartBackground from './MainPartBackground/MainPartBackground';
+import MainPart from './MainPart/mainPart';
 import EditPostWindow from './EditPostWindow/EditPostWindow';
 import DeletePostWindow from './DeletePostWindow/DeletePostWindow';
 
@@ -24,7 +24,7 @@ function App() {
         <CommentWindow></CommentWindow>
         <EditPostWindow></EditPostWindow>
         <DeletePostWindow></DeletePostWindow>
-        <MainPartBackground></MainPartBackground>
+        <MainPart></MainPart>
       </Provider>
       
     </div>

@@ -6,7 +6,34 @@
     justify-content: space-between;
     z-index: 1;
     top: 0;
+    
+}
+
+
+.gradient-blur {
+    position: relative;
+    background: linear-gradient(to bottom, #0C4A60, #d8d4d1); 
+  }
+  
+.gradient-blur::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(to bottom, #0C4A60, #d8d4d1);
+    filter: blur(0px);
+    
+}
+
+.topBarHolder{
+    display: flex;
+    flex-direction: column;
     position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 3;
 }
 
 .logoPic:hover{

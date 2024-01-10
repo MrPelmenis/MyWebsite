@@ -4,19 +4,17 @@
     background-color: #e1dddb;
     position:relative;
     margin: auto;
+    margin-top: 100px;
     box-shadow: 5px 0 5px -5px rgba(0, 0, 0, 0.2), -5px 0 5px -5px rgba(0, 0, 0, 0.2);
 }
 
-/*changing top and left manually for the canvas that's behind it*/
-
-
-@media only screen and (width <= 1300px) {
+@media only screen and (width <= 900px) {
     .MainPart {
         width: 100%;
     }
 }
 
-@media only screen and (width > 1300px) {
+@media only screen and (width > 900px) {
     .MainPart {
         width: 40%;
     }

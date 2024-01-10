@@ -7,7 +7,7 @@
 .titleText{
     font-size: 30px;
     font-weight: 5000;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 .authorDateInfo {
@@ -50,7 +50,7 @@
     margin: 5px;
     width: calc(100%-0px);
     margin-right: 20px;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 .dateInfoAboutPost {
@@ -73,7 +73,7 @@
     padding-left: 3px;
     padding-bottom: 3px;
     margin-top: 10px;
-    margin-left: 10px;
+    margin-left: 20px;
     padding-top: 3px;
 
 }
@@ -83,7 +83,7 @@
     width: 30px;
     height: 30px;
     margin-top: 5px;
-    margin-left: 10px;
+    margin-left: 20px;
     background-color: #0C4A60;
     border-Radius: 700px;
 }
@@ -142,6 +142,7 @@
     user-select: none;
     margin-top: 15px;
     margin-left: 5px;
+    margin-right: 20px;
 }
 
 .hiddenEditDelete:hover {

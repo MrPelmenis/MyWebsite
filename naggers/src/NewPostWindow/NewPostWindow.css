@@ -11,7 +11,7 @@
     display: flex;
 }
 
-.white-box {
+.newPost-white-box {
     background-color: white;
     height: 35%;
     margin: auto;
@@ -23,31 +23,31 @@
 
 
 @media only screen and (width < 1000px) {
-    .white-box {
-        width: 100%;
-        height: 100%;
+    .newPost-white-box {
+        width:90%;
+        height: 50%;
     }
 }
 
 @media only screen and (width > 1300px) {
-    .white-box {
-        width: 60%;
-        height: 70%;
+    .newPost-white-box {
+        width: 30%;
+        height: 40%;
     }
 }
 
 
 @media only screen and (height < 600px) {
-    .white-box {
-        width: 100%;
-        height: 100%;
+    .newPost-white-box {
+        width: 90%;
+        height: 50%;
     }
 }
 
 @media only screen and (height > 800px) {
-    .white-box {
-        height: 60%;
-        height: 70%;
+    .newPost-white-box {
+        width: 30%;
+        height: 40%;
     }
 }
 

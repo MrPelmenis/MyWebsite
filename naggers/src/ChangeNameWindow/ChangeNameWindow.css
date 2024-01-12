@@ -38,6 +38,7 @@
 @media only screen and (height <= 800px) {
     .change-name-white-box {
         height: 70%;
+        margin-top: 120px;
     }
 }
 

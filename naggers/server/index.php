@@ -358,7 +358,7 @@ if (isset($_GET["request"])) {
         
 
             case 'nickNameUpdate': {
-                    $nickname = ($_POST["nickname"]);
+                    $nickname = $_POST["nickname"];
                     echo($nickname);
                     $email = ($jwt->email);
                     $checkName = sql_StringExecute("SELECT 1 FROM Users WHERE Nickname='" . TDB($nickname) . "' AND Email <> '" . TDB($email) . "'");

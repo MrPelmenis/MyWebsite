@@ -29,7 +29,7 @@
 
 @media only screen and (width > 1000px) {
     .Delete-Post-white-box {
-        width:60%;
+        width:40%;
     }
 }
 
@@ -42,7 +42,7 @@
 
 @media only screen and (height > 500px) {
     .Delete-Post-white-box {
-        height: 50%;
+        height: 30%;
     }
 }
 
@@ -141,7 +141,7 @@
 .cancel-delete-buttons{
     display: flex;
     margin: auto;
-    margin-top: 70px;
+    margin-top: 20px;
     width: 30%;
     justify-content: space-between;
 }

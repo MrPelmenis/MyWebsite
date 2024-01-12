@@ -111,7 +111,7 @@ export default function CommentWindow() {
     if (commentWindow.visible) {
         return (
             <div className="AllCommentContainer">
-                <div className="white-box" style={{}}>
+                <div className="commentWindow-white-box" style={{}}>
                     <div className="singleCommentPart" >
                         <div className="close-button" onClick={handleClose}>
                             X

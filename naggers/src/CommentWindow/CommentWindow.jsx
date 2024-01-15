@@ -88,7 +88,6 @@ export default function CommentWindow() {
     }
     
     const makeCommentsIntoReactObjects = (comments)=>{
-        console.log(commentWindow);
             if(comments.length < 1){
                 return(
                     <div style={{width:"100%", height:"100%", textAlign:"center", lineHeight:"200px", fontSize:"30px", color:'gray', userSelect: "none"}}> Be the first one to comment... </div>

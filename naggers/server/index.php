@@ -99,15 +99,10 @@ function getCommentsForPost($isUserLoggedIn){
 
 
 if (isset($_GET["request"])) {
-    $jwt = parseJwt($_SERVER["HTTP_JWT"]);
-   /* $jwtString = json_encode($jwt);
-    $isValid = validateGoogleJWT($jwtString);
-    if ($isValid) {
-        echo 'Token is valid';
-    } else {
-        echo 'Token is invalid';
-    }*/
-    if (($jwt)) {
+    $jwt = json_decode($_SERVER["HTTP_JWT"]);
+    $idToken = ($jwt->id_token);
+
+    if (verifyJWT($idToken)) {
         //user ir logged in  
         switch ($_GET["request"]) {
 
@@ -221,7 +216,9 @@ if (isset($_GET["request"])) {
 
             case "uploadComment": {
                 $headers = getallheaders();
-                $email = ($jwt->email);
+                $id_token = parseBase64($jwt->id_token);
+                    
+                $email = ($id_token->email);
                 $gottenNickname = sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'");
 
                 $date = date('Y-m-d H:i:s');  
@@ -296,7 +293,9 @@ if (isset($_GET["request"])) {
 
             case "uploadPost": {
                 $headers = getallheaders();
-                $email = ($jwt->email);
+                $id_token = parseBase64($jwt->id_token);
+                    
+                $email = ($id_token->email);
                 $gottenNickname = sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'");
 
                 $date = date('Y-m-d H:i:s');
@@ -319,39 +318,43 @@ if (isset($_GET["request"])) {
             }
 
             case "getUsersNickname": {
-                    $headers = getallheaders();
-                    $email = ($jwt->email);
-                    $gottenNickname = sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'");
-                    $accountExists = ($gottenNickname != "" ? true : false);
-                    echo (json_encode(array("nickname" => $gottenNickname, "accountExists" => $accountExists)));
-                    break;
-                }
+                $headers = getallheaders();
+
+                $id_token = parseBase64($jwt->id_token);
+                    
+                $email = ($id_token->email);
+                $gottenNickname = sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'");
+                $accountExists = ($gottenNickname != "" ? true : false);
+                echo (json_encode(array("nickname" => $gottenNickname, "accountExists" => $accountExists)));
+                break;
+            }
 
 
             
-                case "changeUserName":{
-                    $nickname = htmlspecialchars($_POST["nickname"]);
-                    $email = ($jwt->email);
+            case "changeUserName":{
+                $nickname = htmlspecialchars($_POST["nickname"]);
+                $id_token = parseBase64($jwt->id_token);
+                    
+                $email = ($id_token->email);
+                $currentName = sql_StringExecute("SELECT Nickname FROM Users WHERE `Email` = '". TDB($email) ."';");
 
-                    $currentName = sql_StringExecute("SELECT Nickname FROM Users WHERE `Email` = '". TDB($email) ."';");
+                $checkq = "SELECT 1 FROM Users WHERE Nickname='" . TDB($nickname) . "';";
+                $checkName = sql_StringExecute($checkq);
 
-                    $checkq = "SELECT 1 FROM Users WHERE Nickname='" . TDB($nickname) . "';";
-                    $checkName = sql_StringExecute($checkq);
+                if($checkName == ""){
+                    sql_Execute("UPDATE Users SET Nickname = '" . TDB($nickname) . "' WHERE Email = '" . TDB($email) . "'");
 
-                    if($checkName == ""){
-                        sql_Execute("UPDATE Users SET Nickname = '" . TDB($nickname) . "' WHERE Email = '" . TDB($email) . "'");
+                    //postos
+                    $qqq = "UPDATE Posts SET AuthorName = '" . TDB($nickname) . "' WHERE AuthorName = '" . TDB($currentName) . "'";
+                    sql_Execute("UPDATE Posts SET AuthorName = '" . TDB($nickname) . "' WHERE AuthorName = '" . TDB($currentName) . "'");
 
-                        //postos
-                        $qqq = "UPDATE Posts SET AuthorName = '" . TDB($nickname) . "' WHERE AuthorName = '" . TDB($currentName) . "'";
-                        sql_Execute("UPDATE Posts SET AuthorName = '" . TDB($nickname) . "' WHERE AuthorName = '" . TDB($currentName) . "'");
+                    //komentos
+                    sql_Execute("UPDATE Comments SET AuthorName = '" . TDB($nickname) . "' WHERE AuthorName = '" . TDB($currentName) . "'");
 
-                        //komentos
-                        sql_Execute("UPDATE Comments SET AuthorName = '" . TDB($nickname) . "' WHERE AuthorName = '" . TDB($currentName) . "'");
-
-                        echo (json_encode(array("success" => true)));
-                    }else{
-                        echo (json_encode(array("success" => false)));
-                    }
+                    echo (json_encode(array("success" => true)));
+                }else{
+                    echo (json_encode(array("success" => false)));
+                }
 
                 break;
             }
@@ -359,18 +362,24 @@ if (isset($_GET["request"])) {
 
             case 'nickNameUpdate': {
                     $nickname = $_POST["nickname"];
-                    echo($nickname);
-                    $email = ($jwt->email);
+                    $id_token = parseBase64($jwt->id_token);
+                    
+                    $email = ($id_token->email);
+                    
                     $checkName = sql_StringExecute("SELECT 1 FROM Users WHERE Nickname='" . TDB($nickname) . "' AND Email <> '" . TDB($email) . "'");
 
+                    
+
                     $accountExistsCheck = sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'");
+
+
                     if ($checkName == "") {
                         if ($accountExistsCheck == "") {
                             sql_Execute("INSERT INTO Users (Email, Nickname) VALUES ('" . TDB($email) . "', '" . TDB($nickname) . "')");
-                            echo (json_encode(array("success" => false)));
+                            echo (json_encode(array("success" => true)));
                         } else {
                             sql_Execute("UPDATE Users SET Nickname = '" . TDB($nickname) . "' WHERE Email = '" . TDB($email) . "'");
-                            echo (json_encode(array("success" => false)));
+                            echo (json_encode(array("success" => true)));
                         }
                     } else {
                         echo (json_encode(array("success" => false)));
@@ -383,6 +392,19 @@ if (isset($_GET["request"])) {
     }
 }
 
+
+
+function convertToString($stdClassObject) {
+    // Check if the input is an instance of stdClass
+    if (!($stdClassObject instanceof stdClass)) {
+        throw new InvalidArgumentException('Input must be an instance of stdClass');
+    }
+
+    // Convert stdClass object to a JSON-encoded string
+    $jsonString = json_encode($stdClassObject);
+
+    return $jsonString;
+}
 
 
 
@@ -409,10 +431,56 @@ function cors()
 
 
 
-function parseJwt($token)
+function parseBase64($token)
 {
     $base64Url = explode('.', $token)[1];
     $base64 = str_replace('-', '+', str_replace('_', '/', $base64Url));
     $jsonPayload = json_decode(base64_decode($base64));
     return $jsonPayload;
+}
+
+
+
+
+function verifyJWT( $jwt ) {
+    $keyStr = file_get_contents("https://www.googleapis.com/oauth2/v1/certs");
+
+    $keys = json_decode($keyStr, true);
+
+    global $Google_ClientID;
+    
+	// split the jwt
+	$tokenParts = explode( '.', $jwt ); 
+
+	$head = json_decode( base64_decode( strtr( $tokenParts[0], '-_', '+/' ) ), true );
+	$body = json_decode( base64_decode( strtr( $tokenParts[1], '-_', '+/' ) ), true );
+
+	// check expiration time
+	if ( time() >= $body['exp'] ) {
+		return false;
+	}
+
+	// check aud
+	if ( $body['aud'] !== $Google_ClientID ) {
+		return false;
+	}
+
+	// check iss
+	if ( ! in_array( $body['iss'], [ 'accounts.google.com', 'https://accounts.google.com' ] ) ) {
+		return false;
+	}
+
+	// verify the signature
+	$signature = base64_decode( strtr( $tokenParts[2], '-_', '+/' ) );
+
+
+
+	$valid = openssl_verify( $tokenParts[0] . '.' . $tokenParts[1], $signature, $keys[$head['kid']], 'SHA256' );
+
+
+	if ( $valid == 1 ) {
+		return true;
+	}
+
+	return false;
 }

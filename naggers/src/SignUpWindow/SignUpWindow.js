@@ -14,10 +14,6 @@ import { hideScreen } from '../store/signInWindow';
 
 import logoPic from '../img/labsLogo.png';
 
-
-import configData from "../config.json";
-
-
 import { fetchSpecial } from '../serverComunication.js';
 
 
@@ -68,17 +64,12 @@ export default function SingUpWindow() {
                 dispatch(hideScreen());
                 dispatch(changeUser({ name: nicknameInput, accountExists: true }));
             } else {
-                setHelperText('userName allready in use');
+                setHelperText('Nickname allready in use');
             }
         }
     };
 
     const [helperText, setHelperText] = useState("What name do you want to be known by ?");
-
-
-
-    const [whiteWidth, setWhiteWidth] = useState("35%");
-    const [whiteHeight, setWhiteHeight] = useState("35%");
 
     if (signInWindow.visible) {
         return (

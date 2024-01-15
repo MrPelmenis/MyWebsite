@@ -46,25 +46,15 @@ async function callback() {
     
         console.log('response:');
         console.log(result);
-    
-    
-        console.log("Token:");
-        localStorage.setItem("JWT", JSON.stringify(result.id_token));
-       // let jtoken = (localStorage.getItem("JWT"));
+
+        localStorage.setItem("JWT", JSON.stringify(result));
+        let jtoken = (localStorage.getItem("JWT"));
+        console.log("tokenFromStorage:");
+        console.log(jtoken);
 
         window.location.href = "/";
+        
     }
 }
-
-function parseJwt(token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    return JSON.parse(jsonPayload);
-}
-
 
 export default Login;

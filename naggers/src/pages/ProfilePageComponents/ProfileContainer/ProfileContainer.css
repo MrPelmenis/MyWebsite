@@ -78,6 +78,7 @@ input[type="file"] {
    cursor: pointer;
    user-select: none;
    transition: 0.1s;
+   width: 200px;
 }
 
 .changeUsernameButton:hover{

@@ -79,7 +79,6 @@ export default function CommentWindow() {
             let commentsForPost = ((await fetchSpecial("getCommentsForPost", {postID:commentWindow.postID, clientName:currentUser.name}, !ExtraFunctions.isUserLoggedIn())));
             dispatch(changeLoadedComments({comments: commentsForPost}));
         }
-        
     }
 
 
@@ -144,23 +143,3 @@ export default function CommentWindow() {
     }
 
 };
-
-
-
-
-
-
-/*<div className="white-box">
-                    <div className="close-button" onClick={handleClose}>
-                        X
-                    </div>
-                    <div className="topPart">
-                        <img className='signInPic' src={logoPic}></img>
-                        <div className="signinText">Sign In</div>
-                    </div>
-
-                    <div className="inputDiv">
-                        <input type="text" placeholder="Nickname" className="signInInput"></input>
-                        <input type="password" placeholder="Password" className="signInInput"></input>
-                    </div>
-                </div>*/

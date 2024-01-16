@@ -52,7 +52,7 @@ function getRecentPosts($isUserLoggedIn, $postID){
                 
                 ". ($postID == ""?"":"WHERE P.ID=" .$postID. "") ."
                 
-                ORDER BY P.ID DESC LIMIT  ". 10 . " ;";
+                ORDER BY P.ID DESC LIMIT  ". 100 . " ;";
     }else{
         $sqlquer = "
                 SELECT *, 0 as isLikedByCurrentUser
@@ -60,7 +60,7 @@ function getRecentPosts($isUserLoggedIn, $postID){
 
                 ". ($postID == ""?"":"WHERE Posts.ID=" .$postID. "") ."
 
-                ORDER BY ID DESC LIMIT  ". 10 . ";";
+                ORDER BY ID DESC LIMIT  ". 100 . ";";
     }
     
 
@@ -102,7 +102,16 @@ if (isset($_GET["request"])) {
     $jwt = json_decode($_SERVER["HTTP_JWT"]);
     $idToken = ($jwt->id_token);
 
-    if (verifyJWT($idToken)) {
+    $istJWTValid = false;
+
+    try{
+        $istJWTValid = verifyJWT($idToken);
+    }
+    catch (Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
+    
+    if ($istJWTValid) {
         //user ir logged in  
         switch ($_GET["request"]) {
 
@@ -443,44 +452,44 @@ function parseBase64($token)
 
 
 function verifyJWT( $jwt ) {
-    $keyStr = file_get_contents("https://www.googleapis.com/oauth2/v1/certs");
+        $keyStr = file_get_contents("https://www.googleapis.com/oauth2/v1/certs");
 
-    $keys = json_decode($keyStr, true);
-
-    global $Google_ClientID;
+        $keys = json_decode($keyStr, true);
     
-	// split the jwt
-	$tokenParts = explode( '.', $jwt ); 
-
-	$head = json_decode( base64_decode( strtr( $tokenParts[0], '-_', '+/' ) ), true );
-	$body = json_decode( base64_decode( strtr( $tokenParts[1], '-_', '+/' ) ), true );
-
-	// check expiration time
-	if ( time() >= $body['exp'] ) {
-		return false;
-	}
-
-	// check aud
-	if ( $body['aud'] !== $Google_ClientID ) {
-		return false;
-	}
-
-	// check iss
-	if ( ! in_array( $body['iss'], [ 'accounts.google.com', 'https://accounts.google.com' ] ) ) {
-		return false;
-	}
-
-	// verify the signature
-	$signature = base64_decode( strtr( $tokenParts[2], '-_', '+/' ) );
-
-
-
-	$valid = openssl_verify( $tokenParts[0] . '.' . $tokenParts[1], $signature, $keys[$head['kid']], 'SHA256' );
-
-
-	if ( $valid == 1 ) {
-		return true;
-	}
-
-	return false;
+        global $Google_ClientID;
+        
+        // split the jwt
+        $tokenParts = explode( '.', $jwt ); 
+    
+        $head = json_decode( base64_decode( strtr( $tokenParts[0], '-_', '+/' ) ), true );
+        $body = json_decode( base64_decode( strtr( $tokenParts[1], '-_', '+/' ) ), true );
+    
+        // check expiration time
+        if ( time() >= $body['exp'] ) {
+            return false;
+        }
+    
+        // check aud
+        if ( $body['aud'] !== $Google_ClientID ) {
+            return false;
+        }
+    
+        // check iss
+        if ( ! in_array( $body['iss'], [ 'accounts.google.com', 'https://accounts.google.com' ] ) ) {
+            return false;
+        }
+    
+        // verify the signature
+        $signature = base64_decode( strtr( $tokenParts[2], '-_', '+/' ) );
+    
+    
+    
+        $valid = openssl_verify( $tokenParts[0] . '.' . $tokenParts[1], $signature, $keys[$head['kid']], 'SHA256' );
+    
+    
+        if ( $valid == 1 ) {
+            return true;
+        }
+    
+        return false;    
 }

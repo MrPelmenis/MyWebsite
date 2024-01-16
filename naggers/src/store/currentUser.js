@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { fetchSpecial } from "../serverComunication.js";
 import { useDispatch } from 'react-redux';
-import { showScreen } from '../store/signInWindow';
 
 import { ExtraFunctions } from '../extraFunctions.js';
 // Slice

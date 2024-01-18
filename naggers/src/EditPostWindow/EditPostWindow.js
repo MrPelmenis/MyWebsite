@@ -11,8 +11,6 @@ import {  hidePostEditScreen, editPostTitleBody, changeEditHelpText } from '../s
 
 import logoPic from '../img/labsLogo.png';
 
-import configData from "../config.json";
-
 import { fetchSpecial } from '../serverComunication.js';
 
 import { changeLoadedComments} from '../store/commentWindow';

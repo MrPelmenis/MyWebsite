@@ -8,8 +8,6 @@ import TextWithReadMoreButton from "../TextWithReadMoreButtons";
 import { fetchSpecial } from '../serverComunication';
 import { useDispatch, useSelector } from 'react-redux';
 
-import configData from "../config.json";
-
 
 import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
@@ -65,7 +63,7 @@ export default function SingleComment(props) {
         <div className='SingleComment'>
             <div className='CommentAuthorDateInfo'>
                 <div style={{ display: "flex", justifyContent: "left" }}>
-                    <img className="CommentAuthorPic" src={`${configData.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=${props.authorName}`} ></img>
+                    <img className="CommentAuthorPic" src={`${window.websiteSetting.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=${props.authorName}`} ></img>
                     <div className="CommentAuthorName">{props.authorName}</div>
                 </div>
                 <div className='dateInfoAboutComment'>{ExtraFunctions.getTimeAgo(props.date)}</div>

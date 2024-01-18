@@ -28,7 +28,6 @@ import { changeUser } from '../store/currentUser';
 
 import { ExtraFunctions } from '../extraFunctions';
 
-import configData from "../config.json";
 
 export default function TopBar() {
     return (
@@ -57,7 +56,7 @@ function ProfilePicOnTop() {
     return (
         <>
             <img onClick={openProfile} 
-            src={`${configData.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=${currentUserState.name}`}
+            src={`${window.websiteSetting.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=${currentUserState.name}`}
             className='profilePicOnTop'></img>
         </>
     )

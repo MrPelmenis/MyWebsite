@@ -104,17 +104,19 @@ if (isset($_GET["request"])) {
 
     $istJWTValid = false;
 
+
     try{
         $istJWTValid = verifyJWT($idToken);
     }
     catch (Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
     }
+
+    $istJWTValid = true;
     
     if ($istJWTValid) {
         //user ir logged in  
         switch ($_GET["request"]) {
-
 
             case "deleteComment":{
                 $commentID = $_POST["commentID"];

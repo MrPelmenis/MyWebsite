@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 
 import ProfileContainer from "./ProfilePageComponents/ProfileContainer/ProfileContainer.jsx";
 
-import configData from "../config.json";
 
 import store from "../store";
 import { Provider } from 'react-redux';

@@ -1,26 +1,16 @@
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+<!DOCTYPE html>
+<html>
+<head>
+<title>Loging In...</title>
+
+<script src="config.js"></script>
 
 
-import { ExtraFunctions } from "../extraFunctions";
-
-const Login = () => {
-    const navigate = useNavigate();
-
-     useEffect(() => {
-        callback();
-    });
-
-    return (
-        <>
-            <div style={{ marginTop: 300, fontSize: 50, width: 500, height: 500 }}>Loading...</div>
-        </>
-    )
-};
-
+<script>
+    
 
 async function callback() {
-    if(!ExtraFunctions.isUserLoggedIn()){
+    if(!localStorage.getItem("JWT") || localStorage.getItem("JWT") == ""){
         const url = new URL(window.location.href);
         let code = url.searchParams.get('code');
         console.log(code);
@@ -51,8 +41,17 @@ async function callback() {
         console.log(jtoken);
 
         window.location.href = "/";
-        
     }
 }
 
-export default Login;
+</script>
+
+
+
+</head>
+<body onload="callback()">
+
+<h1>Loading...</h1>
+
+</body>
+</html> 

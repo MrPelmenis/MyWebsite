@@ -11,8 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import logoPic from '../img/labsLogo.png';
 
 
-import configData from "../config.json";
-
 
 import { fetchSpecial } from '../serverComunication.js';
 

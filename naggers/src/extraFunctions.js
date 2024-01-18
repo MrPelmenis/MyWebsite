@@ -1,4 +1,3 @@
-import configData from "./config.json";
 
 export class ExtraFunctions {
     static isUserLoggedIn() {
@@ -41,9 +40,9 @@ export class ExtraFunctions {
         let url =
             `https://accounts.google.com/o/oauth2/v2/auth?` +
             `response_type=code&` +
-            `client_id=${configData.CLIENT_ID}&` +
+            `client_id=${window.websiteSetting.CLIENT_ID}&` +
             `scope=openid%20email&` +
-            `redirect_uri=${configData.REDIRECT_URL}&` +
+            `redirect_uri=${window.websiteSetting.REDIRECT_URL}&` +
             `nonce=0394852-3190485-2490358&`;
         window.location.href = url;
     }

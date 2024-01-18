@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeLikeForSinglePost } from '../store/loadedPosts';
 import { showCommentScreen } from '../store/commentWindow';
 import TextWithReadMoreButton from "../TextWithReadMoreButtons";
-import configData from "../config.json";
 
 
 import { AiOutlineLike } from "react-icons/ai";
@@ -56,16 +55,10 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
                 let result;
                 if(isPostLikedByUser == 0){
                     result = await fetchSpecial("postLike", {postID: postID, clientName: currentUser}, false);
-                    console.log("aaa");
-                    console.log(loadedPosts);
                 }else{
                    result = await fetchSpecial("postDislike", {postID: postID, clientName: currentUser}, false);
-                   console.log(result);
-                }
-                
+                }  
                 dispatch(changeLikeForSinglePost({postID:postID, serverResult:result}));
-    
-                console.log(result);
             }else{
                 ExtraFunctions.googleLogin();
             }
@@ -100,7 +93,7 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
         <div className='SinglePost'>
             <div className='authorDateInfo'>
                 <div style={{ display: "flex", justifyContent: "left" }}>
-                    <img className="authorPic" src={`${configData.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=${postAuthorName}`} ></img>
+                    <img className="authorPic" src={`${window.websiteSetting.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=${postAuthorName}`} ></img>
                     <div className="authorName">{authorName}</div>
                 </div>
                 <div className='dateInfoAboutPost' >{ExtraFunctions.getTimeAgo(date)}</div>

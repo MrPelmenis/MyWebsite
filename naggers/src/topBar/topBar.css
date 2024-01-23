@@ -129,6 +129,7 @@
 
 .TopBarImg:hover{
     cursor: pointer;
+
 }
 
 .profilePicOnTop {
@@ -153,8 +154,6 @@
     align-items: flex-start;
 }
 
-
-
 .tooltip {
     position: relative;
     display: inline-block;
@@ -171,10 +170,32 @@
     border-radius: 6px;
     padding: 5px 0;
 
-    /* Position the tooltip */
     position: absolute;
     top: 40px;
     left: 15px;
+    z-index: 1;
+    font-weight: normal;
+    line-height: 15px;
+    animation-delay: 500ms;
+    user-select: none;
+    cursor: pointer;
+}
+
+
+.hometooltiptext {
+    visibility: hidden;
+    width: 60px;
+    background-color: #0C4A60;
+    border: 1px solid white;
+    color: #fff;
+    font-size: 13px;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    position: absolute;
+    top: 60px;
+    left: 25px;
     z-index: 1;
     font-weight: normal;
     line-height: 15px;
@@ -182,6 +203,12 @@
     cursor: pointer;
 }
 
+
+
 .tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.tooltip:hover .hometooltiptext {
     visibility: visible;
 }

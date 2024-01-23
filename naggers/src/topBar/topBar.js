@@ -51,8 +51,6 @@ function ProfilePicOnTop() {
         navigate("/profile");
     }
 
-
-
     return (
         <>
             <img onClick={openProfile} 
@@ -117,7 +115,10 @@ function TopBarImg({ src }) {
     }
 
     return (
-        <img onClick={openMain} className="TopBarImg" src={src}></img>
+        <div className="HomeButton tooltip" alt="Home" onClick={openMain}> 
+            <img onClick={openMain} className="TopBarImg" src={src}></img>
+            <span className="hometooltiptext">Home</span>
+         </div>
     )
 }
 

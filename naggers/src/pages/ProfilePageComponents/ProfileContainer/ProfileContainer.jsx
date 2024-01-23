@@ -11,12 +11,16 @@ import { fetchSpecial } from '../../../serverComunication';
 
 import { showChangeNameScreen } from './../../../store/changeNameWindow';
 
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+
 export default function ProfileContainer() {
     
     const dispatch = useDispatch();
     const currentUserState = useSelector(state => state.currentUser);
 
     const[profilePicSrc, setProfilePicSrc] = useState(defaultProfilePic);
+
+    const navigate = useNavigate();
   
     const uploadImg = (event) => {
         let file = event.target.files[0];
@@ -76,8 +80,7 @@ export default function ProfileContainer() {
             
                 // Send the resized image
                 let res = await fetchSpecial("profileImgUpdate", { clientName: currentUserState.name, imgSrc: resizedDataUrl }, false);
-                console.log(res);
-                window.location.href = "/profile";
+                window.location.href = "/";
               };
             };
             reader.readAsDataURL(file);
@@ -92,6 +95,7 @@ export default function ProfileContainer() {
     const logoutCallback = ()=>{
         localStorage.setItem("JWT", "");
         window.location.href = "/";
+        navigate("/profile");
     }
     
     return (

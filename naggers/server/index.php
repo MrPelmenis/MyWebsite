@@ -99,7 +99,7 @@ function getCommentsForPost($isUserLoggedIn){
 
 
 if (isset($_GET["request"])) {
-    $jwt = json_decode($_SERVER["HTTP_JWT"]);
+   /* $jwt = json_decode($_SERVER["HTTP_JWT"]);
     $idToken = ($jwt->id_token);
 
     $istJWTValid = false;
@@ -110,7 +110,7 @@ if (isset($_GET["request"])) {
     }
     catch (Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
-    }
+    }*/
 
     $istJWTValid = true;
     
@@ -244,7 +244,6 @@ if (isset($_GET["request"])) {
 
 
                 if($accountExists){
-                    //echo($quer);
                     sql_Execute($quer);
                     echo (json_encode(array("answer" => true)));
                 }

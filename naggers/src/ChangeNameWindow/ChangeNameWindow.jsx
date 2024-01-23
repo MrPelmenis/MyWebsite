@@ -5,6 +5,8 @@ import React from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+
 import { hideChangeNameScreen } from '../store/changeNameWindow';
 
 import { fetchSpecial } from '../serverComunication.js';
@@ -19,6 +21,7 @@ export default function ChangeNameWindow() {
 
     const dispatch = useDispatch();
     const changeNameWindow = useSelector(state => state.changeNameWindow);
+    const navigate = useNavigate();
     const handleClose = () => {
        dispatch(changeHelpText({helpText:"What's the name you want now?"}));
        dispatch(hideChangeNameScreen());
@@ -51,10 +54,13 @@ export default function ChangeNameWindow() {
                     return;
                 }
             }
+
             const data = await fetchSpecial("changeUserName", { nickname: nicknameInput });
             if (data.success) {
                 handleClose();
-                window.location.href="./profile";
+                window.location.href="/";
+                navigate("/profile");
+                
             } else {
                 dispatch(changeHelpText({helpText:'Username allready in use'}));
             }

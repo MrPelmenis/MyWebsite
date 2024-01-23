@@ -78,7 +78,6 @@ export default function ProfileContainer() {
                 console.log(resizedDataUrl);
                 setProfilePicSrc(resizedDataUrl);
             
-                // Send the resized image
                 let res = await fetchSpecial("profileImgUpdate", { clientName: currentUserState.name, imgSrc: resizedDataUrl }, false);
                 window.location.href = "/";
               };

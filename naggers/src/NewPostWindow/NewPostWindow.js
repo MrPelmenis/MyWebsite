@@ -28,18 +28,33 @@ export default function NewPostWindow() {
 
     const [textInput, setTextInput] = useState('');
     const handleTextInputChange = event => {
-        setTextInput (event.target.value);
+        setTextInput(event.target.value);
+        if(textInput.length >= 5000){
+            dispatch(changeHelpText({helpText:"Please don't make the body longer than 5000 characters"}));
+        }
     };
 
 
     const [titleInput, setTitleInput] = useState('');
     const handleTitleInputChange = event => {
         setTitleInput (event.target.value);
+        if(titleInput.length >= 100){
+            dispatch(changeHelpText({helpText:"Please don't make the title longer than 100 characters"}));
+        }
     };
 
 
     async function uploadPost (){
         if(titleInput != "" && textInput != ""){
+            if(titleInput.length >= 100){
+                dispatch(changeHelpText({helpText:"Please don't make the title longer than 100 characters"}));
+                return;
+            }
+            if(textInput.length >= 5000){
+                dispatch(changeHelpText({helpText:"Please don't make the body longer than 5000 characters"}));
+                return;
+            }
+
             let res = await fetchSpecial("uploadPost", { title: titleInput, body: textInput }, false);
             console.log(res);
             if(res.postID){

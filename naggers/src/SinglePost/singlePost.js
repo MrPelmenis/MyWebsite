@@ -93,7 +93,7 @@ export default function SinglePost({id, title, body, authorName, date, likeAmoun
         <div className='SinglePost'>
             <div className='authorDateInfo'>
                 <div style={{ display: "flex", justifyContent: "left" }}>
-                    <img className="authorPic" src={`${window.websiteSetting.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=${postAuthorName}`} ></img>
+                    <img className="authorPic" src={`${window.websiteSetting.SERVER_URL}/indexServer.php?requestAnonymus=getProfilePictureForUser&clientName=${postAuthorName}`} ></img>
                     <div className="authorName">{authorName}</div>
                 </div>
                 <div className='dateInfoAboutPost' >{ExtraFunctions.getTimeAgo(date)}</div>

@@ -50,22 +50,22 @@ function getRecentPosts($isUserLoggedIn, $postID){
                 LEFT OUTER JOIN Likes L ON
                 L.PostID = P.ID AND L.UserID = ".$userID."
                 
-                ". ($postID == ""?"":"WHERE P.ID=" .$postID. "") ."
+                ". ($postID == ""?"":"WHERE P.ID=" . $postID. "") ."
                 
-                ORDER BY P.ID DESC LIMIT  ". 100 . " ;";
+                ORDER BY P.DATE_TIME DESC;";
     }else{
         $sqlquer = "
                 SELECT *, 0 as isLikedByCurrentUser
                 FROM Posts
-
                 ". ($postID == ""?"":"WHERE Posts.ID=" .$postID. "") ."
 
-                ORDER BY ID DESC LIMIT  ". 100 . ";";
+                ORDER BY Posts.DATE_TIME DESC;";
     }
     
 
     echo(json_encode(sql_MultipleRow($sqlquer)));
 }
+
 
 function getCommentsForPost($isUserLoggedIn){
     $postID = htmlspecialchars($_POST["postID"]);
@@ -83,14 +83,14 @@ function getCommentsForPost($isUserLoggedIn){
             FROM Comments C 
             LEFT OUTER JOIN CommentLikes CL ON C.ID = CL.CommentID AND CL.UserID = " . TDB($userID) . "
             WHERE C.PostID = " . TDB($postID) . "
-            ORDER BY C.LikeAmount DESC LIMIT 10;";
+            ORDER BY C.LikeAmount;";
         //echo($sqlquer);
     }else{
         //userNotloggedInN
         $sqlquer = "
                 SELECT *, 0 as isLikedByCurrentUser
                 FROM Comments
-                ORDER BY LikeAmount DESC LIMIT  ". 10 . ";";
+                ORDER BY LikeAmount;";
     }
     //echo($sqlquer);
     echo(json_encode(sql_MultipleRow($sqlquer)));
@@ -99,7 +99,7 @@ function getCommentsForPost($isUserLoggedIn){
 
 
 if (isset($_GET["request"])) {
-   /* $jwt = json_decode($_SERVER["HTTP_JWT"]);
+    $jwt = json_decode($_SERVER["HTTP_JWT"]);
     $idToken = ($jwt->id_token);
 
     $istJWTValid = false;
@@ -110,9 +110,10 @@ if (isset($_GET["request"])) {
     }
     catch (Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
-    }*/
+    }
 
     $istJWTValid = true;
+
     
     if ($istJWTValid) {
         //user ir logged in  
@@ -437,6 +438,7 @@ function cors()
             header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
         exit(0);
     }
+
 }
 
 
@@ -466,9 +468,9 @@ function verifyJWT( $jwt ) {
         $body = json_decode( base64_decode( strtr( $tokenParts[1], '-_', '+/' ) ), true );
     
         // check expiration time
-        if ( time() >= $body['exp'] ) {
+        /*if ( time() >= $body['exp'] ) {
             return false;
-        }
+        }*/
     
         // check aud
         if ( $body['aud'] !== $Google_ClientID ) {
@@ -486,7 +488,7 @@ function verifyJWT( $jwt ) {
     
     
         $valid = openssl_verify( $tokenParts[0] . '.' . $tokenParts[1], $signature, $keys[$head['kid']], 'SHA256' );
-    
+        
     
         if ( $valid == 1 ) {
             return true;

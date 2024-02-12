@@ -13,6 +13,7 @@ import { changePosts } from '../store/loadedPosts';
 export default function MainPart() {
     const [mainPartWidth, setWidth] = useState(window.innerWidth);
     useEffect( () => {
+        document.title = 'Naggers';
         makeInsides();
     }, []);
 

@@ -63,7 +63,7 @@ export default function SingleComment(props) {
         <div className='SingleComment'>
             <div className='CommentAuthorDateInfo'>
                 <div style={{ display: "flex", justifyContent: "left" }}>
-                    <img className="CommentAuthorPic" src={`${window.websiteSetting.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=${props.authorName}`} ></img>
+                    <img className="CommentAuthorPic" src={`${window.websiteSetting.SERVER_URL}/indexServer.php?requestAnonymus=getProfilePictureForUser&clientName=${props.authorName}`} ></img>
                     <div className="CommentAuthorName">{props.authorName}</div>
                 </div>
                 <div className='dateInfoAboutComment'>{ExtraFunctions.getTimeAgo(props.date)}</div>

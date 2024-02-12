@@ -44,6 +44,10 @@ export default function CommentWindow() {
 
     async function uploadComment (){
         if(ExtraFunctions.isUserLoggedIn()){
+            if(myCommentText.length >= 1000){
+                dispatch(changeHelpText({helpText:"Write more succinctly that way everyone understands you (Not more than 1000 characters)"}));
+                return;
+            }
             if(myCommentText != ""){
                 let res = await fetchSpecial("uploadComment", { text: myCommentText, postID: commentWindow.postID }, false);
                 console.log(res);
@@ -66,6 +70,9 @@ export default function CommentWindow() {
 
     const handleChange = event => {
         setMyCommentText(event.target.value);
+        if(myCommentText.length >= 1000){
+            dispatch(changeHelpText({helpText:"Write more succinctly that way everyone understands you (Not more than 1000 characters)"}));
+        }
     };
 
     const [arePostsLoaded, setArePostsLoaded] = useState(false);

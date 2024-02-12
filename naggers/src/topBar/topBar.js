@@ -54,7 +54,7 @@ function ProfilePicOnTop() {
     return (
         <>
             <img onClick={openProfile} 
-            src={`${window.websiteSetting.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=${currentUserState.name}`}
+            src={`${window.websiteSetting.SERVER_URL}/indexServer.php?requestAnonymus=getProfilePictureForUser&clientName=${currentUserState.name}`}
             className='profilePicOnTop'></img>
         </>
     )

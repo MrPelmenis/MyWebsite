@@ -101,7 +101,7 @@ export default function ProfileContainer() {
         <div className='ProfileContainer'>
             <div className='profileInfo'>
                 <div style={{display:'flex'}}>
-                    <img src={`${window.websiteSetting.SERVER_URL}/index.php?requestAnonymus=getProfilePictureForUser&clientName=${currentUserState.name}`} className='ProfileImg'></img>
+                    <img src={`${window.websiteSetting.SERVER_URL}/indexServer.php?requestAnonymus=getProfilePictureForUser&clientName=${currentUserState.name}`} className='ProfileImg'></img>
                     <input onChange={uploadImg} type="file" id="imgInput" accept="image/png, image/jpeg"/>
                     <label htmlFor="imgInput"><div className='editImgIcon'> &#9998;</div></label>
                 </div>

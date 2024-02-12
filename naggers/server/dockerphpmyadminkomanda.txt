@@ -1,1 +1,11 @@
-docker run --name phpmyadmin -d -e PMA_HOST=192.168.1.118 -p 8080:80 phpmyadmin
+docker run --name phpmyadmin -d -e PMA_HOST=192.168.1.120 -p 8080:80 phpmyadmin
+
+docker run --name databaze -p 3306:3306 -e MYSQL_ROOT_PASSWORD=zzz -d mysql
+
+docker system prune --all iztira visu
+
+
+
+
+
+

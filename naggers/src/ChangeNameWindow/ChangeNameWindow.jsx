@@ -32,6 +32,9 @@ export default function ChangeNameWindow() {
 
     const handleNickChange = (event) => {
         setNicknameInput(event.target.value);
+        if(nicknameInput.length >= 20){
+            dispatch(changeHelpText({helpText:"Sorry but the max length is 20 characters"}));
+        }
     };
 
     const handleClick = async () => {
@@ -53,6 +56,10 @@ export default function ChangeNameWindow() {
                     dispatch(changeHelpText({helpText:'Please use standart English letters and numbers only'}));
                     return;
                 }
+            }
+            
+            if(nicknameInput.length >= 20){
+                return;
             }
 
             const data = await fetchSpecial("changeUserName", { nickname: nicknameInput });

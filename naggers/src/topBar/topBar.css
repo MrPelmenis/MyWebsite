@@ -6,6 +6,7 @@
     justify-content: space-between;
     z-index: 1;
     top: 0;
+
     
 }
 
@@ -32,8 +33,10 @@
     flex-direction: column;
     position: fixed;
     width: 100%;
+    margin: auto;
     top: 0;
-    z-index: 3;
+    z-index: 2;
+    
 }
 
 .logoPic:hover{
@@ -57,7 +60,7 @@
     height: 25px;
     margin-top: 40px;
     width: 80px;
-    margin-left: 10px;
+    padding-left: 10px;
     color: aqua;
 
     transition: background-color 0.3s ease;
@@ -79,7 +82,7 @@
     height: 25px;
     margin-top: 40px;
     width: 80px;
-    margin-left: 10px;
+    margin-left: 0px;
     color: aqua;
     transition: background-color 0.3s ease;
     font-weight: 900;
@@ -125,6 +128,7 @@
     margin: auto;
     width: 90px;
     height: 90px;
+    margin-left: 10px;
 }
 
 .TopBarImg:hover{

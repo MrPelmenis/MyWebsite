@@ -27,22 +27,44 @@ export default function NewPostWindow() {
     };
 
     const [textInput, setTextInput] = useState('');
-    const handleTextInputChange = event => {
-        setTextInput(event.target.value);
-        if(textInput.length >= 5000){
+    const handleTextInputChange = (event => {
+        const newValue = event.target.value;
+        if (newValue.length < 5000) {
+            setTextInput(newValue);
+            dispatch(changeHelpText({helpText:""}));
+        } else {
             dispatch(changeHelpText({helpText:"Please don't make the body longer than 5000 characters"}));
         }
-    };
+    });
 
 
     const [titleInput, setTitleInput] = useState('');
     const handleTitleInputChange = event => {
-        setTitleInput (event.target.value);
-        if(titleInput.length >= 100){
+        const newValue = event.target.value;
+        if (newValue.length < 100) {
+            setTitleInput(newValue);
+            dispatch(changeHelpText({helpText:""}));
+        } else {
             dispatch(changeHelpText({helpText:"Please don't make the title longer than 100 characters"}));
         }
     };
 
+
+    const handleTitlePaste = event => {
+        const pastedText = event.clipboardData.getData('text');
+        if(pastedText.length + titleInput.length > 100){
+            dispatch(changeHelpText({helpText:"Please don't make the title longer than 100 characters"}));
+        }
+    };
+
+
+    const handleBodyPaste = event => {
+        const pastedText = event.clipboardData.getData('text');
+        console.log(pastedText.length + textInput.length + 2);
+        if(pastedText.length + textInput.length + 2 > 5000){
+            dispatch(changeHelpText({helpText:"Please don't make the body longer than 5000 characters"}));
+        }
+    };
 
     async function uploadPost (){
         if(titleInput != "" && textInput != ""){
@@ -86,11 +108,12 @@ export default function NewPostWindow() {
                     </div>
                     <div className='newPostPart' style={{ textAlign: "center", height: 40, fontSize: 30, marginTop: -20 }}>New Post</div>
                     <div className="postInputHolder" style={{width: "80%", margin: "auto" }}>
-                        <input type='text' placeholder='Title' className='TitleInput'
+                        <input type='text' maxLength="100" onPaste={handleTitlePaste} placeholder='Title' className='TitleInput'
                         onChange={handleTitleInputChange} value={titleInput}></input>
 
-                        <textarea type='text' placeholder='Your Thoughts...' className='PostTextInput'
-                        onChange={handleTextInputChange} value={textInput}></textarea>
+
+                        <textarea type='text' maxLength="5000" placeholder='Your Thoughts...' className='PostTextInput'
+                        onChange={handleTextInputChange} onPaste={handleBodyPaste}value={textInput}></textarea>
                         <div className='newPosthelperText'>{newPostWindow.helpText}</div>
                     </div>
                     <button className='postButton' onClick={()=>{uploadPost()}}>Post</button>

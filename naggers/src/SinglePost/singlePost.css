@@ -10,6 +10,8 @@
     margin-left: 20px;
     word-break: break-all;
     line-height: 30px;
+    width: 90%;
+
 }
 
 .authorDateInfo {
@@ -50,7 +52,7 @@
     white-space: pre-wrap;
     word-wrap: break-word;
     margin: 5px;
-    width: calc(100%-0px);
+    width: calc(90%-0px);
     margin-right: 20px;
     margin-left: 20px;
 }

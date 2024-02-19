@@ -83,14 +83,14 @@ function getCommentsForPost($isUserLoggedIn){
             FROM Comments C 
             LEFT OUTER JOIN CommentLikes CL ON C.ID = CL.CommentID AND CL.UserID = " . TDB($userID) . "
             WHERE C.PostID = " . TDB($postID) . "
-            ORDER BY C.LikeAmount;";
+            ORDER BY C.LikeAmount DESC;";
         //echo($sqlquer);
     }else{
         //userNotloggedInN
         $sqlquer = "
                 SELECT *, 0 as isLikedByCurrentUser
                 FROM Comments
-                ORDER BY LikeAmount;";
+                ORDER BY LikeAmount DESC;";
     }
     //echo($sqlquer);
     echo(json_encode(sql_MultipleRow($sqlquer)));
@@ -233,7 +233,7 @@ if (isset($_GET["request"])) {
                 $email = ($id_token->email);
                 $gottenNickname = sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'");
 
-                $date = date('Y-m-d H:i:s');  
+                $date = gmdate('Y-m-d H:i:s');  
 
                 $text = ($_POST["text"]);
                 $postID = htmlspecialchars($_POST["postID"]);
@@ -309,7 +309,7 @@ if (isset($_GET["request"])) {
                 $email = ($id_token->email);
                 $gottenNickname = sql_StringExecute("SELECT Nickname FROM Users WHERE Email='" . TDB($email) . "'");
 
-                $date = date('Y-m-d H:i:s');
+                $date = gmdate('Y-m-d H:i:s');
 
                 $title = ($_POST["title"]);
                 $body = ($_POST["body"]);

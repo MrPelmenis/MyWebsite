@@ -9,6 +9,9 @@ body {
 
   scrollbar-width: none;
   background-color: #d8d4d1;
+  margin: 0;
+  padding: 0;
+  width: calc(100% - 10px);
 }
 
 code {

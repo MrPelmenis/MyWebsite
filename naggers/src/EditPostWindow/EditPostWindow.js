@@ -37,12 +37,48 @@ export default function EditPostWindow() {
         dispatch(hidePostEditScreen());
     };
     
-    const handleTextInputChange = event => {
-        dispatch(editPostTitleBody({title:editPostWindow.title, body:event.target.value,  postID: editPostWindow.postID, isThisPostEdit: editPostWindow.isThisPostEdit}));
-    };
+
+
+    const [textInput, setTextInput] = useState('');
+    const handleTextInputChange = (event => {
+        const newValue = event.target.value;
+        if (newValue.length < 5000) {
+            dispatch(editPostTitleBody({title:editPostWindow.title, body:event.target.value,  postID: editPostWindow.postID, isThisPostEdit: editPostWindow.isThisPostEdit}));
+            dispatch(changeEditHelpText({helpText:""}));
+        } else {
+            dispatch(changeEditHelpText({helpText:"Please don't make the body longer than 5000 characters"}));
+        }
+    });
+
+
+    const [titleInput, setTitleInput] = useState('');
     const handleTitleInputChange = event => {
-        dispatch(editPostTitleBody({title:event.target.value, body:editPostWindow.body, postID: editPostWindow.postID, isThisPostEdit: editPostWindow.isThisPostEdit}));
+        const newValue = event.target.value;
+        if (newValue.length < 100) {
+            dispatch(editPostTitleBody({title:event.target.value, body:editPostWindow.body, postID: editPostWindow.postID, isThisPostEdit: editPostWindow.isThisPostEdit}));
+            dispatch(changeEditHelpText({helpText:""}));
+        } else {
+            dispatch(changeEditHelpText({helpText:"Please don't make the title longer than 100 characters"}));
+        }
     };
+
+    const handleTitlePaste = event => {
+        const pastedText = event.clipboardData.getData('text');
+        if(pastedText.length + titleInput.length > 100){
+            dispatch(changeEditHelpText({helpText:"Please don't make the title longer than 100 characters"}));
+        }
+    };
+
+
+    const handleBodyPaste = event => {
+        const pastedText = event.clipboardData.getData('text');
+        console.log(pastedText.length + textInput.length + 2);
+        if(pastedText.length + textInput.length + 2 > 5000){
+            dispatch(changeEditHelpText({helpText:"Please don't make the body longer than 5000 characters"}));
+        }
+    };
+
+
 
     const updatePost = async () =>{
         if((editPostWindow.title != "" && editPostWindow.body != "") || (!editPostWindow.isThisPostEdit && editPostWindow.body != "")){

@@ -22,31 +22,27 @@
 }
 
 
-@media only screen and (width < 1000px) {
+@media only screen and (width < 1300px) {
     .newPost-white-box {
         width:90%;
-        height: 50%;
     }
 }
 
 @media only screen and (width > 1300px) {
     .newPost-white-box {
         width: 30%;
-        height: 40%;
     }
 }
 
 
 @media only screen and (height < 600px) {
     .newPost-white-box {
-        width: 90%;
         height: 50%;
     }
 }
 
 @media only screen and (height > 800px) {
     .newPost-white-box {
-        width: 30%;
         height: 40%;
     }
 }

@@ -44,7 +44,7 @@ export default function CommentWindow() {
 
     async function uploadComment (){
         if(ExtraFunctions.isUserLoggedIn()){
-            if(myCommentText.length >= 1000){
+            if(myCommentText.length >= 3000){
                 dispatch(changeHelpText({helpText:"Write more succinctly that way everyone understands you (Not more than 1000 characters)"}));
                 return;
             }
@@ -69,9 +69,19 @@ export default function CommentWindow() {
     const [myCommentText, setMyCommentText] = useState('');
 
     const handleChange = event => {
-        setMyCommentText(event.target.value);
-        if(myCommentText.length >= 1000){
-            dispatch(changeHelpText({helpText:"Write more succinctly that way everyone understands you (Not more than 1000 characters)"}));
+        const newValue = event.target.value;
+        if (newValue.length < 3000) {
+            setMyCommentText(newValue);
+            dispatch(changeHelpText({helpText:""}));
+        } else {
+            dispatch(changeHelpText({helpText:"Please don't make the comment longer than 3000 characters"}));
+        }
+    };
+
+    const handleCommentPaste = event => {
+        const pastedText = event.clipboardData.getData('text');
+        if(pastedText.length + myCommentText.length > 3000){
+            dispatch(changeHelpText({helpText:"Please don't make the comment longer than 3000 characters"}));
         }
     };
 
@@ -127,7 +137,7 @@ export default function CommentWindow() {
                     </div>
 
                     <div className='CommentInput'> 
-                        <textarea  placeholder='What Do You Think?'onChange={handleChange} value={myCommentText} className='CommentInputText'></textarea>
+                        <textarea  maxLength="3001" onPaste={handleCommentPaste} placeholder='What Do You Think?'onChange={handleChange} value={myCommentText} className='CommentInputText'></textarea>
                         <div className='helpText'>{commentWindow.helpText}</div>
                         <button className='postCommentButton' onClick={()=>{uploadComment()}}>Post</button>
                     </div>
